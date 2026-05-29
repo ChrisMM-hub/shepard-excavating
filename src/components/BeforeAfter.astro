@@ -1,0 +1,85 @@
+---
+import { Image } from 'astro:assets';
+import beforeImg from '../assets/photos/ba-foundation-before.jpg';
+import afterImg from '../assets/photos/ba-foundation-after.jpg';
+---
+
+<section class="section" id="before-after" aria-labelledby="ba-h">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Before &amp; after</p>
+      <h2 id="ba-h">See the difference a pro makes</h2>
+      <p class="lead">
+        An old block foundation in Laporte, removed and the lot filled and graded back to grass.
+        Grab the handle and drag to compare.
+      </p>
+    </div>
+
+    <div class="ba" style="--pos:50%">
+      <div class="ba-img ba-after">
+        <Image src={afterImg} alt="After: the old foundation removed and the lot graded flat" widths={[671]} sizes="(max-width: 760px) 100vw, 720px" quality={82} />
+      </div>
+      <div class="ba-img ba-before">
+        <Image src={beforeImg} alt="Before: an old concrete and block foundation in a wooded clearing" widths={[671]} sizes="(max-width: 760px) 100vw, 720px" quality={82} />
+      </div>
+      <span class="ba-tag ba-tag-before">Before</span>
+      <span class="ba-tag ba-tag-after">After</span>
+      <div class="ba-line" aria-hidden="true">
+        <span class="ba-grip"><svg viewBox="0 0 24 24"><path d="M9 7l-5 5 5 5M15 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+      <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Drag to compare the before and after photos" />
+    </div>
+
+    <div class="ba-cta">
+      <a href="/gallery" class="btn btn-dark btn-lg">View Our Project Gallery</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ba {
+    position: relative; max-width: 720px; margin: 0 auto; aspect-ratio: 2 / 1;
+    border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-lg);
+    user-select: none; touch-action: none; background: var(--ink);
+  }
+  .ba-img { position: absolute; inset: 0; }
+  .ba-img :global(img) { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ba-after { z-index: 1; }
+  .ba-before { z-index: 2; clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+
+  .ba-tag {
+    position: absolute; bottom: 0.85rem; z-index: 3; pointer-events: none;
+    font-family: var(--font-head); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    font-size: 0.74rem; color: #fff; background: rgba(20,18,16,0.72); padding: 0.3rem 0.65rem; border-radius: 3px;
+  }
+  .ba-tag-before { left: 0.85rem; z-index: 3; }
+  .ba-tag-after { right: 0.85rem; }
+
+  .ba-line { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 3px; background: #fff; transform: translateX(-50%); z-index: 4; pointer-events: none; box-shadow: 0 0 0 1px rgba(0,0,0,0.25); }
+  .ba-grip {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 46px; height: 46px; border-radius: 50%; background: var(--yellow); color: var(--ink);
+    display: grid; place-items: center; box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  }
+  .ba-grip svg { width: 24px; height: 24px; }
+  .ba-range {
+    position: absolute; inset: 0; width: 100%; height: 100%; margin: 0;
+    z-index: 5; opacity: 0; cursor: ew-resize; -webkit-appearance: none; appearance: none; background: transparent;
+  }
+  .ba-range::-webkit-slider-thumb { -webkit-appearance: none; width: 48px; height: 100%; cursor: ew-resize; }
+  .ba-range::-moz-range-thumb { width: 48px; height: 240px; border: 0; background: transparent; cursor: ew-resize; }
+  .ba-range:focus-visible + .ba-line .ba-grip,
+  .ba:focus-within .ba-grip { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+  .ba-cta { text-align: center; margin-top: 2rem; }
+  @media (max-width: 760px) { .ba { aspect-ratio: 3 / 2; } }
+</style>
+
+<script>
+  document.querySelectorAll('.ba').forEach((ba) => {
+    const range = ba.querySelector('.ba-range') as HTMLInputElement | null;
+    if (!range) return;
+    const set = (v: string) => (ba as HTMLElement).style.setProperty('--pos', v + '%');
+    range.addEventListener('input', () => set(range.value));
+  });
+</script>

@@ -34,14 +34,18 @@ src/
 public/                  logo, favicon, og-image, robots.txt
 ```
 
-## PLACEHOLDERS to confirm with Janele before launch
-Search `PLACEHOLDER` in `src/data/site.ts`.
-- **Reviews** in `site.ts` are sample copy. Replace with live Google Business Profile reviews.
-- **Hours** (`Mon–Fri 7–5 · 24/7 emergency`) — confirm.
-- **ZIP** (56461) — confirm business address ZIP.
-- **Google review link** (`gbpReview`) — drop in the real link.
-- **Logo** is the raster PNG from the old site. Get the vector (.ai/.eps/.svg) from Janele
-  so we can produce a white-knockout version for dark sections.
+## Confirmed and remaining items
+Most placeholders are now resolved from the client's original site and Facebook:
+- **Reviews** — real Facebook recommendations (Chuck Savage, Jaime Duffy, Marcus C. Curtis). Done.
+- **Hours** — verified: Mon–Fri 7am–5pm, Sat by appointment, Sun closed.
+- **ZIP 56461** — verified. MPCA-certified installer, 20+ years, pump every 2–3 years: verified and used in the FAQ.
+
+Still to confirm with Janele:
+- Whether they offer true after-hours / 24/7 emergency response. Copy is currently softened to
+  "emergency service available" (their original site never claimed 24/7).
+- **Google review link** (`gbpReview` in `site.ts`).
+- **Logo vector** (.ai/.eps/.svg) for a clean white-knockout version on dark sections.
+- Equipment / drone video (Chris is sourcing) for an optional hero or feature section.
 
 ## Not yet wired (next steps)
 - **Lead form** shows an inline success state only. Production: POST to the HighLevel

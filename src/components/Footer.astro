@@ -17,12 +17,12 @@ const services = [...featuredServices, ...moreServices];
 
     <nav class="foot-col" aria-label="Services">
       <h3>Services</h3>
-      <ul>{services.map((s) => (<li><a href="#services">{s.title}</a></li>))}</ul>
+      <ul>{services.map((s) => (<li><a href="/#services">{s.title}</a></li>))}</ul>
     </nav>
 
     <nav class="foot-col" aria-label="Service area">
       <h3>Service Area</h3>
-      <ul>{towns.map((t) => (<li><a href="#service-area">{t}, MN</a></li>))}</ul>
+      <ul>{towns.map((t) => (<li><a href="/#service-area">{t}, MN</a></li>))}</ul>
     </nav>
 
     <div class="foot-col">
@@ -33,7 +33,7 @@ const services = [...featuredServices, ...moreServices];
         <li>{business.address.street}<br />{business.address.city}, {business.address.region} {business.address.zip}</li>
         <li class="hrs">{business.hours}</li>
       </ul>
-      <a href="#contact" class="btn btn-primary">Get a Free Estimate</a>
+      <a href="/#contact" class="btn btn-primary">Get a Free Estimate</a>
     </div>
   </div>
 
@@ -41,6 +41,7 @@ const services = [...featuredServices, ...moreServices];
     <div class="container bottom-inner">
       <p>© {year} {business.name}. All rights reserved.</p>
       <p class="credits">
+        <a href="/gallery">Project Gallery</a><span aria-hidden="true">·</span>
         <a href="#">Privacy Policy</a><span aria-hidden="true">·</span>
         Website by <a href="https://minnesotamarketing.com" rel="noopener">Minnesota Marketing</a>
       </p>

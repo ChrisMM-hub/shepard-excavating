@@ -21,7 +21,7 @@ export const business = {
     zip: '56461', // PLACEHOLDER: confirm with Janele
   },
   geo: { lat: 47.2167, lng: -94.75 },
-  hours: 'Mon–Fri 7:00am – 5:00pm · Emergency service available', // PLACEHOLDER: confirm hours, and whether they offer true 24/7
+  hours: 'Mon–Fri 7:00am – 5:00pm · Sat by appointment · Sun closed', // verified from their original site; confirm any after-hours/emergency availability
   facebook: 'https://www.facebook.com/ShepardExcavating/',
   bbb:
     'https://www.bbb.org/us/mn/laporte/profile/excavating-contractors/shepard-excavating-septic-service-0704-96159257',
@@ -143,21 +143,34 @@ export const reviews = [
   },
 ];
 
+// Answers use real details pulled from the client's original site for accuracy.
 export const faqs = [
   {
     q: 'Is it Shepard or Shepherd Excavating?',
     a: 'Our family name is Shepard, but folks often write it as Shepherd Excavating. Both point to the same business: Shepard Excavating and Septic Service, LLC, based in Laporte, MN.',
   },
   {
+    q: 'How often should I have my septic tank pumped?',
+    a: 'Most experts recommend having your septic system pumped every two to three years. Give us a call and we will get you on the schedule at a fair rate.',
+  },
+  {
+    q: 'Are you a licensed septic installer?',
+    a: 'Yes. We are an MPCA-certified septic installer with more than 20 years of experience. We handle the whole process: drawing up the septic design, applying for county permits, the installation, and the final inspection.',
+  },
+  {
     q: 'What areas do you serve?',
-    a: 'We work across Beltrami, Hubbard, and Cass counties, including Bemidji, Laporte, Park Rapids, Walker, Cass Lake, Hackensack, and Longville.',
+    a: 'We work across Beltrami, Hubbard, and Cass counties, including Bemidji, Laporte, Park Rapids, Walker, Cass Lake, Hackensack, Longville, and the surrounding lake country.',
   },
   {
     q: 'Do you handle septic and water-line emergencies?',
-    a: 'Yes. Septic backups, frozen lines, and water-line problems cannot wait, so give us a call at (218) 224-2754 and we will get to you as fast as we can.',
+    a: 'Yes. We thaw frozen septic and water lines, clear sewer backups with our rooter and line-cleaning service, and handle other home emergencies. Give us a call at (218) 224-2754 and we will get to you as fast as we can.',
   },
   {
-    q: 'Can one company really do all of this?',
-    a: 'That is the whole idea. Septic, excavating, land clearing, demolition, gravel, dumpsters, and snow removal, all under one roof since 1997.',
+    q: 'What kinds of sand and gravel do you sell?',
+    a: 'Fill sand, screened topsoil, Class 5 gravel, crushed concrete, 1½-inch washed rock, and boulders. We can deliver it and spread it for you, and we will source other materials on request.',
+  },
+  {
+    q: 'Can one company really handle all of this?',
+    a: 'That is the whole idea. Septic, excavating, land clearing, demolition, sand and gravel, dumpsters, and snow removal, all under one roof since 1997. One call instead of juggling four contractors.',
   },
 ];

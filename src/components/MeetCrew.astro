@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets';
+import crew from '../assets/photos/crew.jpg';
+import { business } from '../data/site';
+---
+
+<section class="section section--stone" id="crew" aria-labelledby="crew-h">
+  <div class="container">
+    <div class="section-head center">
+      <p class="eyebrow" style="justify-content:center;">The people behind the work</p>
+      <h2 id="crew-h">Meet the crew</h2>
+      <p class="lead">
+        Shepard Excavating is a family-run outfit based in Laporte. Brian Shepard has spent {business.years} years
+        building a crew you will actually recognize around the lakes. When you call, you get the people whose
+        name is on the truck.
+      </p>
+    </div>
+    <figure class="crew-photo">
+      <Image
+        src={crew}
+        alt="The Shepard Excavating and Septic Service crew in front of a company truck"
+        widths={[800, 1280, 1600]}
+        sizes="(max-width: 1080px) 100vw, 1040px"
+        quality={80}
+      />
+    </figure>
+  </div>
+</section>
+
+<style>
+  .crew-photo { max-width: 1040px; margin: 0 auto; border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow); }
+  .crew-photo :global(img) { width: 100%; height: auto; display: block; }
+</style>
