@@ -121,25 +121,25 @@ export const whyUs = [
   },
 ];
 
-// PLACEHOLDER reviews — replace with live Google Business Profile reviews before launch.
+// Real recommendations from the Shepard Excavating Facebook page.
 export const reviews = [
   {
     quote:
-      'Brian and his crew put in our new mound system and had it inspected and backfilled faster than we expected. Fair price, no surprises.',
-    name: 'Mark D.',
-    town: 'Park Rapids, MN',
+      'My septic alarm was going off last Saturday so I called them. They walked me through a few things I could check myself. We came to the conclusion my pump was not working and the tank was full. They came out right away Monday and fixed us up. Great service, fair price.',
+    name: 'Chuck Savage',
+    date: 'March 2020',
   },
   {
     quote:
-      'Called on a Sunday with a backed-up septic and they walked me through it and were out the next morning. Lifesavers.',
-    name: 'Janet R.',
-    town: 'Walker, MN',
+      "Amazing work. They truly care about what you want and need. Highly recommend. Great people. Do good at what they do. It's so cool that it's a family. We will always support them!",
+    name: 'Jaime Duffy',
+    date: 'October 2021',
   },
   {
     quote:
-      'Cleared our lake lot, dug the basement, and brought in gravel for the drive. One company, one bill, zero headaches.',
-    name: 'Steve & Lori K.',
-    town: 'Cass Lake, MN',
+      'Shepard Excavating recently removed an old concrete slab and block foundation for us and brought in fill to make this old foundation a thing of the past.',
+    name: 'Marcus C. Curtis',
+    date: 'April 2020',
   },
 ];
 

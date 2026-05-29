@@ -59,8 +59,10 @@ const services = [...featuredServices, ...moreServices];
 
   .foot-col h3 { color: #fff; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
   .foot-col ul { display: grid; gap: 0.55rem; }
-  .foot-col a { color: #cfcabf; font-size: 0.98rem; }
-  .foot-col a:hover { color: var(--yellow); }
+  .foot-col a:not(.btn) { color: #cfcabf; font-size: 0.98rem; }
+  .foot-col a:not(.btn):hover { color: var(--yellow); }
+  /* the footer CTA is a yellow button — keep its label dark and readable */
+  .foot-col a.btn-primary { color: var(--ink); }
   .contact-lines li { font-size: 0.98rem; line-height: 1.45; }
   .contact-lines a { font-weight: 600; }
   .hrs { color: var(--gold); }
