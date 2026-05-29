@@ -28,6 +28,15 @@ export const business = {
   gbpReview: '#', // PLACEHOLDER: drop in the Google review link
 };
 
+// "Watch us work" video section.
+// Leave both empty to show the placeholder. To go live, set ONE of:
+//   youtubeId: 'XXXXXXXXXXX'           (a YouTube video id)
+//   mp4: '/video/shepard-reel.mp4'      (a file placed in public/video/)
+export const video = {
+  youtubeId: '',
+  mp4: '',
+};
+
 // Plain-language service-area towns (location pages get built later).
 export const towns = [
   'Bemidji',
