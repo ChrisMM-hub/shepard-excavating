@@ -21,7 +21,7 @@ export const business = {
     zip: '56461', // PLACEHOLDER: confirm with Janele
   },
   geo: { lat: 47.2167, lng: -94.75 },
-  hours: 'Mon–Fri 7:00am – 5:00pm · 24/7 Emergency Service', // PLACEHOLDER: confirm
+  hours: 'Mon–Fri 7:00am – 5:00pm · Emergency service available', // PLACEHOLDER: confirm hours, and whether they offer true 24/7
   facebook: 'https://www.facebook.com/ShepardExcavating/',
   bbb:
     'https://www.bbb.org/us/mn/laporte/profile/excavating-contractors/shepard-excavating-septic-service-0704-96159257',
@@ -98,7 +98,7 @@ export const moreServices = [
 export const stats = [
   { value: '29', label: 'Years in business' },
   { value: '10', label: 'Services, one call' },
-  { value: '24/7', label: 'Septic emergencies' },
+  { value: '7', label: 'Towns served' },
   { value: '3', label: 'Counties served' },
 ];
 
@@ -153,8 +153,8 @@ export const faqs = [
     a: 'We work across Beltrami, Hubbard, and Cass counties, including Bemidji, Laporte, Park Rapids, Walker, Cass Lake, Hackensack, and Longville.',
   },
   {
-    q: 'Do you handle septic emergencies after hours?',
-    a: 'Yes. Frozen lines and backups do not wait for business hours, and neither do we. Call (218) 224-2754 any time.',
+    q: 'Do you handle septic and water-line emergencies?',
+    a: 'Yes. Septic backups, frozen lines, and water-line problems cannot wait, so give us a call at (218) 224-2754 and we will get to you as fast as we can.',
   },
   {
     q: 'Can one company really do all of this?',
