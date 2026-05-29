@@ -1,0 +1,27 @@
+---
+import { business } from '../data/site';
+---
+
+<div class="call-bar" aria-label="Quick contact">
+  <a href={business.phoneHref} class="cb cb-call">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.58 3.6a1 1 0 0 1-.25 1l-2.2 2.2Z" fill="currentColor"/></svg>
+    Call Now
+  </a>
+  <a href="#contact" class="cb cb-quote">Get a Quote</a>
+</div>
+
+<style>
+  .call-bar { display: none; }
+  @media (max-width: 1080px) {
+    :global(body) { padding-bottom: 60px; }
+    .call-bar {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
+      display: grid; grid-template-columns: 1fr 1fr;
+      box-shadow: 0 -8px 24px -12px rgba(0,0,0,0.4);
+    }
+    .cb { display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.95rem; font-family: var(--font-head); font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; font-size: 1.02rem; }
+    .cb svg { width: 1.15em; height: 1.15em; }
+    .cb-call { background: var(--ink); color: #fff; }
+    .cb-quote { background: var(--yellow); color: var(--ink); }
+  }
+</style>

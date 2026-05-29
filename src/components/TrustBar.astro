@@ -1,0 +1,38 @@
+---
+import { stats, business } from '../data/site';
+---
+
+<section class="trust" aria-label="At a glance">
+  <div class="container trust-inner">
+    <ul class="stats">
+      {stats.map((s) => (
+        <li>
+          <span class="num">{s.value}</span>
+          <span class="lbl">{s.label}</span>
+        </li>
+      ))}
+    </ul>
+    <p class="trust-note">
+      Licensed &amp; insured septic installer · Serving Bemidji &amp; the Leech Lake area since {business.founded}
+    </p>
+  </div>
+</section>
+
+<style>
+  .trust { background: #fff; border-bottom: 1px solid var(--line); }
+  .trust-inner { padding-block: clamp(1.8rem, 3vw, 2.4rem); }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .stats li { text-align: center; position: relative; padding: 0.3rem 0.5rem; }
+  .stats li:not(:last-child)::after { content: ''; position: absolute; right: 0; top: 15%; height: 70%; width: 1px; background: var(--line); }
+  .num {
+    display: block; font-family: var(--font-head); font-weight: 800;
+    font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 1;
+    background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .lbl { display: block; margin-top: 0.4rem; font-family: var(--font-head); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.78rem; color: var(--slate); }
+  .trust-note { text-align: center; margin-top: 1.4rem; font-family: var(--font-head); font-weight: 600; color: var(--slate); font-size: 0.96rem; }
+  @media (max-width: 640px) {
+    .stats { grid-template-columns: repeat(2, 1fr); gap: 1.4rem 0.5rem; }
+    .stats li:nth-child(2)::after { display: none; }
+  }
+</style>

@@ -1,0 +1,114 @@
+---
+import { Image } from 'astro:assets';
+import { featuredServices, moreServices } from '../data/site';
+
+// Resolve photo imports for each service slug.
+import septicPumping from '../assets/photos/svc-septic-pumping.jpg';
+import septicInstall from '../assets/photos/svc-septic-install.jpg';
+import excavating from '../assets/photos/svc-excavating.jpg';
+import landClearing from '../assets/photos/svc-land-clearing.jpg';
+import demolition from '../assets/photos/svc-demolition.jpg';
+import aggregate from '../assets/photos/svc-aggregate.jpg';
+import emergency from '../assets/photos/svc-emergency.jpg';
+import snow from '../assets/photos/svc-snow.jpg';
+import fisher from '../assets/photos/svc-fisher.jpg';
+import dumpster from '../assets/photos/svc-dumpster.jpg';
+
+const imgMap: Record<string, ImageMetadata> = {
+  'svc-septic-pumping': septicPumping,
+  'svc-septic-install': septicInstall,
+  'svc-excavating': excavating,
+  'svc-land-clearing': landClearing,
+  'svc-demolition': demolition,
+  'svc-aggregate': aggregate,
+  'svc-emergency': emergency,
+  'svc-snow': snow,
+  'svc-fisher': fisher,
+  'svc-dumpster': dumpster,
+};
+---
+
+<section class="section" id="services" aria-labelledby="services-h">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">What we do</p>
+      <h2 id="services-h">Septic to snow, handled by one local crew</h2>
+      <p class="lead">
+        Most folks around here know us for septic and dirt work, but Shepard runs ten service lines.
+        One call, one company, one crew that shows up.
+      </p>
+    </div>
+
+    <ul class="grid">
+      {featuredServices.map((s) => (
+        <li class="card">
+          <a href={'#contact'} class="card-link" aria-label={s.title}>
+            <div class="card-media">
+              <Image src={imgMap[s.img]} alt={s.title} widths={[400, 760]} sizes="(max-width: 760px) 100vw, 380px" quality={74} />
+              <span class="bucket">{s.bucket}</span>
+            </div>
+            <div class="card-body">
+              <h3>{s.title}</h3>
+              <p>{s.blurb}</p>
+              <span class="more">Learn more <span aria-hidden="true">→</span></span>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <p class="more-label">Also offering</p>
+    <ul class="mini-grid">
+      {moreServices.map((s) => (
+        <li class="mini">
+          <a href={s.slug === 'septic-emergency' ? '#emergency' : '#contact'}>
+            <div class="mini-media">
+              <Image src={imgMap[s.img]} alt={s.title} widths={[240, 480]} sizes="220px" quality={70} />
+            </div>
+            <div class="mini-body">
+              <h3>{s.title}</h3>
+              <p>{s.blurb}</p>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; }
+  .card {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg);
+    overflow: hidden; box-shadow: var(--shadow-sm);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  }
+  .card:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: #cfc8ba; }
+  .card-link { display: flex; flex-direction: column; height: 100%; }
+  .card-media { position: relative; aspect-ratio: 16 / 10; overflow: hidden; }
+  .card-media :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+  .card:hover .card-media :global(img) { transform: scale(1.06); }
+  .bucket {
+    position: absolute; top: 0.8rem; left: 0.8rem; font-family: var(--font-head);
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.7rem;
+    padding: 0.28rem 0.6rem; border-radius: 3px; background: rgba(20,18,16,0.85); color: var(--yellow);
+    backdrop-filter: blur(2px);
+  }
+  .card-body { padding: 1.3rem 1.4rem 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+  .card-body p { color: var(--slate); font-size: 1rem; line-height: 1.5; flex: 1; }
+  .more { font-family: var(--font-head); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.85rem; color: var(--orange-deep); margin-top: 0.3rem; }
+  .card:hover .more span { display: inline-block; transform: translateX(4px); transition: transform 0.18s; }
+
+  .more-label { margin: 2.8rem 0 1.1rem; font-family: var(--font-head); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.82rem; color: var(--slate); }
+  .mini-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .mini { background: var(--stone); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; transition: transform 0.18s, box-shadow 0.18s; }
+  .mini:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); }
+  .mini a { display: flex; align-items: center; gap: 0.9rem; padding: 0.7rem; }
+  .mini-media { width: 74px; height: 74px; border-radius: var(--r); overflow: hidden; flex-shrink: 0; }
+  .mini-media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .mini-body h3 { font-size: 1.02rem; font-weight: 700; }
+  .mini-body p { font-size: 0.86rem; color: var(--slate); line-height: 1.35; }
+
+  @media (max-width: 940px) { .grid { grid-template-columns: repeat(2, 1fr); } .mini-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } .mini-grid { grid-template-columns: 1fr; } }
+</style>

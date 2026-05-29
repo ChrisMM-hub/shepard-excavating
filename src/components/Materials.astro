@@ -1,0 +1,61 @@
+---
+import { Image } from 'astro:assets';
+import gravel from '../assets/photos/gal-aggregate.jpg';
+import dumpster from '../assets/photos/svc-dumpster.jpg';
+---
+
+<section class="section section--stone" id="materials" aria-labelledby="materials-h">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Materials &amp; rentals</p>
+      <h2 id="materials-h">Order gravel or drop a dumpster</h2>
+      <p class="lead">Two of the easiest things we do. Tell us what you need and where, and we will get it there.</p>
+    </div>
+
+    <div class="mat-grid">
+      <article class="mat-card">
+        <div class="mat-media">
+          <Image src={gravel} alt="Loader and a pile of screened gravel at the Shepard pit" widths={[560, 1000]} sizes="(max-width: 800px) 100vw, 560px" quality={74} />
+        </div>
+        <div class="mat-body">
+          <h3>Sand, Gravel &amp; Fill</h3>
+          <ul class="ticks">
+            <li>Driveway rock, class 5, washed sand, and fill</li>
+            <li>Pickup at the pit or delivered to your site</li>
+            <li>Small loads to full truckloads</li>
+          </ul>
+          <a href="#contact" class="btn btn-dark">Request Gravel Delivery</a>
+        </div>
+      </article>
+
+      <article class="mat-card">
+        <div class="mat-media">
+          <Image src={dumpster} alt="Red roll-off dumpster being loaded on a job site" widths={[560, 1000]} sizes="(max-width: 800px) 100vw, 560px" quality={74} />
+        </div>
+        <div class="mat-body">
+          <h3>Roll-Off Dumpster Rental</h3>
+          <ul class="ticks">
+            <li>Cleanouts, remodels, roofing, and job debris</li>
+            <li>Dropped and picked up on your schedule</li>
+            <li>Straightforward flat-rate pricing</li>
+          </ul>
+          <a href="#contact" class="btn btn-dark">Reserve a Dumpster</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .mat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+  .mat-card { display: grid; grid-template-columns: 42% 1fr; background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-sm); }
+  .mat-media { position: relative; min-height: 220px; }
+  .mat-media :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .mat-body { padding: 1.5rem 1.6rem; display: flex; flex-direction: column; gap: 0.9rem; }
+  .ticks { display: grid; gap: 0.5rem; flex: 1; }
+  .ticks li { position: relative; padding-left: 1.6rem; color: var(--slate); font-size: 1rem; line-height: 1.4; }
+  .ticks li::before { content: ''; position: absolute; left: 0; top: 0.45em; width: 11px; height: 11px; border-radius: 2px; background: var(--grad); }
+  .mat-body .btn { align-self: flex-start; }
+  @media (max-width: 800px) { .mat-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 460px) { .mat-card { grid-template-columns: 1fr; } .mat-media { min-height: 180px; } }
+</style>

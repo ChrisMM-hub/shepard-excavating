@@ -1,0 +1,77 @@
+---
+import { business, featuredServices, moreServices, towns } from '../data/site';
+const year = 2026;
+const services = [...featuredServices, ...moreServices];
+---
+
+<footer class="footer">
+  <div class="container foot-grid">
+    <div class="foot-brand">
+      <img src="/logo-shepard.png" alt={business.name} width="220" height="92" />
+      <p>{business.tagline}. Family-owned excavating and septic service across Northern Minnesota since {business.founded}.</p>
+      <a href={business.facebook} class="social" aria-label="Shepard Excavating on Facebook" rel="noopener" target="_blank">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8.5h2.5V5.5H14c-2 0-3.5 1.6-3.5 3.6v1.9H8v3h2.5V21h3v-7h2.3l.5-3h-2.8V9.4c0-.5.4-.9.9-.9Z" fill="currentColor"/></svg>
+        <span>Follow on Facebook</span>
+      </a>
+    </div>
+
+    <nav class="foot-col" aria-label="Services">
+      <h3>Services</h3>
+      <ul>{services.map((s) => (<li><a href="#services">{s.title}</a></li>))}</ul>
+    </nav>
+
+    <nav class="foot-col" aria-label="Service area">
+      <h3>Service Area</h3>
+      <ul>{towns.map((t) => (<li><a href="#service-area">{t}, MN</a></li>))}</ul>
+    </nav>
+
+    <div class="foot-col">
+      <h3>Get in Touch</h3>
+      <ul class="contact-lines">
+        <li><a href={business.phoneHref}>{business.phone}</a></li>
+        <li><a href={business.emailHref}>{business.email}</a></li>
+        <li>{business.address.street}<br />{business.address.city}, {business.address.region} {business.address.zip}</li>
+        <li class="hrs">{business.hours}</li>
+      </ul>
+      <a href="#contact" class="btn btn-primary">Get a Free Estimate</a>
+    </div>
+  </div>
+
+  <div class="foot-bottom">
+    <div class="container bottom-inner">
+      <p>© {year} {business.name}. All rights reserved.</p>
+      <p class="credits">
+        <a href="#">Privacy Policy</a><span aria-hidden="true">·</span>
+        Website by <a href="https://minnesotamarketing.com" rel="noopener">Minnesota Marketing</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer { background: var(--ink); color: #cfcabf; padding-top: clamp(3rem, 6vw, 4.5rem); }
+  .foot-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.3fr; gap: 2rem; padding-bottom: 3rem; }
+  .foot-brand img { height: 56px; width: auto; background: #fff; padding: 8px 12px; border-radius: var(--r); }
+  .foot-brand p { margin: 1rem 0; max-width: 34ch; font-size: 0.98rem; }
+  .social { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-head); font-weight: 700; color: #fff; }
+  .social svg { width: 22px; height: 22px; color: var(--yellow); }
+  .social:hover { color: var(--yellow); }
+
+  .foot-col h3 { color: #fff; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+  .foot-col ul { display: grid; gap: 0.55rem; }
+  .foot-col a { color: #cfcabf; font-size: 0.98rem; }
+  .foot-col a:hover { color: var(--yellow); }
+  .contact-lines li { font-size: 0.98rem; line-height: 1.45; }
+  .contact-lines a { font-weight: 600; }
+  .hrs { color: var(--gold); }
+  .foot-col .btn { margin-top: 1.2rem; }
+
+  .foot-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-block: 1.3rem; font-size: 0.86rem; }
+  .bottom-inner { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .credits a { color: #cfcabf; text-decoration: underline; text-underline-offset: 2px; }
+  .credits a:hover { color: var(--yellow); }
+  .credits span { margin: 0 0.5rem; }
+
+  @media (max-width: 860px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .foot-grid { grid-template-columns: 1fr; } }
+</style>
