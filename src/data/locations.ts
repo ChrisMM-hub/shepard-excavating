@@ -12,6 +12,7 @@ export interface Location {
   intro: string;
   local: string;      // local landmarks / lakes color
   mapQuery: string;   // for the Google Maps embed
+  faqs: { q: string; a: string }[];
 }
 
 export const locations: Location[] = [
@@ -29,6 +30,11 @@ export const locations: Location[] = [
     local:
       'We work all around Bemidji, from lake places on Lake Bemidji and Lake Irving to lots out past the university and along the Paul Bunyan Trail. It is a short run from our shop in Laporte, so Bemidji is right in our backyard.',
     mapQuery: 'Bemidji, MN',
+    faqs: [
+      { q: 'Do you provide septic and excavating service in Bemidji?', a: 'Yes. We work all over the Bemidji area, from lake homes on Lake Bemidji and Lake Irving to lots near the university and along the Paul Bunyan Trail. Our shop in Laporte is a short drive south.' },
+      { q: 'What can you handle in Bemidji?', a: 'Septic installs, pumping, and emergencies, plus excavating, land clearing, demolition, sand and gravel, dumpsters, and snow removal. One call covers the whole job.' },
+      { q: 'Are you licensed and insured?', a: 'Yes. We are an MPCA-certified septic installer, licensed and bonded, and family-owned since 1997.' },
+    ],
   },
   {
     slug: 'laporte-mn',
@@ -44,6 +50,11 @@ export const locations: Location[] = [
     local:
       'We have worked the Laporte area and the lakes around it for decades, from new septic systems and basements to driveways, clearing, and winter plowing. Being based here means quick response and a name you already know.',
     mapQuery: 'Laporte, MN 56461',
+    faqs: [
+      { q: 'Are you based in Laporte?', a: 'Yes, Laporte is our home base. Our shop is right here, so we are quick to respond anywhere in town or out on the surrounding lakes.' },
+      { q: 'What can you handle in Laporte?', a: 'Everything under one roof: septic, excavating, land clearing, demolition, sand and gravel, dumpsters, and snow removal.' },
+      { q: 'Are you licensed and insured?', a: 'Yes. We are an MPCA-certified septic installer, licensed and bonded, and family-owned since 1997.' },
+    ],
   },
   {
     slug: 'park-rapids-mn',
@@ -59,6 +70,11 @@ export const locations: Location[] = [
     local:
       'We work the lakes and woods all around Park Rapids, from places along the Heartland Trail to cabins out toward the Mississippi headwaters at Itasca. Laporte is just up the road, so we are never far.',
     mapQuery: 'Park Rapids, MN',
+    faqs: [
+      { q: 'Do you serve the Park Rapids area?', a: 'Yes. As a licensed installer in Hubbard County, we work the lakes and woods around Park Rapids, from the Heartland Trail to cabins toward the Itasca headwaters.' },
+      { q: 'What can you handle in Park Rapids?', a: 'Septic systems and pumping, excavating, land clearing, demolition, sand and gravel, dumpsters, and snow removal, all from one local outfit.' },
+      { q: 'Are you licensed and insured?', a: 'Yes. We are an MPCA-certified septic installer, licensed and bonded, and family-owned since 1997.' },
+    ],
   },
   {
     slug: 'walker-mn',
@@ -74,6 +90,11 @@ export const locations: Location[] = [
     local:
       'We do a lot of work on tight lake lots around Walker and the Leech Lake shoreline, where access and grading take a careful hand. Clearing a cabin lot or putting in a new system near the water is right up our alley.',
     mapQuery: 'Walker, MN',
+    faqs: [
+      { q: 'Do you work on Leech Lake around Walker?', a: 'Yes. We handle septic and dirt work all along the Leech Lake shoreline and the resorts around Walker, including the tight lake lots that take a careful hand.' },
+      { q: 'What can you handle in Walker?', a: 'Septic, excavating, land clearing, demolition, sand and gravel, dumpsters, and snow removal. One call covers it.' },
+      { q: 'Are you licensed and insured?', a: 'Yes. We are an MPCA-certified septic installer, licensed and bonded, and family-owned since 1997.' },
+    ],
   },
   {
     slug: 'cass-lake-mn',
@@ -89,6 +110,11 @@ export const locations: Location[] = [
     local:
       'The lakes and forest land around Cass Lake make for plenty of cabin and shoreline work, from new septic systems to clearing and grading. We know how to work this country and leave a site clean.',
     mapQuery: 'Cass Lake, MN',
+    faqs: [
+      { q: 'Do you serve Cass Lake and the Chippewa National Forest area?', a: 'Yes. We take care of septic, excavating, gravel, clearing, and plowing for cabins and homes around Cass Lake and the surrounding forest land.' },
+      { q: 'What can you handle in Cass Lake?', a: 'Septic installs and pumping, excavating, land clearing, demolition, sand and gravel, dumpsters, and snow removal.' },
+      { q: 'Are you licensed and insured?', a: 'Yes. We are an MPCA-certified septic installer, licensed and bonded, and family-owned since 1997.' },
+    ],
   },
   {
     slug: 'hackensack-mn',
@@ -104,6 +130,11 @@ export const locations: Location[] = [
     local:
       'From places on Birch Lake and Ten Mile Lake to the cabins scattered through the woods around town, we handle the kind of lake-lot work that keeps a property in good shape for years.',
     mapQuery: 'Hackensack, MN',
+    faqs: [
+      { q: 'Do you serve Hackensack and the Woman Lake chain?', a: 'Yes. From places on Birch Lake and Ten Mile Lake to cabins around town, we handle the septic and dirt work that lake-country property needs.' },
+      { q: 'What can you handle in Hackensack?', a: 'Septic, excavating, land clearing, demolition, sand and gravel, dumpsters, and snow removal, all from one call.' },
+      { q: 'Are you licensed and insured?', a: 'Yes. We are an MPCA-certified septic installer, licensed and bonded, and family-owned since 1997.' },
+    ],
   },
   {
     slug: 'longville-mn',
@@ -119,6 +150,11 @@ export const locations: Location[] = [
     local:
       'Longville sits right in the lakes, and we work the cabins and properties all around it, from new drain fields to driveways, clearing, and winter plowing. It is a bit of a drive from Laporte, and we are glad to make it.',
     mapQuery: 'Longville, MN',
+    faqs: [
+      { q: 'Do you serve Longville and the Woman Lake area?', a: 'Yes. We work the cabins and properties all around Longville and the Woman Lake area, from new drain fields to driveways, clearing, and winter plowing.' },
+      { q: 'What can you handle in Longville?', a: 'Septic, excavating, land clearing, demolition, sand and gravel, dumpsters, and snow removal. One local outfit for all of it.' },
+      { q: 'Are you licensed and insured?', a: 'Yes. We are an MPCA-certified septic installer, licensed and bonded, and family-owned since 1997.' },
+    ],
   },
 ];
 

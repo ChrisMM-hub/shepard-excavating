@@ -17,6 +17,7 @@ interface Props {
   description?: string;
   jsonLd?: any[];
   noindex?: boolean;
+  ogImage?: string;
 }
 
 const {
@@ -24,10 +25,11 @@ const {
   description = 'Family-owned septic, excavating, gravel, demolition, and snow removal serving Bemidji, Park Rapids, and the Leech Lake area since 1997. Call (218) 224-2754.',
   jsonLd = [],
   noindex = false,
+  ogImage = '/og/home.jpg',
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, business.domain).href;
-const ogImage = business.domain + '/og-image.jpg';
+const ogImageUrl = new URL(ogImage, business.domain).href;
 
 const localBusiness = {
   '@context': 'https://schema.org',
@@ -35,7 +37,7 @@ const localBusiness = {
   '@id': business.domain + '/#business',
   name: business.name,
   alternateName: business.alternateName,
-  image: ogImage,
+  image: ogImageUrl,
   logo: business.domain + '/logo-shepard.png',
   telephone: '+1-218-224-2754',
   email: business.email,
@@ -77,15 +79,15 @@ const localBusiness = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:image:width" content="1208" />
-    <meta property="og:image:height" content="906" />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
     {jsonLd.map((s) => (<script type="application/ld+json" set:html={JSON.stringify(s)} />))}

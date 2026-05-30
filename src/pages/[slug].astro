@@ -39,20 +39,21 @@ if (kind === 'service') {
     provider: { '@id': `${business.domain}/#business` },
     areaServed: towns.map((t: string) => ({ '@type': 'City', name: t })),
   });
-  if (data.faqs?.length) {
-    jsonLd.push({
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: data.faqs.map((f: { q: string; a: string }) => ({
-        '@type': 'Question',
-        name: f.q,
-        acceptedAnswer: { '@type': 'Answer', text: f.a },
-      })),
-    });
-  }
+}
+
+if (data.faqs?.length) {
+  jsonLd.push({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: data.faqs.map((f: { q: string; a: string }) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  });
 }
 ---
 
-<Base title={data.metaTitle} description={data.metaDesc} jsonLd={jsonLd}>
+<Base title={data.metaTitle} description={data.metaDesc} jsonLd={jsonLd} ogImage={`/og/${data.slug}.jpg`}>
   {kind === 'service' ? <ServiceTemplate service={data} /> : <LocationTemplate location={data} />}
 </Base>
