@@ -1,6 +1,6 @@
 ---
-import { business, featuredServices, moreServices, towns } from '../data/site';
-const services = [...featuredServices, ...moreServices].map((s) => s.title);
+import QuoteForm from './QuoteForm.astro';
+import { business } from '../data/site';
 ---
 
 <section class="section section--dark" id="contact" aria-labelledby="contact-h">
@@ -35,62 +35,7 @@ const services = [...featuredServices, ...moreServices].map((s) => s.title);
       </ul>
     </div>
 
-    <div class="form-card">
-      <form id="quote-form" novalidate>
-        <div class="row">
-          <div class="field">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" autocomplete="name" required />
-          </div>
-          <div class="field">
-            <label for="phone">Phone <span class="req">*</span></label>
-            <input id="phone" name="phone" type="tel" autocomplete="tel" required />
-          </div>
-        </div>
-        <div class="field">
-          <label for="email">Email</label>
-          <input id="email" name="email" type="email" autocomplete="email" />
-        </div>
-        <div class="row">
-          <div class="field">
-            <label for="service">Service needed</label>
-            <select id="service" name="service">
-              <option value="">Select a service</option>
-              {services.map((s) => (<option value={s}>{s}</option>))}
-              <option value="Something else">Something else</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="town">Town</label>
-            <select id="town" name="town">
-              <option value="">Select your town</option>
-              {towns.map((t) => (<option value={t}>{t}</option>))}
-              <option value="Other">Other / nearby</option>
-            </select>
-          </div>
-        </div>
-        <div class="field">
-          <span class="label-as">How soon?</span>
-          <div class="urgency">
-            <label><input type="radio" name="urgency" value="Routine" checked /> <span>Routine</span></label>
-            <label><input type="radio" name="urgency" value="This week" /> <span>This week</span></label>
-            <label class="urg-emer"><input type="radio" name="urgency" value="Emergency" /> <span>Emergency</span></label>
-          </div>
-        </div>
-        <div class="field">
-          <label for="message">Brief description</label>
-          <textarea id="message" name="message" rows="3" placeholder="Tell us a little about the job, the property, and timing."></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Request My Free Estimate</button>
-        <p class="form-fine">We answer fast. Your info goes straight to the Shepard family, never sold or shared.</p>
-      </form>
-
-      <div class="form-success" id="form-success" hidden>
-        <div class="check" aria-hidden="true">✓</div>
-        <h3>Thanks, we got it.</h3>
-        <p>Your request is in. We will reach out shortly. Need us right now? Call <a href={business.phoneHref}>{business.phone}</a>.</p>
-      </div>
-    </div>
+    <QuoteForm />
   </div>
 </section>
 
@@ -105,52 +50,5 @@ const services = [...featuredServices, ...moreServices].map((s) => s.title);
   .info-list a:hover { color: var(--yellow); }
   .info-list div:not(.ico) { color: #ded9cf; }
 
-  .form-card { background: #fff; color: var(--ink); border-radius: var(--r-lg); padding: clamp(1.4rem, 3vw, 2rem); box-shadow: var(--shadow-lg); }
-  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .field { margin-bottom: 1rem; }
-  label, .label-as { display: block; font-family: var(--font-head); font-weight: 700; font-size: 0.92rem; margin-bottom: 0.35rem; }
-  .req { color: var(--red); }
-  input, select, textarea {
-    width: 100%; font: inherit; font-size: 1rem; padding: 0.75rem 0.85rem;
-    border: 1.5px solid var(--line); border-radius: var(--r); background: var(--paper); color: var(--ink);
-    transition: border-color 0.15s, box-shadow 0.15s;
-  }
-  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px rgba(224,122,23,0.18); background: #fff; }
-  textarea { resize: vertical; }
-  .urgency { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-  .urgency label { display: inline-flex; align-items: center; gap: 0.45rem; font-family: var(--font-body); font-weight: 600; font-size: 0.98rem; padding: 0.55rem 0.9rem; border: 1.5px solid var(--line); border-radius: var(--r); cursor: pointer; margin: 0; }
-  .urgency input { width: auto; }
-  .urgency label:has(input:checked) { border-color: var(--ink); background: var(--stone); }
-  .urg-emer label, .urgency .urg-emer:has(input:checked) { border-color: var(--red); }
-  .urgency .urg-emer:has(input:checked) { background: #fbeae8; color: var(--red-deep); }
-  .form-fine { font-size: 0.84rem; color: var(--slate); margin-top: 0.8rem; text-align: center; }
-
-  .form-success { text-align: center; padding: 2.5rem 1rem; }
-  .form-success .check { width: 64px; height: 64px; margin: 0 auto 1rem; border-radius: 50%; background: var(--grad); color: var(--ink); font-size: 2rem; font-weight: 800; display: grid; place-items: center; }
-  .form-success h3 { font-size: 1.5rem; }
-  .form-success p { color: var(--slate); margin-top: 0.5rem; }
-  .form-success a { color: var(--orange-deep); font-weight: 700; }
-
   @media (max-width: 860px) { .contact-grid { grid-template-columns: 1fr; } }
-  @media (max-width: 460px) { .row { grid-template-columns: 1fr; } }
 </style>
-
-<script>
-  // Prototype only: validate lightly and show an inline success state.
-  // Production: POST to the HighLevel webhook, then redirect to /thank-you for GA4.
-  const form = document.getElementById('quote-form') as HTMLFormElement | null;
-  const success = document.getElementById('form-success');
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const phone = (form.querySelector('#phone') as HTMLInputElement)?.value.trim();
-    const name = (form.querySelector('#name') as HTMLInputElement)?.value.trim();
-    if (!name || !phone) {
-      if (!name) (form.querySelector('#name') as HTMLInputElement)?.focus();
-      else (form.querySelector('#phone') as HTMLInputElement)?.focus();
-      return;
-    }
-    form.hidden = true;
-    if (success) success.hidden = false;
-    success?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  });
-</script>

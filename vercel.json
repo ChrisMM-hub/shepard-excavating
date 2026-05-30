@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/emergency", "destination": "/septic-emergency", "permanent": true },
+    { "source": "/septic-pumping-maintenance", "destination": "/septic-pumping", "permanent": true },
+    { "source": "/septic-system-education", "destination": "/septic-education", "permanent": true }
+  ]
+}

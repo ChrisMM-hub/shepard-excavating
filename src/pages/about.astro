@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
+import { img } from '../lib/images';
+import { business, whyUs, towns, counties } from '../data/site';
+
+const heroImg = img('fleet-1.jpg');
+const crewImg = img('crew.jpg');
+const title = 'About Shepard Excavating | Family-Owned Since 1997';
+const description =
+  'Shepard Excavating and Septic Service is a family-run, MPCA-certified outfit in Laporte, MN, handling septic and dirt work across the Bemidji and Leech Lake area since 1997.';
+---
+
+<Base title={title} description={description}>
+  <section class="ab-hero" aria-label="About">
+    <Image src={heroImg} alt="Shepard Excavating truck fleet at the shop in Laporte, MN" class="ab-hero-bg" widths={[768, 1280, 1920]} sizes="100vw" loading="eager" fetchpriority="high" quality={76} />
+    <div class="ab-hero-overlay"></div>
+    <div class="container ab-hero-inner">
+      <p class="eyebrow eyebrow--light">Family-owned since {business.founded}</p>
+      <h1>About Shepard Excavating</h1>
+      <p class="ab-lead">A family-run outfit in Laporte, Minnesota, and the one call folks around the lakes make for septic and dirt work.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container ab-story">
+      <div class="ab-text">
+        <p class="eyebrow">Our story</p>
+        <h2>{business.years} years of dirt, done right</h2>
+        <p>We started in {business.founded}, and we have been digging, hauling, pumping, and plowing across Northern Minnesota ever since. Septic systems, excavating, land clearing, demolition, sand and gravel, dumpsters, and snow removal. It is all under one roof, so you make one call instead of lining up four different contractors.</p>
+        <p>Brian Shepard runs the show, and when you call, you get the people whose name is on the truck. We are an MPCA-certified septic installer, licensed and bonded, and licensed to install and maintain systems in Hubbard and Beltrami counties.</p>
+        <p>We like to say we are #1 in the #2 business. It gets a laugh, but it is true. Septic is right there in our name, and we take it seriously, from a routine pump to a brand-new mound system.</p>
+      </div>
+      <figure class="ab-photo">
+        <Image src={crewImg} alt="The Shepard Excavating and Septic Service team in front of a company truck" widths={[600, 1000]} sizes="(max-width: 900px) 100vw, 460px" quality={78} />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section section--stone">
+    <div class="container">
+      <div class="section-head"><p class="eyebrow">Why Shepard</p><h2>What you get when you call us</h2></div>
+      <ul class="ab-values">
+        {whyUs.map((w, i) => (
+          <li>
+            <span class="ab-num">{String(i + 1).padStart(2, '0')}</span>
+            <div><h3>{w.title}</h3><p>{w.body}</p></div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--dark ab-cta">
+    <div class="container center">
+      <h2>One call for the whole job</h2>
+      <p class="lead">Serving {towns.slice(0, -1).join(', ')}, and {towns[towns.length - 1]} across {counties.join(', ')} counties.</p>
+      <div class="ab-cta-row">
+        <a href="/contact" class="btn btn-primary btn-lg">Get a Free Estimate</a>
+        <a href={business.phoneHref} class="btn btn-outline btn-lg">Call {business.phone}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ab-hero { position: relative; isolation: isolate; display: flex; align-items: center; min-height: clamp(340px, 48vh, 480px); }
+  .ab-hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+  .ab-hero-overlay { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(20,18,16,0.84), rgba(20,18,16,0.4) 70%), linear-gradient(0deg, rgba(20,18,16,0.7), rgba(20,18,16,0.2)); }
+  .ab-hero-inner { color: #fff; padding-block: clamp(2rem, 5vw, 3.5rem); }
+  .eyebrow--light { color: var(--yellow); }
+  .eyebrow--light::before { background: var(--yellow); }
+  .ab-hero h1 { color: #fff; margin-top: 0.5rem; text-shadow: 0 2px 20px rgba(0,0,0,0.35); }
+  .ab-lead { max-width: 50ch; margin-top: 1rem; font-size: clamp(1.05rem, 1.6vw, 1.3rem); color: #ece9e2; }
+
+  .ab-story { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(2rem, 5vw, 3.5rem); align-items: center; }
+  .ab-text p { color: var(--slate); margin-top: 0.9rem; max-width: 60ch; }
+  .ab-text h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); }
+  .ab-photo { border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow); }
+  .ab-photo :global(img) { width: 100%; height: auto; display: block; }
+
+  .ab-values { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem 2.5rem; }
+  .ab-values li { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start; }
+  .ab-num { font-family: var(--font-head); font-weight: 800; font-size: 1.5rem; color: transparent; background: var(--grad); -webkit-background-clip: text; background-clip: text; }
+  .ab-values h3 { font-size: 1.18rem; }
+  .ab-values p { color: var(--slate); margin-top: 0.2rem; }
+
+  .ab-cta h2 { color: #fff; }
+  .ab-cta-row { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; margin-top: 1.6rem; }
+
+  @media (max-width: 900px) { .ab-story { grid-template-columns: 1fr; } .ab-values { grid-template-columns: 1fr; } }
+</style>

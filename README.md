@@ -47,11 +47,23 @@ Still to confirm with Janele:
 - **Logo vector** (.ai/.eps/.svg) for a clean white-knockout version on dark sections.
 - Equipment / drone video (Chris is sourcing) for an optional hero or feature section.
 
+## Pages built
+- Home, Project Gallery, About, Contact, Thank-You, Privacy Policy
+- 11 service pages and 7 location pages, generated from data via `src/pages/[slug].astro`
+
+## Editing content
+- **Business facts, reviews, homepage FAQs:** `src/data/site.ts`
+- **Service pages** (copy, FAQs, photos, related links): `src/data/services.ts`
+- **Location pages** (town copy, local detail, map): `src/data/locations.ts`
+- Photos referenced by filename; the resolver lives in `src/lib/images.ts`. Drop new
+  images in `src/assets/photos/` or `src/assets/gallery/` and reference the filename.
+
 ## Not yet wired (next steps)
-- **Lead form** shows an inline success state only. Production: POST to the HighLevel
-  webhook, then redirect to `/thank-you` for the GA4 conversion event.
+- **Lead form** shows an inline success state. Production: POST to the HighLevel
+  webhook, then redirect to `/thank-you` (the page is built) for the GA4 conversion event.
 - **GTM / GA4** not installed yet (no IDs). Load via Partytown when ready.
-- Service and location pages (this is the homepage only).
+- **Blog** (Phase 2): not built yet.
+- 301 redirects for the 3 renamed slugs are in `vercel.json`.
 
 ## Deploy
 Vercel auto-detects Astro (static). Push to GitHub and import, or `vercel` CLI.

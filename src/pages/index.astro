@@ -14,9 +14,20 @@ import Reviews from '../components/Reviews.astro';
 import FAQ from '../components/FAQ.astro';
 import EmergencyBand from '../components/EmergencyBand.astro';
 import Contact from '../components/Contact.astro';
+import { faqs } from '../data/site';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
 ---
 
-<Base>
+<Base jsonLd={[faqSchema]}>
   <Hero />
   <TrustBar />
   <Services />

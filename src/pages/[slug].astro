@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+import ServiceTemplate from '../components/ServiceTemplate.astro';
+import LocationTemplate from '../components/LocationTemplate.astro';
+import { services } from '../data/services';
+import { locations } from '../data/locations';
+import { business, towns } from '../data/site';
+
+export function getStaticPaths() {
+  return [
+    ...services.map((svc) => ({ params: { slug: svc.slug }, props: { kind: 'service', data: svc } })),
+    ...locations.map((loc) => ({ params: { slug: loc.slug }, props: { kind: 'location', data: loc } })),
+  ];
+}
+
+const { kind, data } = Astro.props as { kind: 'service' | 'location'; data: any };
+const canonical = `${business.domain}/${data.slug}`;
+const crumbName = kind === 'service' ? data.navLabel : data.name;
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${business.domain}/` },
+    { '@type': 'ListItem', position: 2, name: crumbName, item: canonical },
+  ],
+};
+
+const jsonLd: any[] = [breadcrumb];
+
+if (kind === 'service') {
+  jsonLd.unshift({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: data.navLabel,
+    name: data.h1,
+    description: data.metaDesc,
+    url: canonical,
+    provider: { '@id': `${business.domain}/#business` },
+    areaServed: towns.map((t: string) => ({ '@type': 'City', name: t })),
+  });
+  if (data.faqs?.length) {
+    jsonLd.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: data.faqs.map((f: { q: string; a: string }) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    });
+  }
+}
+---
+
+<Base title={data.metaTitle} description={data.metaDesc} jsonLd={jsonLd}>
+  {kind === 'service' ? <ServiceTemplate service={data} /> : <LocationTemplate location={data} />}
+</Base>

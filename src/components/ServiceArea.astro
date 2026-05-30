@@ -15,7 +15,7 @@ const mapSrc =
       </p>
       <ul class="towns">
         {towns.map((t) => (
-          <li><a href="#contact"><span class="pin" aria-hidden="true">●</span>{t}, MN</a></li>
+          <li><a href={'/' + t.toLowerCase().replace(/\s+/g, '-') + '-mn'}><span class="pin" aria-hidden="true">●</span>{t}, MN</a></li>
         ))}
       </ul>
       <p class="area-note">Counties: {counties.join(' · ')}</p>

@@ -10,16 +10,20 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MobileCallBar from '../components/MobileCallBar.astro';
-import { business, towns, faqs } from '../data/site';
+import { business, towns } from '../data/site';
 
 interface Props {
   title?: string;
   description?: string;
+  jsonLd?: any[];
+  noindex?: boolean;
 }
 
 const {
   title = 'Septic, Excavating & Site Work in Bemidji, MN | Shepard Excavating',
   description = 'Family-owned septic, excavating, land clearing, demolition, gravel, and snow removal serving Bemidji, Park Rapids, Walker and the Leech Lake area since 1997. Call (218) 224-2754.',
+  jsonLd = [],
+  noindex = false,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, business.domain).href;
@@ -51,15 +55,6 @@ const localBusiness = {
   sameAs: [business.facebook, business.bbb],
 };
 
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((f) => ({
-    '@type': 'Question',
-    name: f.q,
-    acceptedAnswer: { '@type': 'Answer', text: f.a },
-  })),
-};
 ---
 
 <!doctype html>
@@ -71,7 +66,7 @@ const faqSchema = {
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#141210" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/logo-shepard.png" />
@@ -93,7 +88,7 @@ const faqSchema = {
     <meta name="twitter:image" content={ogImage} />
 
     <script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
-    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+    {jsonLd.map((s) => (<script type="application/ld+json" set:html={JSON.stringify(s)} />))}
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>

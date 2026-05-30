@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import { business } from '../data/site';
+---
+
+<Base title="Thank You | Shepard Excavating" description="Thanks for reaching out to Shepard Excavating and Septic Service." noindex={true}>
+  <section class="ty">
+    <div class="container ty-card">
+      <div class="ty-check" aria-hidden="true">✓</div>
+      <h1>Thanks, we got it.</h1>
+      <p>Your request is in, and we will get back to you shortly. If it cannot wait, give us a call and we will get a truck headed your way.</p>
+      <div class="ty-row">
+        <a href={business.phoneHref} class="btn btn-primary btn-lg">Call {business.phone}</a>
+        <a href="/" class="btn btn-ghost btn-lg">Back to home</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ty { display: grid; place-items: center; padding-block: clamp(4rem, 12vw, 8rem); background: var(--stone); }
+  .ty-card { max-width: 38rem; text-align: center; }
+  .ty-check { width: 76px; height: 76px; margin: 0 auto 1.4rem; border-radius: 50%; background: var(--grad); color: var(--ink); font-size: 2.4rem; font-weight: 800; display: grid; place-items: center; }
+  .ty-card p { color: var(--slate); font-size: 1.15rem; margin-top: 0.8rem; }
+  .ty-row { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; margin-top: 1.8rem; }
+</style>

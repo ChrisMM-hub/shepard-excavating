@@ -42,7 +42,7 @@ const imgMap: Record<string, ImageMetadata> = {
     <ul class="grid">
       {featuredServices.map((s) => (
         <li class="card">
-          <a href={'#contact'} class="card-link" aria-label={s.title}>
+          <a href={'/' + s.slug} class="card-link" aria-label={s.title}>
             <div class="card-media">
               <Image src={imgMap[s.img]} alt={s.title} widths={[400, 760]} sizes="(max-width: 760px) 100vw, 380px" quality={74} />
               <span class="bucket">{s.bucket}</span>
@@ -61,7 +61,7 @@ const imgMap: Record<string, ImageMetadata> = {
     <ul class="mini-grid">
       {moreServices.map((s) => (
         <li class="mini">
-          <a href={s.slug === 'septic-emergency' ? '#emergency' : '#contact'}>
+          <a href={'/' + s.slug}>
             <div class="mini-media">
               <Image src={imgMap[s.img]} alt={s.title} widths={[240, 480]} sizes="220px" quality={70} />
             </div>
