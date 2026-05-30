@@ -1,5 +1,5 @@
 ---
-import { featuredServices, moreServices, towns } from '../data/site';
+import { featuredServices, moreServices, towns, highlevelWebhook } from '../data/site';
 
 interface Props {
   service?: string; // pre-selects the service dropdown
@@ -11,7 +11,7 @@ const services = [...featuredServices, ...moreServices].map((s) => s.title);
 ---
 
 <div class="form-card">
-  <form class="quote-form" novalidate>
+  <form class="quote-form" novalidate data-webhook={highlevelWebhook}>
     <div class="row">
       <div class="field">
         <label for="qf-name">Name</label>
@@ -97,17 +97,52 @@ const services = [...featuredServices, ...moreServices].map((s) => s.title);
 </style>
 
 <script>
-  // Prototype behavior: validate lightly, show inline success.
-  // Production: POST to the HighLevel webhook, then redirect to /thank-you for the GA4 conversion event.
+  // The form posts to a HighLevel inbound webhook when one is configured (data-webhook),
+  // then redirects to /thank-you. With no webhook set it shows the inline success state,
+  // so the demo keeps working until HighLevel is connected.
   document.querySelectorAll('.form-card').forEach((card) => {
     const form = card.querySelector('form') as HTMLFormElement | null;
     const success = card.querySelector('.form-success') as HTMLElement | null;
-    form?.addEventListener('submit', (e) => {
+    if (!form) return;
+    const field = (n: string) => form.querySelector(`[name="${n}"]`) as HTMLInputElement | null;
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const nameEl = form.querySelector('[name="name"]') as HTMLInputElement;
-      const phoneEl = form.querySelector('[name="phone"]') as HTMLInputElement;
-      if (!nameEl.value.trim()) { nameEl.focus(); return; }
-      if (!phoneEl.value.trim()) { phoneEl.focus(); return; }
+      const name = field('name')?.value.trim() || '';
+      const phone = field('phone')?.value.trim() || '';
+      if (!name) { field('name')?.focus(); return; }
+      if (!phone) { field('phone')?.focus(); return; }
+
+      const payload = {
+        name,
+        phone,
+        email: field('email')?.value.trim() || '',
+        service: field('service')?.value || '',
+        location: field('town')?.value || '',
+        urgency: (form.querySelector('[name="urgency"]:checked') as HTMLInputElement | null)?.value || '',
+        message: field('message')?.value.trim() || '',
+        source: 'Website quote form',
+        page: window.location.href,
+      };
+
+      // GA4 / GTM conversion signal
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({ event: 'generate_lead', form: 'quote', service: payload.service, urgency: payload.urgency });
+
+      const webhook = form.dataset.webhook;
+      if (webhook) {
+        const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+        if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+        try {
+          await fetch(webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+        } catch (err) {
+          console.error('Lead webhook error', err);
+        }
+        window.location.href = '/thank-you';
+        return;
+      }
+
+      // No webhook configured yet: inline success (demo mode).
       form.hidden = true;
       if (success) success.hidden = false;
       success?.scrollIntoView({ behavior: 'smooth', block: 'center' });
