@@ -51,6 +51,8 @@ const nav = [
     ],
   },
 ];
+
+const here = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
 
 <header class="site-header" id="site-header">
@@ -61,18 +63,21 @@ const nav = [
 
     <nav class="nav" aria-label="Primary">
       <ul>
-        {nav.map((g) => (
-          <li class={g.items.length ? 'has-menu' : ''}>
-            <a href={g.href}>{g.label}{g.items.length ? <span class="caret" aria-hidden="true">▾</span> : null}</a>
-            {g.items.length > 0 && (
-              <ul class="submenu">
-                {g.items.map(([label, href]) => (
-                  <li><a href={href}>{label}</a></li>
-                ))}
-              </ul>
-            )}
-          </li>
-        ))}
+        {nav.map((g) => {
+          const act = g.href === here || g.items.some((it) => it[1] === here);
+          return (
+            <li class={g.items.length ? 'has-menu' : ''}>
+              <a href={g.href} class={act ? 'nav-active' : ''} aria-current={act ? 'page' : undefined}>{g.label}{g.items.length ? <span class="caret" aria-hidden="true">▾</span> : null}</a>
+              {g.items.length > 0 && (
+                <ul class="submenu">
+                  {g.items.map(([label, href]) => (
+                    <li><a href={href} class={href === here ? 'sub-active' : ''}>{label}</a></li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </nav>
 
@@ -129,6 +134,8 @@ const nav = [
     padding: 0.6rem 0.7rem; border-radius: var(--r);
   }
   .nav > ul > li > a:hover { color: var(--orange-deep); background: var(--stone); }
+  .nav > ul > li > a.nav-active { color: var(--orange-deep); }
+  .submenu li a.sub-active { background: var(--stone); color: var(--orange-deep); }
   .caret { font-size: 0.7em; opacity: 0.7; }
 
   .submenu {

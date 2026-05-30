@@ -37,7 +37,7 @@ export const locations: Location[] = [
     h1: 'Excavating, Septic & More in Laporte, MN',
     metaTitle: 'Excavating & Septic in Laporte, MN | Shepard',
     metaDesc:
-      'Septic, excavating, land clearing, demolition, gravel, and snow removal in Laporte, MN, our home base. MPCA-certified and family-owned since 1997. Call (218) 224-2754.',
+      'Septic, excavating, gravel, demolition, and snow removal in Laporte, MN, our home base. Family-owned and MPCA-certified since 1997. Call (218) 224-2754.',
     heroImage: 'whyus-septic.jpg',
     intro:
       'Laporte is home. Our shop sits right here, so when you need septic work, excavating, gravel, or snow removal in town or out on the lakes, we are just down the road.',
@@ -112,7 +112,7 @@ export const locations: Location[] = [
     h1: 'Excavating, Septic & More in Longville, MN',
     metaTitle: 'Excavating & Septic in Longville, MN | Shepard',
     metaDesc:
-      'Septic, excavating, land clearing, demolition, gravel, and snow removal around Longville and the Woman Lake area, MN. Family-owned since 1997. Call (218) 224-2754.',
+      'Septic, excavating, gravel, demolition, and snow removal around Longville and the Woman Lake area, MN. Family-owned since 1997. Call (218) 224-2754.',
     heroImage: 'fleet-1.jpg',
     intro:
       'Up around Longville and the Woman Lake area, we are the one call for septic systems, excavating, land clearing, gravel, and snow removal. Lake-country work is what we do.',
