@@ -39,9 +39,11 @@ export const video = {
 
 // HighLevel lead routing for the quote form.
 // Leave empty to keep the inline "thanks, we got it" success state (demo mode).
-// Once the HL Workflow's Inbound Webhook trigger exists, paste its URL here:
-// the form will POST the lead to it and redirect to /thank-you (GA4 conversion).
-export const highlevelWebhook = '';
+// Live: the form POSTs the lead to this Inbound Webhook, which runs the
+// "Website Lead Intake" workflow (create contact -> opportunity -> email Janele),
+// then redirects to /thank-you (GA4 conversion). Sub-account: Shepard Excavating.
+export const highlevelWebhook =
+  'https://services.leadconnectorhq.com/hooks/o43aKWYnDo6IBr5XtAxK/webhook-trigger/8b17dfdd-18aa-4662-8194-9fa4f7d925a1';
 
 // Plain-language service-area towns (location pages get built later).
 export const towns = [

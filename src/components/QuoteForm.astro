@@ -134,7 +134,14 @@ const services = [...featuredServices, ...moreServices].map((s) => s.title);
         const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
         if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
         try {
-          await fetch(webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+          // HighLevel's inbound webhook needs a JSON body (it rejects text/plain)
+          // and it answers the CORS preflight with Access-Control-Allow-Origin: *,
+          // so a standard application/json POST works cross-origin from the browser.
+          await fetch(webhook, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
         } catch (err) {
           console.error('Lead webhook error', err);
         }
