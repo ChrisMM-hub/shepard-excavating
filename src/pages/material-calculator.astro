@@ -1,0 +1,332 @@
+---
+import Base from '../layouts/Base.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { business } from '../data/site';
+
+const title = 'Material Calculator | Fill, Gravel & Topsoil Yards | Shepard';
+const description =
+  'Estimate how many cubic yards of fill, gravel, sand, or topsoil your project needs. Enter your measurements and get an order-ready estimate with a built-in waste margin. Then request a quote from Shepard Excavating.';
+
+// Materials Shepard actually sells (from the pit). Informational for the lead;
+// the math itself is the same volume calculation for any of them.
+const materials = [
+  'Class 5 gravel',
+  'Fill sand',
+  'Screened topsoil',
+  'Crushed concrete',
+  '1½" washed rock',
+  'Not sure yet',
+];
+
+const MARGIN_PCT = 10; // shown in the UI and applied in the script
+
+// HowTo + a soft FAQ help search and give the page some schema weight.
+const howTo = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to estimate how much fill or gravel you need',
+  description:
+    'Estimate cubic yards of material for a project from the area and depth, with a waste and compaction margin added.',
+  step: [
+    { '@type': 'HowToStep', name: 'Measure the area', text: 'Measure the length and width of the area in feet, or use the total square footage.' },
+    { '@type': 'HowToStep', name: 'Pick a depth', text: 'Decide how deep the material should go, in inches.' },
+    { '@type': 'HowToStep', name: 'Read the estimate', text: 'The calculator returns cubic yards, plus a 10% margin for waste and compaction.' },
+  ],
+};
+---
+
+<Base title={title} description={description} jsonLd={[howTo]} ogImage="/og/aggregate.jpg">
+  <!-- Hero -->
+  <section class="mc-hero">
+    <div class="container">
+      <p class="eyebrow eyebrow--light">Free tool</p>
+      <h1>Material Calculator</h1>
+      <p class="mc-lead">
+        Not sure how much to order? Punch in your measurements and we will get you a
+        cubic-yard estimate for fill, gravel, sand, or topsoil. It is quick, and it adds
+        a little cushion so you do not come up short on the job.
+      </p>
+    </div>
+  </section>
+
+  <!-- Calculator -->
+  <section class="section">
+    <div class="container">
+      <div class="calc" id="calc">
+        <!-- Inputs -->
+        <form class="calc-inputs" id="mc-form" novalidate aria-label="Material calculator">
+          <h2>Tell us about your project</h2>
+
+          <div class="field">
+            <label for="mc-material">What material?</label>
+            <select id="mc-material">
+              {materials.map((m) => (<option value={m}>{m}</option>))}
+            </select>
+          </div>
+
+          <div class="field">
+            <span class="lbl">How do you want to enter the area?</span>
+            <div class="seg" role="group" aria-label="Area entry method">
+              <button type="button" class="seg-btn is-on" data-mode="lw" aria-pressed="true">Length &amp; width</button>
+              <button type="button" class="seg-btn" data-mode="area" aria-pressed="false">Total square feet</button>
+            </div>
+          </div>
+
+          <div class="row" id="mc-lw">
+            <div class="field">
+              <label for="mc-length">Length (feet)</label>
+              <input id="mc-length" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. 40" />
+            </div>
+            <div class="field">
+              <label for="mc-width">Width (feet)</label>
+              <input id="mc-width" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. 15" />
+            </div>
+          </div>
+
+          <div class="field" id="mc-area-wrap" hidden>
+            <label for="mc-area">Total area (square feet)</label>
+            <input id="mc-area" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. 600" />
+          </div>
+
+          <div class="field">
+            <label for="mc-depth">How deep? (inches)</label>
+            <input id="mc-depth" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. 4" />
+            <div class="chips" aria-label="Common depths">
+              <button type="button" class="chip-btn" data-depth="2">2"</button>
+              <button type="button" class="chip-btn" data-depth="3">3"</button>
+              <button type="button" class="chip-btn" data-depth="4">4"</button>
+              <button type="button" class="chip-btn" data-depth="6">6"</button>
+            </div>
+            <p class="hint">A gravel driveway top is usually 3 to 4 inches. A fill or base layer is often 4 to 6.</p>
+          </div>
+        </form>
+
+        <!-- Result -->
+        <aside class="calc-out" aria-live="polite">
+          <p class="out-eyebrow">You will need about</p>
+          <p class="out-number"><span id="mc-final">—</span> <span class="out-unit">cubic yards</span></p>
+          <p class="out-sub" id="mc-roundup" hidden></p>
+
+          <div class="out-rows">
+            <div><span>Area</span><b id="mc-out-area">—</b></div>
+            <div><span>Before margin</span><b id="mc-out-base">—</b></div>
+            <div class="out-margin"><span>+ {MARGIN_PCT}% waste &amp; compaction</span><b id="mc-out-add">—</b></div>
+          </div>
+
+          <p class="out-cover" id="mc-cover" hidden></p>
+
+          <button type="button" class="btn btn-primary btn-block btn-lg" id="mc-use" disabled>
+            Use this estimate in my request
+          </button>
+          <p class="out-margin-note">
+            Heads up: we build in a <strong>{MARGIN_PCT}% margin</strong> for waste and the way
+            material settles when it is compacted, so your order has a little cushion.
+          </p>
+        </aside>
+      </div>
+
+      <p class="calc-disclaimer">
+        This is an estimate to get you in the ballpark. The exact amount depends on how the
+        material compacts and the lay of your site. Send us your numbers and we will confirm
+        the right quantity and a fair price before anything gets delivered.
+      </p>
+    </div>
+  </section>
+
+  <!-- Request a quote -->
+  <section class="section section--stone" id="request" aria-labelledby="req-h">
+    <div class="container req-grid">
+      <div class="req-info">
+        <p class="eyebrow">Ready to order</p>
+        <h2 id="req-h">Get your material quote</h2>
+        <p class="lead">
+          Use the button on your estimate to drop the numbers right into this form, add your
+          name and phone, and we will get back to you with pricing and delivery. Picking up at
+          the pit works too.
+        </p>
+        <p class="req-phone"><a href={business.phoneHref}>{business.phone}</a></p>
+      </div>
+      <QuoteForm service="Sand, Gravel & Aggregate" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .mc-hero { background: var(--charcoal); color: #fff; padding-block: clamp(2.5rem, 6vw, 4rem); }
+  .eyebrow--light { color: var(--yellow); }
+  .eyebrow--light::before { background: var(--yellow); }
+  .mc-hero h1 { color: #fff; margin-top: 0.5rem; }
+  .mc-lead { color: #cfccc2; margin-top: 0.9rem; max-width: 60ch; font-size: 1.12rem; }
+
+  .calc { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(1.4rem, 3vw, 2.4rem); align-items: start; }
+  .calc-inputs { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: clamp(1.4rem, 3vw, 2rem); box-shadow: var(--shadow-sm); }
+  .calc-inputs h2 { font-size: clamp(1.4rem, 2.4vw, 1.8rem); margin-bottom: 1.3rem; }
+
+  .field { margin-bottom: 1.15rem; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  label, .lbl { display: block; font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; margin-bottom: 0.4rem; }
+  input, select {
+    width: 100%; font: inherit; font-size: 1.05rem; padding: 0.78rem 0.9rem;
+    border: 1.5px solid var(--line); border-radius: var(--r); background: var(--paper); color: var(--ink);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  input:focus, select:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px rgba(224,122,23,0.18); background: #fff; }
+  .hint { font-size: 0.9rem; color: var(--slate); margin-top: 0.5rem; }
+
+  .seg { display: inline-flex; border: 1.5px solid var(--line); border-radius: var(--r); overflow: hidden; }
+  .seg-btn { background: #fff; border: 0; padding: 0.6rem 1rem; font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; color: var(--slate); }
+  .seg-btn + .seg-btn { border-left: 1.5px solid var(--line); }
+  .seg-btn.is-on { background: var(--ink); color: #fff; }
+
+  .chips { display: flex; gap: 0.5rem; margin-top: 0.6rem; flex-wrap: wrap; }
+  .chip-btn { background: var(--stone); border: 1.5px solid var(--line); border-radius: var(--r); padding: 0.4rem 0.85rem; font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; color: var(--ink); }
+  .chip-btn.is-on { background: var(--yellow); border-color: var(--yellow-deep); }
+
+  /* result panel */
+  .calc-out { background: var(--ink); color: #fff; border-radius: var(--r-lg); padding: clamp(1.4rem, 3vw, 2rem); box-shadow: var(--shadow); position: sticky; top: calc(var(--header-h) + 1rem); }
+  .out-eyebrow { font-family: var(--font-head); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem; color: var(--yellow); }
+  .out-number { font-family: var(--font-head); font-weight: 800; line-height: 1; margin: 0.35rem 0 0; }
+  .out-number #mc-final { font-size: clamp(3rem, 8vw, 4.5rem); color: #fff; }
+  .out-unit { font-size: 1.3rem; color: #cfccc2; }
+  .out-sub { color: var(--yellow); font-weight: 700; font-family: var(--font-head); margin-top: 0.4rem; }
+
+  .out-rows { display: grid; gap: 0.55rem; margin: 1.4rem 0; padding: 1.1rem 0; border-top: 1px solid rgba(255,255,255,0.14); border-bottom: 1px solid rgba(255,255,255,0.14); }
+  .out-rows div { display: flex; justify-content: space-between; gap: 1rem; font-size: 1rem; }
+  .out-rows span { color: #cfccc2; }
+  .out-rows b { font-family: var(--font-head); }
+  .out-margin span { color: var(--yellow); }
+
+  .out-cover { font-size: 0.95rem; color: #cfccc2; margin-bottom: 1.1rem; }
+  .calc-out .btn { margin-top: 0.4rem; }
+  .calc-out .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+  .out-margin-note { font-size: 0.9rem; color: #cfccc2; margin-top: 0.9rem; line-height: 1.5; }
+  .out-margin-note strong { color: #fff; }
+
+  .calc-disclaimer { max-width: 70ch; margin: 1.6rem auto 0; text-align: center; color: var(--slate); font-size: 0.96rem; }
+
+  /* request section */
+  .req-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  .req-info .lead { margin-top: 0.8rem; }
+  .req-phone { margin-top: 1.2rem; }
+  .req-phone a { font-family: var(--font-head); font-weight: 800; font-size: 1.7rem; color: var(--ink); }
+  .req-phone a:hover { color: var(--orange-deep); }
+
+  @media (max-width: 900px) {
+    .calc { grid-template-columns: 1fr; }
+    .calc-out { position: static; }
+    .req-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  const MARGIN = 0.10;
+  const $ = (sel: string) => document.querySelector(sel) as HTMLElement | null;
+  const val = (sel: string) => {
+    const el = document.querySelector(sel) as HTMLInputElement | null;
+    const n = el ? parseFloat(el.value) : NaN;
+    return isFinite(n) && n > 0 ? n : 0;
+  };
+
+  let mode: 'lw' | 'area' = 'lw';
+  let last = { area: 0, depth: 0, final: 0, base: 0, material: '' };
+
+  const fmt = (n: number) => (n >= 100 ? Math.round(n).toLocaleString() : n.toFixed(1));
+
+  function compute() {
+    const area = mode === 'area' ? val('#mc-area') : val('#mc-length') * val('#mc-width');
+    const depth = val('#mc-depth');
+    const materialEl = document.querySelector('#mc-material') as HTMLSelectElement | null;
+    const material = materialEl ? materialEl.value : '';
+
+    const finalEl = $('#mc-final');
+    const useBtn = $('#mc-use') as HTMLButtonElement | null;
+    const roundup = $('#mc-roundup');
+    const cover = $('#mc-cover');
+
+    if (area > 0 && depth > 0) {
+      const cuft = area * (depth / 12);
+      const base = cuft / 27;
+      const final = base * (1 + MARGIN);
+      const add = final - base;
+      const halfUp = Math.ceil(final * 2) / 2; // nearest half yard, rounded up
+      const perYard = 324 / depth; // sq ft one yard covers at this depth
+
+      if (finalEl) finalEl.textContent = fmt(final);
+      const a = $('#mc-out-area'); if (a) a.textContent = Math.round(area).toLocaleString() + ' sq ft';
+      const b = $('#mc-out-base'); if (b) b.textContent = fmt(base) + ' yd';
+      const ad = $('#mc-out-add'); if (ad) ad.textContent = '+ ' + fmt(add) + ' yd';
+      if (roundup) { roundup.textContent = 'Round up to about ' + halfUp + ' yards when you order.'; roundup.hidden = false; }
+      if (cover) { cover.textContent = 'At ' + depth + '", one cubic yard covers about ' + Math.round(perYard) + ' sq ft.'; cover.hidden = false; }
+      if (useBtn) useBtn.disabled = false;
+
+      last = { area: Math.round(area), depth, final, base, material };
+    } else {
+      if (finalEl) finalEl.textContent = '—';
+      ['#mc-out-area', '#mc-out-base', '#mc-out-add'].forEach((s) => { const el = $(s); if (el) el.textContent = '—'; });
+      if (roundup) roundup.hidden = true;
+      if (cover) cover.hidden = true;
+      if (useBtn) useBtn.disabled = true;
+    }
+  }
+
+  // mode toggle
+  document.querySelectorAll('.seg-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      mode = (btn as HTMLElement).dataset.mode === 'area' ? 'area' : 'lw';
+      document.querySelectorAll('.seg-btn').forEach((b) => {
+        const on = b === btn;
+        b.classList.toggle('is-on', on);
+        b.setAttribute('aria-pressed', String(on));
+      });
+      const lw = $('#mc-lw'); const areaWrap = $('#mc-area-wrap');
+      if (lw) lw.hidden = mode === 'area';
+      if (areaWrap) areaWrap.hidden = mode !== 'area';
+      compute();
+    });
+  });
+
+  // depth chips
+  document.querySelectorAll('.chip-btn').forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const d = (chip as HTMLElement).dataset.depth || '';
+      const input = document.querySelector('#mc-depth') as HTMLInputElement | null;
+      if (input) input.value = d;
+      document.querySelectorAll('.chip-btn').forEach((c) => c.classList.toggle('is-on', c === chip));
+      compute();
+    });
+  });
+
+  // clear chip highlight if depth typed manually
+  document.querySelector('#mc-depth')?.addEventListener('input', () => {
+    const v = (document.querySelector('#mc-depth') as HTMLInputElement).value;
+    document.querySelectorAll('.chip-btn').forEach((c) => c.classList.toggle('is-on', (c as HTMLElement).dataset.depth === v));
+  });
+
+  // recompute on any input
+  ['#mc-material', '#mc-length', '#mc-width', '#mc-area', '#mc-depth'].forEach((sel) => {
+    document.querySelector(sel)?.addEventListener('input', compute);
+  });
+
+  // hand the estimate to the quote form
+  $('#mc-use')?.addEventListener('click', () => {
+    if (!last.final) return;
+    const svc = document.querySelector('#qf-service') as HTMLSelectElement | null;
+    if (svc && [...svc.options].some((o) => o.value === 'Sand, Gravel & Aggregate')) {
+      svc.value = 'Sand, Gravel & Aggregate';
+    }
+    const msg = document.querySelector('#qf-message') as HTMLTextAreaElement | null;
+    if (msg) {
+      const mat = last.material && last.material !== 'Not sure yet' ? last.material : 'material';
+      msg.value =
+        'Material estimate from your website calculator: about ' + last.final.toFixed(1) +
+        ' cubic yards of ' + mat + ' for a ' + last.area.toLocaleString() + ' sq ft area at ' +
+        last.depth + ' inches deep (includes a 10% waste and compaction margin). ' +
+        'Please confirm pricing and delivery.';
+    }
+    const target = document.getElementById('request');
+    target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.setTimeout(() => (document.querySelector('#qf-name') as HTMLInputElement | null)?.focus(), 600);
+  });
+
+  compute();
+</script>
