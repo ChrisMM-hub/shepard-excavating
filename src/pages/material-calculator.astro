@@ -20,6 +20,24 @@ const materials = [
 
 const MARGIN_PCT = 10; // shown in the UI and applied in the script
 
+// Common-project guideline figures. Depths cross-checked against multiple sources
+// (and building code where it applies); yardage uses the same formula as the tool,
+// including the 10% margin. These are ballpark guidelines, not a spec.
+const scenarios = [
+  { name: 'Rural gravel driveway', material: 'Class 5', size: '12 x 150 ft (1,800 sq ft)', depth: '4-6"', yards: '24-37',
+    note: 'Re-graveling an existing drive? About 4" does it. Soft or wet ground usually needs more, built up in lifts.' },
+  { name: 'Pole barn or shop pad', material: 'Class 5', size: '30 x 40 ft (1,200 sq ft)', depth: '4-6"', yards: '16-24',
+    note: 'Placed and compacted in 6 to 8 inch lifts for a level, solid pad.' },
+  { name: 'Concrete garage slab base', material: 'Class 5', size: '24 x 24 ft (576 sq ft)', depth: '4"', yards: '~8',
+    note: 'The building code (IRC) calls for at least a 4 inch base of clean gravel under a slab on grade.' },
+  { name: 'Storage shed base', material: 'Class 5', size: '12 x 16 ft (192 sq ft)', depth: '4-6"', yards: '2.5-4',
+    note: 'A 4 to 6 inch compacted pad keeps the shed level and sheds water away from the floor.' },
+  { name: 'New lawn topsoil', material: 'Screened topsoil', size: '50 x 40 ft (2,000 sq ft)', depth: '4-6"', yards: '27-41',
+    note: 'Fresh topsoil settles 10 to 15 percent, so order a little extra. 6 inches gives roots the most room.' },
+  { name: 'Paver patio or walkway base', material: 'Class 5', size: '12 x 16 ft (192 sq ft)', depth: '4"', yards: '~2.5',
+    note: 'ICPI calls for at least 4 inches of compacted base for foot traffic, 6 to 8 where vehicles drive.' },
+];
+
 // HowTo + a soft FAQ help search and give the page some schema weight.
 const howTo = {
   '@context': 'https://schema.org',
@@ -133,8 +151,48 @@ const howTo = {
     </div>
   </section>
 
+  <!-- Common project estimates -->
+  <section class="section section--stone" id="guidelines" aria-labelledby="guide-h">
+    <div class="container">
+      <div class="section-head center">
+        <p class="eyebrow" style="justify-content:center;">General guidelines</p>
+        <h2 id="guide-h">How much do common projects take?</h2>
+        <p class="lead">A few typical jobs, to give you a feel for scale. The real amount depends on your soil, drainage, frost, and how the area gets used, so treat these as a starting point. Tell us about your project and we will confirm the right quantity.</p>
+      </div>
+
+      <div class="scn-grid">
+        {scenarios.map((s) => (
+          <article class="scn-card">
+            <div class="scn-top">
+              <h3>{s.name}</h3>
+              <span class="chip">{s.material}</span>
+            </div>
+            <p class="scn-yards"><span>{s.yards}</span> cu yd</p>
+            <dl class="scn-meta">
+              <div><dt>Typical size</dt><dd>{s.size}</dd></div>
+              <div><dt>Common depth</dt><dd>{s.depth}</dd></div>
+            </dl>
+            <p class="scn-note">{s.note}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="scn-general">
+        <h3>General fill notes</h3>
+        <ul>
+          <li>Deep fills go in firmer when they are placed and compacted in 6 to 8 inch lifts, not all at once.</li>
+          <li>Up here, frost and soft, wet, or clay ground usually call for more depth. A driveway or pad on poor soil is often built up 8 to 12 inches total.</li>
+          <li>Under a concrete slab, the building code (IRC) calls for at least a 4 inch base of clean gravel. For pavers, the ICPI calls for at least 4 inches of compacted base for foot traffic and 6 to 8 inches where vehicles drive.</li>
+          <li>Fresh topsoil settles about 10 to 15 percent, so order a little extra for a new lawn.</li>
+        </ul>
+      </div>
+
+      <p class="calc-disclaimer">These are general guidelines, not a substitute for a look at your site or for local code and permits. Soil, slope, frost depth, and how you will use the area all change what you actually need. Give us a call and we will help you get it right.</p>
+    </div>
+  </section>
+
   <!-- Request a quote -->
-  <section class="section section--stone" id="request" aria-labelledby="req-h">
+  <section class="section" id="request" aria-labelledby="req-h">
     <div class="container req-grid">
       <div class="req-info">
         <p class="eyebrow">Ready to order</p>
@@ -210,6 +268,25 @@ const howTo = {
   .req-phone { margin-top: 1.2rem; }
   .req-phone a { font-family: var(--font-head); font-weight: 800; font-size: 1.7rem; color: var(--ink); }
   .req-phone a:hover { color: var(--orange-deep); }
+
+  /* common-project guidelines */
+  .scn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
+  .scn-card { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: 1.4rem 1.5rem; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; }
+  .scn-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem; }
+  .scn-top h3 { font-size: 1.18rem; }
+  .scn-top .chip { flex-shrink: 0; }
+  .scn-yards { font-family: var(--font-head); font-weight: 800; color: var(--ink); margin: 0.7rem 0 0.9rem; line-height: 1; }
+  .scn-yards span { font-size: 2.1rem; color: var(--orange-deep); }
+  .scn-meta { display: grid; gap: 0.45rem; margin-bottom: 0.9rem; }
+  .scn-meta div { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px dashed var(--line); padding-bottom: 0.45rem; }
+  .scn-meta dt { color: var(--slate); font-size: 0.95rem; }
+  .scn-meta dd { font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; text-align: right; }
+  .scn-note { color: var(--slate); font-size: 0.95rem; line-height: 1.5; margin-top: auto; }
+  .scn-general { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: 1.5rem 1.6rem; margin-top: 1.4rem; }
+  .scn-general h3 { margin-bottom: 0.8rem; }
+  .scn-general ul { display: grid; gap: 0.6rem; }
+  .scn-general li { position: relative; padding-left: 1.6rem; color: var(--slate); line-height: 1.5; }
+  .scn-general li::before { content: ''; position: absolute; left: 0; top: 0.5em; width: 11px; height: 11px; border-radius: 2px; background: var(--grad); }
 
   @media (max-width: 900px) {
     .calc { grid-template-columns: 1fr; }
