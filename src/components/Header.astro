@@ -164,7 +164,14 @@ const here = Astro.url.pathname.replace(/\/$/, '') || '/';
   .menu-toggle[aria-expanded='true'] span:nth-child(2) { opacity: 0; }
   .menu-toggle[aria-expanded='true'] span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-  .mobile-menu { border-top: 1px solid var(--line); padding: 1rem var(--gutter) 1.5rem; background: #fff; }
+  /* Open menu is a fixed overlay that scrolls on its own, below the sticky header.
+     overscroll-behavior + body lock keep the page behind from scrolling. */
+  .mobile-menu {
+    position: fixed; top: var(--header-h); left: 0; right: 0; bottom: 0;
+    overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+    border-top: 1px solid var(--line); padding: 1rem var(--gutter) 2.5rem; background: #fff; z-index: 99;
+  }
+  :global(body.nav-open) { overflow: hidden; }
   .mobile-menu > ul > li { border-bottom: 1px solid var(--line); }
   .mobile-menu .m-top { display: block; font-family: var(--font-head); font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; padding: 0.85rem 0; font-size: 1.05rem; }
   .mobile-menu ul ul { padding: 0 0 0.6rem 0.6rem; }
@@ -192,6 +199,7 @@ const here = Astro.url.pathname.replace(/\/$/, '') || '/';
     toggle.setAttribute('aria-expanded', String(!open));
     if (menu) menu.hidden = open;
     toggle.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
+    document.body.classList.toggle('nav-open', !open); // lock background scroll while open
   });
 
   // close mobile menu on link click
@@ -199,6 +207,7 @@ const here = Astro.url.pathname.replace(/\/$/, '') || '/';
     a.addEventListener('click', () => {
       menu.hidden = true;
       toggle?.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('nav-open');
     })
   );
 

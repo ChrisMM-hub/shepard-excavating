@@ -17,10 +17,10 @@ import afterImg from '../assets/photos/ba-foundation-after.jpg';
 
     <div class="ba" style="--pos:50%">
       <div class="ba-img ba-after">
-        <Image src={afterImg} alt="After: the old foundation removed and the lot graded flat" widths={[950]} sizes="(max-width: 860px) 100vw, 820px" quality={82} />
+        <Image src={afterImg} alt="After: the old foundation removed and the lot graded flat" widths={[950]} sizes="(max-width: 860px) 100vw, 820px" quality={82} draggable={false} />
       </div>
       <div class="ba-img ba-before">
-        <Image src={beforeImg} alt="Before: an old concrete and block foundation in a wooded clearing" widths={[950]} sizes="(max-width: 860px) 100vw, 820px" quality={82} />
+        <Image src={beforeImg} alt="Before: an old concrete and block foundation in a wooded clearing" widths={[950]} sizes="(max-width: 860px) 100vw, 820px" quality={82} draggable={false} />
       </div>
       <span class="ba-tag ba-tag-before">Before</span>
       <span class="ba-tag ba-tag-after">After</span>
@@ -42,8 +42,10 @@ import afterImg from '../assets/photos/ba-foundation-after.jpg';
     border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-lg);
     user-select: none; touch-action: none; cursor: ew-resize; background: var(--ink);
   }
-  .ba-img { position: absolute; inset: 0; }
-  .ba-img :global(img) { width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* images are non-interactive so the container owns all dragging
+     (otherwise the browser's native image-drag hijacks the handle) */
+  .ba-img { position: absolute; inset: 0; pointer-events: none; }
+  .ba-img :global(img) { width: 100%; height: 100%; object-fit: cover; display: block; -webkit-user-drag: none; user-select: none; }
   .ba-after { z-index: 1; }
   .ba-before { z-index: 2; clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
 
@@ -100,6 +102,8 @@ import afterImg from '../assets/photos/ba-foundation-after.jpg';
     ba.addEventListener('pointermove', (e) => { if (dragging) fromX(e.clientX); });
     ba.addEventListener('pointerup', () => { dragging = false; });
     ba.addEventListener('pointercancel', () => { dragging = false; });
+    // Belt-and-suspenders: kill any native drag that would ghost-drag the photo.
+    ba.addEventListener('dragstart', (e) => e.preventDefault());
 
     // Keyboard: the range stays focusable (Tab) even with pointer-events: none.
     range?.addEventListener('input', () => ba.style.setProperty('--pos', range.value + '%'));

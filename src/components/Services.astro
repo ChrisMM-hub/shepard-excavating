@@ -110,5 +110,20 @@ const imgMap: Record<string, ImageMetadata> = {
   .mini-body p { font-size: 0.86rem; color: var(--slate); line-height: 1.35; }
 
   @media (max-width: 940px) { .grid { grid-template-columns: repeat(2, 1fr); } .mini-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } .mini-grid { grid-template-columns: 1fr; } }
+
+  /* On phones, reflow the big featured cards into compact horizontal rows so the
+     whole services list (featured + "also offering") reads as one clean, scannable
+     menu instead of two competing card systems. */
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: 1fr; gap: 0.8rem; }
+    .card-link { flex-direction: row; }
+    .card-media { aspect-ratio: 1 / 1; width: 118px; flex-shrink: 0; }
+    .card-body { padding: 0.85rem 1rem; justify-content: center; gap: 0.3rem; }
+    .card-body h3 { font-size: 1.06rem; }
+    .card-body p { font-size: 0.9rem; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .card .more { display: none; }
+    .bucket { top: 0.5rem; left: 0.5rem; font-size: 0.62rem; padding: 0.2rem 0.45rem; }
+    .more-label { margin: 2rem 0 0.9rem; }
+    .mini-grid { grid-template-columns: 1fr; }
+  }
 </style>
