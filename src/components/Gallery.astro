@@ -7,14 +7,14 @@ import gLand from '../assets/photos/gal-landclearing.jpg';
 import gDemo from '../assets/photos/svc-demolition.jpg';
 import gAgg from '../assets/photos/gal-aggregate.jpg';
 
-// Explicit bento placement so the grid always tiles with no holes.
+// A curated, captioned strip (CSS scroll-snap) instead of a stack of photos.
 const shots = [
-  { img: gFleet, alt: 'The Shepard Excavating truck fleet lined up', cls: 'g-a' },
-  { img: gSeptic, alt: 'New septic drain field installation', cls: 'g-b' },
-  { img: gExcav, alt: 'Excavator and loader during site work', cls: 'g-c' },
-  { img: gLand, alt: 'Cleared lake lot ready for building', cls: 'g-d' },
-  { img: gDemo, alt: 'Excavator demolishing an old cabin next to a roll-off dumpster', cls: 'g-e' },
-  { img: gAgg, alt: 'Loader and screened gravel at the pit', cls: 'g-f' },
+  { img: gFleet, cap: 'Our fleet, ready to roll', alt: 'The Shepard Excavating truck fleet lined up' },
+  { img: gSeptic, cap: 'A fresh septic drain field', alt: 'New septic drain field installation' },
+  { img: gExcav, cap: 'Site prep and grading', alt: 'Excavator and loader during site work' },
+  { img: gLand, cap: 'Clearing a lake lot', alt: 'A cleared wooded lot ready for building' },
+  { img: gDemo, cap: 'Cabin teardown and haul-off', alt: 'Excavator demolishing an old cabin beside a roll-off dumpster' },
+  { img: gAgg, cap: 'Screened gravel from our pit', alt: 'Loader and a pile of screened gravel at the pit' },
 ];
 ---
 
@@ -23,43 +23,35 @@ const shots = [
     <div class="section-head">
       <p class="eyebrow">On the job</p>
       <h2 id="work-h">Real work, real equipment, real Northern Minnesota dirt</h2>
+      <p class="lead">A look at recent septic, site work, clearing, and gravel jobs around the lakes.</p>
     </div>
-    <div class="gal">
-      {shots.map((s) => (
-        <figure class={'gal-item ' + s.cls}>
-          <Image src={s.img} alt={s.alt} widths={[400, 800, 1200]} sizes="(max-width: 700px) 100vw, 50vw" quality={72} />
-        </figure>
-      ))}
-    </div>
+  </div>
+  <div class="gal-strip" role="list" aria-label="Recent project photos">
+    {shots.map((s, i) => (
+      <figure class="gal-card" role="listitem">
+        <Image src={s.img} alt={s.alt} widths={[360, 720]} sizes="(max-width: 760px) 80vw, 360px" quality={72} loading={i < 2 ? 'eager' : 'lazy'} />
+        <figcaption>{s.cap}</figcaption>
+      </figure>
+    ))}
   </div>
 </section>
 
 <style>
-  .gal {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 210px);
-    gap: 1rem;
+  .gal-strip {
+    display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    padding: 0 var(--gutter) 0.5rem; max-width: var(--container); margin-inline: auto;
   }
-  .gal-item { position: relative; overflow: hidden; border-radius: var(--r-lg); box-shadow: var(--shadow-sm); }
-  .gal-item :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-  .gal-item:hover :global(img) { transform: scale(1.07); }
-
-  /* desktop bento: 4 cols x 3 rows, fully tiled */
-  .g-a { grid-column: 1 / 3; grid-row: 1 / 3; }
-  .g-b { grid-column: 3 / 4; grid-row: 1 / 2; }
-  .g-c { grid-column: 4 / 5; grid-row: 1 / 2; }
-  .g-d { grid-column: 3 / 5; grid-row: 2 / 3; }
-  .g-e { grid-column: 1 / 3; grid-row: 3 / 4; }
-  .g-f { grid-column: 3 / 5; grid-row: 3 / 4; }
-
-  @media (max-width: 800px) {
-    .gal { grid-template-columns: repeat(2, 1fr); grid-template-rows: none; grid-auto-rows: 165px; }
-    .gal-item { grid-column: auto !important; grid-row: auto !important; }
-    .g-a { grid-column: 1 / 3 !important; grid-row: span 2 !important; }
+  .gal-strip::-webkit-scrollbar { display: none; }
+  .gal-card {
+    position: relative; flex: 0 0 min(80%, 360px); scroll-snap-align: start;
+    aspect-ratio: 4 / 3; border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-sm); margin: 0;
   }
-  @media (max-width: 460px) {
-    .gal { grid-template-columns: 1fr; grid-auto-rows: 200px; }
-    .g-a { grid-column: 1 / 2 !important; grid-row: span 1 !important; }
+  .gal-card :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .gal-card figcaption {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; padding: 1.4rem 1.1rem 0.9rem;
+    color: #fff; font-family: var(--font-head); font-weight: 700; font-size: 1rem; letter-spacing: 0.01em;
+    background: linear-gradient(180deg, rgba(20,18,16,0) 0%, rgba(20,18,16,0.82) 100%);
   }
+  @media (min-width: 1040px) { .gal-card { flex-basis: 30%; } }
 </style>

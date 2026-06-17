@@ -43,5 +43,10 @@ import { reviews, business } from '../data/site';
   .rev-foot { text-align: center; margin-top: 1.8rem; }
   .rev-foot a { color: var(--orange-deep); font-family: var(--font-head); font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; }
   .rev-foot a:hover { color: var(--ink); }
-  @media (max-width: 880px) { .rev-grid { grid-template-columns: 1fr; max-width: 36rem; margin-inline: auto; } }
+  @media (max-width: 880px) {
+    /* horizontal swipe row on mobile (CSS scroll-snap, no JS) */
+    .rev-grid { display: flex; grid-template-columns: none; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 0.5rem; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); }
+    .rev-grid::-webkit-scrollbar { display: none; }
+    .rev-card { scroll-snap-align: start; flex: 0 0 86%; }
+  }
 </style>

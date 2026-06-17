@@ -1,0 +1,32 @@
+---
+import { business } from '../data/site';
+---
+
+<section class="midcta" aria-label="Get a free estimate">
+  <div class="container midcta-inner">
+    <div class="midcta-copy">
+      <h2>Got a project? Let's talk.</h2>
+      <p>Tell us what you are planning and we will get you a clear estimate and an honest timeline. No pressure, no runaround.</p>
+    </div>
+    <div class="midcta-actions">
+      <a href="#contact" class="btn btn-primary btn-lg">Get a Free Estimate</a>
+      <a href={business.phoneHref} class="btn btn-outline btn-lg">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.58 3.6a1 1 0 0 1-.25 1l-2.2 2.2Z" fill="currentColor"/></svg>
+        {business.phone}
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .midcta { background: var(--ink); color: #fff; border-top: 3px solid var(--yellow); }
+  .midcta-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.8rem; flex-wrap: wrap; padding-block: clamp(2.2rem, 4vw, 3rem); }
+  .midcta-copy { flex: 1 1 320px; }
+  .midcta h2 { color: #fff; font-size: clamp(1.6rem, 3.2vw, 2.2rem); }
+  .midcta p { color: #cfccc2; margin-top: 0.5rem; max-width: 52ch; }
+  .midcta-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+  @media (max-width: 600px) {
+    .midcta-actions { width: 100%; }
+    .midcta-actions .btn { flex: 1 1 100%; justify-content: center; }
+  }
+</style>

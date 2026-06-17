@@ -1,0 +1,22 @@
+---
+import { business } from '../data/site';
+---
+
+<section class="intro-band" aria-label="About Shepard Excavating">
+  <div class="container">
+    <p class="eyebrow">Northern Minnesota, since {business.founded}</p>
+    <p class="intro-text">
+      Shepard Excavating and Septic Service has dug, hauled, and plowed across Beltrami, Hubbard,
+      and Cass counties since {business.founded}. We are an MPCA-certified septic installer who
+      handles the whole job: drain fields and mound systems, pumping, excavating, land clearing,
+      demolition, sand and gravel, and winter snow removal. We work for homeowners, cabin owners,
+      and builders around Bemidji, Park Rapids, Walker, and the Leech Lake area. One local crew,
+      one call, and a straight answer on what your project needs.
+    </p>
+  </div>
+</section>
+
+<style>
+  .intro-band { background: var(--stone); border-bottom: 1px solid var(--line); padding-block: clamp(2rem, 4vw, 2.8rem); }
+  .intro-text { max-width: 68ch; font-size: clamp(1.08rem, 1.6vw, 1.28rem); line-height: 1.6; color: var(--ink); margin-top: 0.8rem; }
+</style>

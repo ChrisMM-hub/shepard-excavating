@@ -51,10 +51,47 @@ const localBusiness = {
     addressCountry: 'US',
   },
   geo: { '@type': 'GeoCoordinates', latitude: business.geo.lat, longitude: business.geo.lng },
-  areaServed: towns.map((t) => ({ '@type': 'City', name: t })),
+  areaServed: [
+    ...towns.map((t) => ({ '@type': 'City', name: t })),
+    { '@type': 'AdministrativeArea', name: 'Beltrami County, Minnesota' },
+    { '@type': 'AdministrativeArea', name: 'Hubbard County, Minnesota' },
+    { '@type': 'AdministrativeArea', name: 'Cass County, Minnesota' },
+  ],
   foundingDate: String(business.founded),
   priceRange: '$$',
   sameAs: [business.facebook, business.bbb],
+  knowsAbout: [
+    'Septic system installation',
+    'Mound septic systems',
+    'Drain field installation and repair',
+    'Septic tank pumping',
+    'Excavating and site grading',
+    'Land clearing',
+    'Aggregate and gravel hauling',
+    'Snow removal',
+  ],
+  hasCredential: {
+    '@type': 'EducationalOccupationalCredential',
+    credentialCategory: 'license',
+    name: 'MPCA Certified Subsurface Sewage Treatment System (SSTS) Installer',
+    recognizedBy: { '@type': 'GovernmentOrganization', name: 'Minnesota Pollution Control Agency' },
+  },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Septic & Excavating Services',
+    itemListElement: [
+      'Septic System Installation',
+      'Septic Pumping & Service',
+      'Septic Emergency Service',
+      'Excavating & Site Work',
+      'Land Clearing',
+      'Demolition',
+      'Sand, Gravel & Aggregate',
+      'Roll-Off Dumpster Rental',
+      'Snow Removal',
+      'Fisher Snowplow Sales',
+    ].map((name) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name } })),
+  },
 };
 
 ---
