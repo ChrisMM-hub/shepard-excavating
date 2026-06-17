@@ -1,22 +1,61 @@
 ---
+import { Image } from 'astro:assets';
+import introImg from '../assets/photos/whyus-fleet.jpg';
 import { business } from '../data/site';
 ---
 
 <section class="intro-band" aria-label="About Shepard Excavating">
-  <div class="container">
-    <p class="eyebrow">Northern Minnesota, since {business.founded}</p>
-    <p class="intro-text">
-      Shepard Excavating and Septic Service has dug, hauled, and plowed across Beltrami, Hubbard,
-      and Cass counties since {business.founded}. We are an MPCA-certified septic installer who
-      handles the whole job: drain fields and mound systems, pumping, excavating, land clearing,
-      demolition, sand and gravel, and winter snow removal. We work for homeowners, cabin owners,
-      and builders around Bemidji, Park Rapids, Walker, and the Leech Lake area. One local crew,
-      one call, and a straight answer on what your project needs.
-    </p>
+  <div class="container intro-grid">
+    <div class="intro-copy">
+      <p class="eyebrow">Northern Minnesota, since {business.founded}</p>
+      <h2 class="intro-head">Straight answers, work that holds up</h2>
+      <p class="intro-text">
+        Shepard Excavating and Septic Service has dug, hauled, and plowed across Beltrami, Hubbard,
+        and Cass counties since {business.founded}. We are an MPCA-certified septic installer who handles
+        drain fields and mound systems, pumping, excavating, land clearing, demolition, sand and gravel,
+        and winter snow removal, for homeowners, cabin owners, and builders around Bemidji, Park Rapids,
+        Walker, and the Leech Lake area.
+      </p>
+      <p class="intro-text intro-text--last">
+        You deal with the people whose name is on the truck, start to finish, and the work gets done right.
+      </p>
+    </div>
+
+    <figure class="intro-media">
+      <Image
+        src={introImg}
+        alt="Shepard Excavating's fleet of red dump trucks lined up at the shop"
+        widths={[480, 900]}
+        sizes="(max-width: 880px) 100vw, 460px"
+        quality={76}
+        loading="lazy"
+      />
+      <figcaption class="intro-badge">
+        <strong>Family-owned</strong>
+        <span>Since {business.founded}</span>
+      </figcaption>
+    </figure>
   </div>
 </section>
 
 <style>
-  .intro-band { background: var(--stone); border-bottom: 1px solid var(--line); padding-block: clamp(2rem, 4vw, 2.8rem); }
-  .intro-text { max-width: 68ch; font-size: clamp(1.08rem, 1.6vw, 1.28rem); line-height: 1.6; color: var(--ink); margin-top: 0.8rem; }
+  .intro-band { background: var(--stone); border-bottom: 1px solid var(--line); padding-block: clamp(2.4rem, 5vw, 3.6rem); }
+  .intro-grid { display: grid; grid-template-columns: 1.25fr 0.9fr; gap: clamp(1.8rem, 4vw, 3.4rem); align-items: center; }
+  .intro-head { font-size: clamp(1.55rem, 2.7vw, 2.15rem); line-height: 1.1; margin: 0.5rem 0 0.9rem; }
+  .intro-text { max-width: 60ch; font-size: clamp(1.04rem, 1.4vw, 1.18rem); line-height: 1.62; color: var(--ink); }
+  .intro-text--last { margin-top: 0.9rem; color: var(--slate); }
+
+  .intro-media { position: relative; margin: 0; border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow); }
+  .intro-media :global(img) { display: block; width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4 / 3; }
+  .intro-badge {
+    position: absolute; left: 0; bottom: 1.2rem; display: flex; flex-direction: column;
+    background: var(--ink); color: #fff; border-left: 4px solid var(--yellow); padding: 0.55rem 1.05rem 0.6rem 0.95rem;
+  }
+  .intro-badge strong { font-family: var(--font-head); font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.98rem; line-height: 1; }
+  .intro-badge span { font-family: var(--font-head); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-top: 0.2rem; }
+
+  @media (max-width: 880px) {
+    .intro-grid { grid-template-columns: 1fr; gap: 1.6rem; }
+    .intro-media :global(img) { aspect-ratio: 16 / 10; }
+  }
 </style>
