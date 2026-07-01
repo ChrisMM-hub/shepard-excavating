@@ -4,6 +4,25 @@
    red action accent, warm paper neutrals. Typeface: Barlow family.
    ============================================================ */
 
+/* Metric-matched fallbacks (Arial, size/ascent/descent-adjusted to Barlow) so the
+   fallback -> Barlow swap causes no layout shift. Values computed from the font files. */
+@font-face {
+  font-family: 'Barlow Fallback';
+  src: local('Arial');
+  size-adjust: 116.22%;
+  ascent-override: 86.04%;
+  descent-override: 17.21%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Barlow SC Fallback';
+  src: local('Arial');
+  size-adjust: 108.29%;
+  ascent-override: 92.34%;
+  descent-override: 18.47%;
+  line-gap-override: 0%;
+}
+
 :root {
   /* Brand */
   --ink: #141210;          /* near-black, warm */
@@ -25,8 +44,8 @@
   --grad: linear-gradient(96deg, var(--yellow) 0%, var(--orange) 100%);
 
   /* Type */
-  --font-head: 'Barlow Semi Condensed', system-ui, sans-serif;
-  --font-body: 'Barlow', system-ui, sans-serif;
+  --font-head: 'Barlow Semi Condensed', 'Barlow SC Fallback', system-ui, sans-serif;
+  --font-body: 'Barlow', 'Barlow Fallback', system-ui, sans-serif;
 
   /* Radius / shadow */
   --r: 4px;
