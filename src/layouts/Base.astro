@@ -1,11 +1,25 @@
 ---
-import '@fontsource/barlow/400.css';
-import '@fontsource/barlow/600.css';
-import '@fontsource/barlow/700.css';
-import '@fontsource/barlow-semi-condensed/600.css';
-import '@fontsource/barlow-semi-condensed/700.css';
-import '@fontsource/barlow-semi-condensed/800.css';
+// Self-host the Barlow fonts with font-display:optional so text never swaps mid-load
+// (no swap = no reflow = no CLS). On fast/repeat visits Barlow shows immediately; on a
+// cold slow load the metric-matched fallback in global.css is used for that view.
+import barlow400 from '@fontsource/barlow/files/barlow-latin-400-normal.woff2';
+import barlow600 from '@fontsource/barlow/files/barlow-latin-600-normal.woff2';
+import barlow700 from '@fontsource/barlow/files/barlow-latin-700-normal.woff2';
+import barlowSC600 from '@fontsource/barlow-semi-condensed/files/barlow-semi-condensed-latin-600-normal.woff2';
+import barlowSC700 from '@fontsource/barlow-semi-condensed/files/barlow-semi-condensed-latin-700-normal.woff2';
+import barlowSC800 from '@fontsource/barlow-semi-condensed/files/barlow-semi-condensed-latin-800-normal.woff2';
 import '../styles/global.css';
+
+const fontFaces = [
+  ['Barlow', 400, barlow400],
+  ['Barlow', 600, barlow600],
+  ['Barlow', 700, barlow700],
+  ['Barlow Semi Condensed', 600, barlowSC600],
+  ['Barlow Semi Condensed', 700, barlowSC700],
+  ['Barlow Semi Condensed', 800, barlowSC800],
+]
+  .map(([f, w, u]) => `@font-face{font-family:'${f}';font-style:normal;font-weight:${w};font-display:optional;src:url(${u}) format('woff2')}`)
+  .join('');
 
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -109,6 +123,7 @@ const localBusiness = {
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/logo-shepard.png" />
+    <style is:inline set:html={fontFaces}></style>
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
