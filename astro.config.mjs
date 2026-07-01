@@ -7,6 +7,6 @@ export default defineConfig({
   integrations: [
     sitemap({ filter: (page) => !/\/(thank-you|privacy-policy)\/?$/.test(page) }),
   ],
-  build: { inlineStylesheets: 'auto' },
+  build: { inlineStylesheets: 'always' },
   image: { service: { entrypoint: 'astro/assets/services/sharp' } },
 });

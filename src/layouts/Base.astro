@@ -7,6 +7,13 @@ import '@fontsource/barlow-semi-condensed/700.css';
 import '@fontsource/barlow-semi-condensed/800.css';
 import '../styles/global.css';
 
+// Preload the above-the-fold font files so text paints in Barlow on first frame
+// (prevents the fallback-to-Barlow swap that was driving mobile CLS).
+import barlow400 from '@fontsource/barlow/files/barlow-latin-400-normal.woff2';
+import barlow700 from '@fontsource/barlow/files/barlow-latin-700-normal.woff2';
+import barlowSC700 from '@fontsource/barlow-semi-condensed/files/barlow-semi-condensed-latin-700-normal.woff2';
+import barlowSC800 from '@fontsource/barlow-semi-condensed/files/barlow-semi-condensed-latin-800-normal.woff2';
+
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MobileCallBar from '../components/MobileCallBar.astro';
@@ -109,6 +116,11 @@ const localBusiness = {
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/logo-shepard.png" />
+
+    <link rel="preload" as="font" type="font/woff2" href={barlow400} crossorigin="anonymous" />
+    <link rel="preload" as="font" type="font/woff2" href={barlow700} crossorigin="anonymous" />
+    <link rel="preload" as="font" type="font/woff2" href={barlowSC700} crossorigin="anonymous" />
+    <link rel="preload" as="font" type="font/woff2" href={barlowSC800} crossorigin="anonymous" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />

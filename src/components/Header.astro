@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-shepard.png';
 import { business } from '../data/site';
 
 // Bucketed navigation (the IA from the design-direction doc).
@@ -59,7 +61,7 @@ const here = Astro.url.pathname.replace(/\/$/, '') || '/';
 <header class="site-header" id="site-header">
   <div class="container bar">
     <a href="/" class="brand" aria-label={business.shortName + ' home'}>
-      <img src="/logo-shepard.png" alt={business.name} width="230" height="96" />
+      <Image src={logo} alt={business.name} width={240} height={104} quality={88} loading="eager" />
     </a>
 
     <nav class="nav" aria-label="Primary">
