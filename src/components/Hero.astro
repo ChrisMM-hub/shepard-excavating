@@ -53,7 +53,10 @@ const hero = await getImage({
 </section>
 
 <style>
-  .hero { position: relative; isolation: isolate; min-height: clamp(560px, 82vh, 820px); display: flex; align-items: center; }
+  /* Anchor content to the top (not center) so a font-swap text-height change cannot
+     re-center and shift the whole hero block. Fixes mobile CLS. */
+  .hero { position: relative; isolation: isolate; min-height: clamp(560px, 82vh, 820px); display: flex; align-items: flex-start; }
+  .hero-inner { margin-top: clamp(1.5rem, 7vh, 5rem); }
   .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
   .hero-overlay {
     position: absolute; inset: 0; z-index: -1;
