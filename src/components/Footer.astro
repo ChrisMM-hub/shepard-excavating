@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-shepard.png';
 import { business, featuredServices, moreServices, towns } from '../data/site';
 const year = 2026;
 const services = [...featuredServices, ...moreServices];
@@ -7,7 +9,7 @@ const services = [...featuredServices, ...moreServices];
 <footer class="footer">
   <div class="container foot-grid">
     <div class="foot-brand">
-      <img src="/logo-shepard.png" alt={business.name} width="220" height="92" />
+      <Image src={logo} alt={business.name} width={240} height={104} quality={88} loading="lazy" />
       <p>{business.tagline}. Family-owned excavating and septic service across Northern Minnesota since {business.founded}.</p>
       <a href={business.facebook} class="social" aria-label="Shepard Excavating on Facebook" rel="noopener" target="_blank">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8.5h2.5V5.5H14c-2 0-3.5 1.6-3.5 3.6v1.9H8v3h2.5V21h3v-7h2.3l.5-3h-2.8V9.4c0-.5.4-.9.9-.9Z" fill="currentColor"/></svg>

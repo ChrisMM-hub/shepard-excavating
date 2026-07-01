@@ -1,19 +1,33 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage } from 'astro:assets';
 import heroImg from '../assets/photos/hero.jpg';
 import { business } from '../data/site';
+
+// Resolve the hero (LCP) image up front so we can preload it and force a
+// synchronous decode. astro:assets defaults to decoding="async", which lets the
+// browser defer painting the already-downloaded hero and inflates LCP.
+const hero = await getImage({
+  src: heroImg,
+  widths: [540, 828, 1280, 1920],
+  sizes: '100vw',
+  format: 'webp',
+  quality: 68,
+});
 ---
 
+<link rel="preload" as="image" href={hero.src} imagesrcset={hero.srcSet.attribute} imagesizes="100vw" fetchpriority="high" />
 <section class="hero" aria-label="Introduction">
-  <Image
-    src={heroImg}
+  <img
+    src={hero.src}
+    srcset={hero.srcSet.attribute}
+    sizes="100vw"
     alt="A Shepard Excavating dump truck being loaded by a wheel loader at a Northern Minnesota gravel pit"
     class="hero-bg"
-    widths={[540, 828, 1280, 1920]}
-    sizes="100vw"
+    width="1208"
+    height="906"
     loading="eager"
     fetchpriority="high"
-    quality={68}
+    decoding="sync"
   />
   <div class="hero-overlay"></div>
 
