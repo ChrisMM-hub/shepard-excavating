@@ -16,10 +16,10 @@ import { business } from '../data/site';
     :global(body) { padding-bottom: 60px; }
     .call-bar {
       position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
-      display: grid; grid-template-columns: 1fr 1fr;
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       box-shadow: 0 -8px 24px -12px rgba(0,0,0,0.4);
     }
-    .cb { display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.95rem; font-family: var(--font-head); font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; font-size: 1.02rem; }
+    .cb { display: flex; align-items: center; justify-content: center; gap: 0.45rem; padding: 0.95rem 0.4rem; min-width: 0; font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 0; font-size: clamp(0.82rem, 3.6vw, 0.98rem); white-space: nowrap; }
     .cb svg { width: 1.15em; height: 1.15em; }
     .cb-call { background: var(--ink); color: #fff; }
     .cb-quote { background: var(--yellow); color: var(--ink); }

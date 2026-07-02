@@ -1,63 +1,66 @@
 /* ============================================================
-   Shepard Excavating — design system
-   Brand sampled from the real logo: black + equipment yellow/orange,
-   red action accent, warm paper neutrals. Typeface: Barlow family.
+   Shepard Excavating — design system (v3 "same skin, fast engine")
+   Matches the look of the original shepardexcavating.com:
+   Josefin Sans titles, Quicksand body/nav, black bands, yellow
+   tagline strip, crimson action buttons, light gray page.
    ============================================================ */
 
-/* Metric-matched fallbacks (Arial, size/ascent/descent-adjusted to Barlow) so the
-   fallback -> Barlow swap causes no layout shift. Values computed from the font files. */
+/* Metric-matched fallbacks (Arial, size/ascent/descent-adjusted) so a cold-load
+   fallback render occupies the same space as the webfont. Values computed from
+   the actual font files. */
 @font-face {
-  font-family: 'Barlow Fallback';
+  font-family: 'Josefin Fallback';
   src: local('Arial');
-  size-adjust: 116.22%;
-  ascent-override: 86.04%;
-  descent-override: 17.21%;
+  size-adjust: 121.43%;
+  ascent-override: 61.76%;
+  descent-override: 20.59%;
   line-gap-override: 0%;
 }
 @font-face {
-  font-family: 'Barlow SC Fallback';
+  font-family: 'Quicksand Fallback';
   src: local('Arial');
-  size-adjust: 108.29%;
-  ascent-override: 92.34%;
-  descent-override: 18.47%;
+  size-adjust: 113.73%;
+  ascent-override: 87.93%;
+  descent-override: 21.98%;
   line-gap-override: 0%;
 }
 
 :root {
-  /* Brand */
-  --ink: #141210;          /* near-black, warm */
-  --charcoal: #23241d;     /* dark sections */
-  --charcoal-2: #2f3128;
-  --paper: #faf8f3;        /* page background */
-  --stone: #efece4;        /* alt section / cards */
-  --line: #ded8cc;         /* hairlines */
-  --slate: #5c584f;        /* secondary text */
+  /* Brand — sampled from the live site + logo */
+  --ink: #0d0d0d;          /* their black */
+  --charcoal: #0f0f0f;     /* dark bands (their call band is near-black) */
+  --charcoal-2: #1d1d1d;
+  --paper: #f5f5f5;        /* their body background */
+  --stone: #ebebeb;        /* alt section / footer gray */
+  --line: #dcdcdc;         /* hairlines */
+  --slate: #565656;        /* secondary text */
 
-  --yellow: #ffcb05;       /* primary action / signature */
+  --yellow: #ffcb05;       /* tagline strip / logo yellow */
   --yellow-deep: #f2b500;
-  --orange: #e07a17;       /* gradient partner / accents */
+  --orange: #e07a17;       /* logo gradient partner, small accents */
   --orange-deep: #c2630c;
-  --red: #c8362a;          /* emergency only */
-  --red-deep: #a4271d;
+  --red: #c21313;          /* their action-button crimson */
+  --red-deep: #9a1010;
   --gold: #cbb168;
 
   --grad: linear-gradient(96deg, var(--yellow) 0%, var(--orange) 100%);
 
-  /* Type */
-  --font-head: 'Barlow Semi Condensed', 'Barlow SC Fallback', system-ui, sans-serif;
-  --font-body: 'Barlow', 'Barlow Fallback', system-ui, sans-serif;
+  /* Type — matches their platform theme (custom.css):
+     titles Josefin Sans, paragraphs/nav Quicksand */
+  --font-head: 'Josefin Sans', 'Josefin Fallback', system-ui, sans-serif;
+  --font-body: 'Quicksand', 'Quicksand Fallback', system-ui, sans-serif;
 
-  /* Radius / shadow */
-  --r: 4px;
-  --r-lg: 10px;
-  --shadow-sm: 0 1px 2px rgba(20, 18, 16, 0.08);
-  --shadow: 0 10px 30px -12px rgba(20, 18, 16, 0.28);
-  --shadow-lg: 0 28px 60px -20px rgba(20, 18, 16, 0.45);
+  /* Radius / shadow — their buttons use 5px, flat */
+  --r: 5px;
+  --r-lg: 8px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow: 0 8px 24px -10px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 22px 48px -18px rgba(0, 0, 0, 0.35);
 
   /* Layout */
   --container: 1200px;
   --gutter: clamp(1.1rem, 4vw, 2.5rem);
-  --header-h: 76px;
+  --header-h: 56px; /* the sticky black nav bar */
 }
 
 /* ---------- reset ---------- */
@@ -74,7 +77,7 @@ body {
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
-@media (min-width: 768px) { body { font-size: 1.125rem; } } /* 18px desktop */
+@media (min-width: 768px) { body { font-size: 1.0625rem; } }
 img, picture, svg { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; }
@@ -83,21 +86,21 @@ ul { list-style: none; padding: 0; }
 /* ---------- type ---------- */
 h1, h2, h3, h4 {
   font-family: var(--font-head);
-  font-weight: 800;
-  line-height: 1.04;
-  letter-spacing: -0.01em;
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: 0;
   text-wrap: balance;
 }
-h1 { font-size: clamp(2.5rem, 6.2vw, 4.6rem); text-transform: uppercase; }
-h2 { font-size: clamp(2rem, 4.4vw, 3.1rem); }
-h3 { font-size: clamp(1.3rem, 2.2vw, 1.6rem); font-weight: 700; }
+h1 { font-size: clamp(2.1rem, 4.6vw, 3.1rem); }
+h2 { font-size: clamp(1.7rem, 3.4vw, 2.35rem); }
+h3 { font-size: clamp(1.25rem, 2.1vw, 1.5rem); font-weight: 600; }
 .eyebrow {
   font-family: var(--font-head);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  font-size: 0.82rem;
-  color: var(--orange-deep);
+  font-size: 0.8rem;
+  color: var(--red);
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
@@ -105,19 +108,19 @@ h3 { font-size: clamp(1.3rem, 2.2vw, 1.6rem); font-weight: 700; }
 .eyebrow::before {
   content: '';
   width: 26px; height: 3px;
-  background: var(--grad);
+  background: var(--yellow);
   border-radius: 2px;
 }
-.lead { font-size: clamp(1.1rem, 1.6vw, 1.3rem); color: var(--slate); }
-.section--dark .lead { color: #cfccc2; }
+.lead { font-size: clamp(1.05rem, 1.5vw, 1.2rem); color: var(--slate); }
+.section--dark .lead { color: #cfcfcf; }
 
 /* ---------- layout primitives ---------- */
 .container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
-.section { padding-block: clamp(3.5rem, 7vw, 6rem); }
+.section { padding-block: clamp(3.2rem, 6.5vw, 5.5rem); }
 .section--stone { background: var(--stone); }
-.section--dark { background: var(--charcoal); color: var(--paper); }
+.section--dark { background: var(--charcoal); color: #f2f2f2; }
 .section--dark h2, .section--dark h3 { color: #fff; }
-.section-head { max-width: 46rem; margin-bottom: clamp(2rem, 4vw, 3rem); }
+.section-head { max-width: 46rem; margin-bottom: clamp(1.8rem, 4vw, 2.8rem); }
 .section-head h2 { margin-top: 0.6rem; }
 .center { text-align: center; margin-inline: auto; }
 
@@ -125,37 +128,42 @@ h3 { font-size: clamp(1.3rem, 2.2vw, 1.6rem); font-weight: 700; }
 .btn {
   --b: transparent;
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-  font-family: var(--font-head); font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.03em; font-size: 1rem; line-height: 1;
-  padding: 0.95rem 1.6rem; border-radius: var(--r);
+  font-family: var(--font-body); font-weight: 700;
+  letter-spacing: 0.01em; font-size: 1rem; line-height: 1;
+  padding: 0.9rem 1.5rem; border-radius: var(--r);
   border: 2px solid var(--b); background: var(--b); color: var(--ink);
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, border-color 0.15s ease;
   white-space: nowrap;
 }
 .btn svg { width: 1.1em; height: 1.1em; }
-.btn-primary { --b: var(--yellow); color: var(--ink); box-shadow: var(--shadow-sm); }
-.btn-primary:hover { background: var(--yellow-deep); border-color: var(--yellow-deep); transform: translateY(-2px); box-shadow: var(--shadow); }
+/* primary = their crimson button */
+.btn-primary { --b: var(--red); color: #fff; box-shadow: var(--shadow-sm); }
+.btn-primary:hover { background: var(--red-deep); border-color: var(--red-deep); transform: translateY(-2px); box-shadow: var(--shadow); }
 .btn-red { --b: var(--red); color: #fff; }
 .btn-red:hover { background: var(--red-deep); border-color: var(--red-deep); transform: translateY(-2px); box-shadow: var(--shadow); }
+.btn-yellow { --b: var(--yellow); color: var(--ink); }
+.btn-yellow:hover { background: var(--yellow-deep); border-color: var(--yellow-deep); transform: translateY(-2px); }
 .btn-dark { --b: var(--ink); color: #fff; }
 .btn-dark:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.btn-light { --b: #fff; color: var(--ink); }
+.btn-light:hover { background: var(--paper); border-color: var(--paper); transform: translateY(-2px); box-shadow: var(--shadow); }
 .btn-outline { border-color: rgba(255,255,255,0.55); color: #fff; background: transparent; }
 .btn-outline:hover { background: #fff; color: var(--ink); border-color: #fff; transform: translateY(-2px); }
 .btn-ghost { border-color: var(--line); background: #fff; }
 .btn-ghost:hover { border-color: var(--ink); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
-.btn-lg { padding: 1.1rem 2rem; font-size: 1.08rem; }
+.btn-lg { padding: 1.05rem 1.9rem; font-size: 1.05rem; }
 .btn-block { width: 100%; }
 
 /* ---------- chips / misc ---------- */
 .chip {
-  display: inline-block; font-family: var(--font-head); font-weight: 700;
+  display: inline-block; font-family: var(--font-body); font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.72rem;
   padding: 0.3rem 0.6rem; border-radius: 3px; background: var(--ink); color: var(--yellow);
 }
-.accent-bar { width: 64px; height: 5px; background: var(--grad); border-radius: 3px; }
+.accent-bar { width: 64px; height: 5px; background: var(--yellow); border-radius: 3px; }
 
 /* ---------- accessibility ---------- */
-:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
 .skip-link {
   position: absolute; left: 0.5rem; top: -3rem; z-index: 200;
   background: var(--ink); color: #fff; padding: 0.6rem 1rem; border-radius: var(--r);

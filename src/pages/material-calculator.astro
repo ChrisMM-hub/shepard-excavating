@@ -216,15 +216,15 @@ const howTo = {
   .mc-hero h1 { color: #fff; margin-top: 0.5rem; }
   .mc-lead { color: #cfccc2; margin-top: 0.9rem; max-width: 60ch; font-size: 1.12rem; }
 
-  .calc { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(1.4rem, 3vw, 2.4rem); align-items: start; }
-  .calc-inputs { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: clamp(1.4rem, 3vw, 2rem); box-shadow: var(--shadow-sm); }
+  .calc { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(1.4rem, 3vw, 2.4rem); align-items: start; }
+  .calc-inputs { min-width: 0; background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: clamp(1.4rem, 3vw, 2rem); box-shadow: var(--shadow-sm); }
   .calc-inputs h2 { font-size: clamp(1.4rem, 2.4vw, 1.8rem); margin-bottom: 1.3rem; }
 
   .field { margin-bottom: 1.15rem; }
-  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; }
   label, .lbl { display: block; font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; margin-bottom: 0.4rem; }
   input, select {
-    width: 100%; font: inherit; font-size: 1.05rem; padding: 0.78rem 0.9rem;
+    width: 100%; min-width: 0; font: inherit; font-size: 1.05rem; padding: 0.78rem 0.9rem;
     border: 1.5px solid var(--line); border-radius: var(--r); background: var(--paper); color: var(--ink);
     transition: border-color 0.15s, box-shadow 0.15s;
   }
@@ -241,7 +241,7 @@ const howTo = {
   .chip-btn.is-on { background: var(--yellow); border-color: var(--yellow-deep); }
 
   /* result panel */
-  .calc-out { background: var(--ink); color: #fff; border-radius: var(--r-lg); padding: clamp(1.4rem, 3vw, 2rem); box-shadow: var(--shadow); position: sticky; top: calc(var(--header-h) + 1rem); }
+  .calc-out { min-width: 0; background: var(--ink); color: #fff; border-radius: var(--r-lg); padding: clamp(1.4rem, 3vw, 2rem); box-shadow: var(--shadow); position: sticky; top: calc(var(--header-h) + 1rem); }
   .out-eyebrow { font-family: var(--font-head); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem; color: var(--yellow); }
   .out-number { font-family: var(--font-head); font-weight: 800; line-height: 1; margin: 0.35rem 0 0; }
   .out-number #mc-final { font-size: clamp(3rem, 8vw, 4.5rem); color: #fff; }
@@ -289,7 +289,7 @@ const howTo = {
   .scn-general li::before { content: ''; position: absolute; left: 0; top: 0.5em; width: 11px; height: 11px; border-radius: 2px; background: var(--grad); }
 
   @media (max-width: 900px) {
-    .calc { grid-template-columns: 1fr; }
+    .calc { grid-template-columns: minmax(0, 1fr); }
     .calc-out { position: static; }
     .req-grid { grid-template-columns: 1fr; }
   }

@@ -34,7 +34,7 @@ const mapSrc = 'https://www.google.com/maps?q=42554+County+45+Laporte+MN+56461&z
             <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="9" r="2.5" fill="currentColor"/></svg></span>
             <div><span class="info-label">Shop</span>{business.address.street}<br />{business.address.city}, {business.address.region} {business.address.zip}</div>
           </li>
-          <li>
+          <li id="hours">
             <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
             <div><span class="info-label">Hours</span>{business.hours}</div>
           </li>

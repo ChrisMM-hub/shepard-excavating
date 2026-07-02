@@ -1,22 +1,21 @@
 ---
-// Self-host the Barlow fonts with font-display:optional so text never swaps mid-load
-// (no swap = no reflow = no CLS). On fast/repeat visits Barlow shows immediately; on a
-// cold slow load the metric-matched fallback in global.css is used for that view.
-import barlow400 from '@fontsource/barlow/files/barlow-latin-400-normal.woff2';
-import barlow600 from '@fontsource/barlow/files/barlow-latin-600-normal.woff2';
-import barlow700 from '@fontsource/barlow/files/barlow-latin-700-normal.woff2';
-import barlowSC600 from '@fontsource/barlow-semi-condensed/files/barlow-semi-condensed-latin-600-normal.woff2';
-import barlowSC700 from '@fontsource/barlow-semi-condensed/files/barlow-semi-condensed-latin-700-normal.woff2';
-import barlowSC800 from '@fontsource/barlow-semi-condensed/files/barlow-semi-condensed-latin-800-normal.woff2';
+// Self-host the site fonts with font-display:optional so text never swaps mid-load
+// (no swap = no reflow = no CLS). On fast/repeat visits the webfont shows immediately;
+// on a cold slow load the metric-matched fallback in global.css is used for that view.
+// v3 fonts match the original shepardexcavating.com theme: Josefin Sans + Quicksand.
+import josefin600 from '@fontsource/josefin-sans/files/josefin-sans-latin-600-normal.woff2';
+import josefin700 from '@fontsource/josefin-sans/files/josefin-sans-latin-700-normal.woff2';
+import quicksand400 from '@fontsource/quicksand/files/quicksand-latin-400-normal.woff2';
+import quicksand500 from '@fontsource/quicksand/files/quicksand-latin-500-normal.woff2';
+import quicksand700 from '@fontsource/quicksand/files/quicksand-latin-700-normal.woff2';
 import '../styles/global.css';
 
 const fontFaces = [
-  ['Barlow', 400, barlow400],
-  ['Barlow', 600, barlow600],
-  ['Barlow', 700, barlow700],
-  ['Barlow Semi Condensed', 600, barlowSC600],
-  ['Barlow Semi Condensed', 700, barlowSC700],
-  ['Barlow Semi Condensed', 800, barlowSC800],
+  ['Josefin Sans', 600, josefin600],
+  ['Josefin Sans', 700, josefin700],
+  ['Quicksand', 400, quicksand400],
+  ['Quicksand', 500, quicksand500],
+  ['Quicksand', 700, quicksand700],
 ]
   .map(([f, w, u]) => `@font-face{font-family:'${f}';font-style:normal;font-weight:${w};font-display:optional;src:url(${u}) format('woff2')}`)
   .join('');
@@ -74,6 +73,14 @@ const localBusiness = {
   foundingDate: String(business.founded),
   priceRange: '$$',
   sameAs: [business.facebook, business.bbb],
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '07:00',
+      closes: '17:00',
+    },
+  ],
   knowsAbout: [
     'Septic system installation',
     'Mound septic systems',
@@ -118,7 +125,7 @@ const localBusiness = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#141210" />
+    <meta name="theme-color" content="#0d0d0d" />
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

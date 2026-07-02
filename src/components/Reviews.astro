@@ -1,12 +1,14 @@
 ---
 import { reviews, business } from '../data/site';
+// The original homepage has a "From Our Facebook Page" section (a slow FB embed).
+// Same section, upgraded: real recommendations from their page, rendered as fast HTML.
 ---
 
-<section class="section section--stone" id="reviews" aria-labelledby="rev-h">
+<section class="section reviews" id="reviews" aria-labelledby="rev-h">
   <div class="container">
     <div class="section-head center">
-      <p class="eyebrow" style="justify-content:center;">Word around the lakes</p>
-      <h2 id="rev-h">What neighbors say about Shepard</h2>
+      <h2 id="rev-h">From Our Facebook Page</h2>
+      <p class="rev-sub">Be sure to like, follow, and stay up to date with us.</p>
     </div>
     <ul class="rev-grid">
       {reviews.map((r) => (
@@ -21,31 +23,34 @@ import { reviews, business } from '../data/site';
       ))}
     </ul>
     <p class="rev-foot">
-      <a href={business.facebook} rel="noopener" target="_blank">See more reviews on Facebook <span aria-hidden="true">→</span></a>
+      <a href={business.facebook} rel="noopener" target="_blank">See more on our Facebook page <span aria-hidden="true">&rarr;</span></a>
     </p>
   </div>
 </section>
 
 <style>
-  .rev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; align-items: stretch; }
-  .rev-card { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: 1.6rem; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 0.9rem; }
+  .reviews { background: #fff; }
+  .rev-sub { color: var(--slate); margin-top: 0.4rem; }
+  .rev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; align-items: stretch; }
+  .rev-card { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: 1.5rem; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 0.9rem; }
   .fb-badge {
     display: inline-flex; align-items: center; gap: 0.45rem; align-self: flex-start;
-    font-family: var(--font-head); font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em;
-    color: var(--ink); background: var(--stone); border: 1px solid var(--line);
+    font-family: var(--font-body); font-weight: 700; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.04em;
+    color: var(--ink); background: var(--paper); border: 1px solid var(--line);
     padding: 0.35rem 0.7rem; border-radius: 999px;
   }
-  .fb-badge svg { width: 16px; height: 16px; color: var(--orange-deep); }
-  blockquote { font-size: 1.04rem; line-height: 1.55; color: var(--ink); flex: 1; }
-  .rev-by { display: flex; flex-direction: column; border-top: 1px solid var(--line); padding-top: 0.9rem; }
-  .rev-by strong { font-family: var(--font-head); font-weight: 700; font-size: 1.04rem; }
-  .rev-by span { color: var(--slate); font-size: 0.88rem; }
-  .rev-foot { text-align: center; margin-top: 1.8rem; }
-  .rev-foot a { color: var(--orange-deep); font-family: var(--font-head); font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; }
-  .rev-foot a:hover { color: var(--ink); }
+  .fb-badge svg { width: 16px; height: 16px; color: #1877f2; }
+  blockquote { font-size: 0.99rem; line-height: 1.6; color: var(--ink); flex: 1; }
+  .rev-by { display: flex; flex-direction: column; border-top: 1px solid var(--line); padding-top: 0.85rem; }
+  .rev-by strong { font-family: var(--font-head); font-weight: 700; font-size: 1.02rem; }
+  .rev-by span { color: var(--slate); font-size: 0.85rem; }
+  .rev-foot { text-align: center; margin-top: 1.7rem; }
+  .rev-foot a { color: var(--red); font-weight: 700; }
+  .rev-foot a:hover { color: var(--red-deep); }
+
   @media (max-width: 880px) {
     /* horizontal swipe row on mobile (CSS scroll-snap, no JS) */
-    .rev-grid { display: flex; grid-template-columns: none; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 0.5rem; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); }
+    .rev-grid { display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 0.5rem; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); }
     .rev-grid::-webkit-scrollbar { display: none; }
     .rev-card { scroll-snap-align: start; flex: 0 0 86%; }
   }

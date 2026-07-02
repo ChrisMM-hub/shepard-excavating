@@ -1,47 +1,63 @@
 ---
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
-import TrustBar from '../components/TrustBar.astro';
-import Intro from '../components/Intro.astro';
-import Services from '../components/Services.astro';
-import Reviews from '../components/Reviews.astro';
+import HomeFeature from '../components/HomeFeature.astro';
 import CalculatorCTA from '../components/CalculatorCTA.astro';
-import BeforeAfter from '../components/BeforeAfter.astro';
-import Gallery from '../components/Gallery.astro';
-import MidCTA from '../components/MidCTA.astro';
-import WhyUs from '../components/WhyUs.astro';
-import MeetCrew from '../components/MeetCrew.astro';
-import ServiceArea from '../components/ServiceArea.astro';
-import FAQ from '../components/FAQ.astro';
-import EmergencyBand from '../components/EmergencyBand.astro';
+import Reviews from '../components/Reviews.astro';
 import Contact from '../components/Contact.astro';
-import { faqs } from '../data/site';
 
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((f) => ({
-    '@type': 'Question',
-    name: f.q,
-    acceptedAnswer: { '@type': 'Answer', text: f.a },
-  })),
-};
+import pitImg from '../assets/photos/v3-pit.jpg';
+import pumpTruckImg from '../assets/photos/v3-pump-truck.jpg';
+import fisherImg from '../assets/photos/v3-fisher.jpg';
+
+// v3 homepage: the original site's structure and copy, rebuilt on the fast stack.
+// Kept from the v2 build: Material Calculator, all service + town pages (linked via
+// nav, towns band, and footer), real Facebook reviews, HighLevel quote form.
 ---
 
-<Base jsonLd={[faqSchema]}>
+<Base>
   <Hero />
-  <TrustBar />
-  <Intro />
-  <Services />
-  <Reviews />
+
+  <HomeFeature
+    heading="Helping you make room"
+    paragraphs={[
+      'We have the equipment and expertise to help with any and all of your excavation and demolition projects. From making room for your new dream home to driveway building we got you covered.',
+      'Work with us and we will handle all of your land clearing done in a timely fashion.',
+    ]}
+    btnLabel="Excavating"
+    btnHref="/excavating"
+    img={pitImg}
+    alt="Shepard Excavating equipment moving sand and screening material at the pit"
+  />
+
+  <HomeFeature
+    heading="Get quick emergency service"
+    paragraphs={[
+      'When you need speedy, affordable emergency service, we are the only team you need.',
+      'Let us help with septic emergencies, frozen pipes, snow removal, and more.',
+    ]}
+    btnLabel="Emergency"
+    btnHref="/septic-emergency"
+    img={pumpTruckImg}
+    alt="The Shepard Excavating septic pump truck P6 ready to roll in winter"
+    flip
+    tint
+  />
+
+  <HomeFeature
+    heading="Fisher Snowplows"
+    paragraphs={[
+      'Come check out our line up of Fisher snowplows for sale. We have a variety of snowplows on hand or can order anything you need.',
+      "We can get v-plows or straight blades for 1/2 ton vehicles. Meaning we can set you up to push snow with just about anything! As well as ATV's! We also sell a variety of salters.",
+      'We can order snow plows year round. So you are prepared before winter hits.',
+    ]}
+    btnLabel="Fisher Snowplows"
+    btnHref="/fisher-snowplows"
+    img={fisherImg}
+    alt="A Fisher XV2 V-plow mounted on a pickup at the Shepard Excavating shop"
+  />
+
   <CalculatorCTA />
-  <BeforeAfter />
-  <Gallery />
-  <MidCTA />
-  <WhyUs />
-  <MeetCrew />
-  <ServiceArea />
-  <FAQ />
-  <EmergencyBand />
+  <Reviews />
   <Contact />
 </Base>

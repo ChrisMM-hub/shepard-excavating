@@ -1,54 +1,92 @@
 ---
 import QuoteForm from './QuoteForm.astro';
 import { business } from '../data/site';
+
+// The original homepage ends on a black "Give us a call" band with the serving-area
+// line. Same band here, with each town linked to its local page, and the quote form
+// (HighLevel-wired) living inside it.
+const townLinks: Array<[string, string | null]> = [
+  ['Walker', '/walker-mn'],
+  ['Bemidji', '/bemidji-mn'],
+  ['Hackensack', '/hackensack-mn'],
+  ['Laporte', '/laporte-mn'],
+  ['Cass Lake', '/cass-lake-mn'],
+  ['Longville', '/longville-mn'],
+  ['Park Rapids', '/park-rapids-mn'],
+];
 ---
 
-<section class="section section--dark" id="contact" aria-labelledby="contact-h">
-  <div class="container contact-grid">
-    <div class="contact-info">
-      <p class="eyebrow">Get a free estimate</p>
-      <h2 id="contact-h">Tell us about the job</h2>
-      <p class="lead">
-        Fill out the form or call and talk to a real person. We will get you a straight answer and a fair price.
-        No pressure, no runaround.
+<section class="section section--dark contact" id="contact" aria-labelledby="contact-h">
+  <div class="container">
+    <div class="band-head">
+      <h2 id="contact-h">Give us a call <a href={business.phoneHref} class="band-phone">218-224-2754</a></h2>
+      <p class="band-serving"><strong>Proudly serving the Northern Minnesota area.</strong></p>
+      <p class="band-towns">
+        Including {townLinks.map(([town, href], i) => (
+          <>
+            {href ? <a href={href}>{town}</a> : town}{i < townLinks.length - 2 ? ', ' : i === townLinks.length - 2 ? ' and ' : ''}
+          </>
+        ))}
       </p>
-
-      <ul class="info-list">
-        <li>
-          <span class="ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.58 3.6a1 1 0 0 1-.25 1l-2.2 2.2Z" fill="currentColor"/></svg>
-          </span>
-          <div><span class="info-label">Call or text</span><a href={business.phoneHref}>{business.phone}</a></div>
-        </li>
-        <li>
-          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 5h18v14H3z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m3 6 9 7 9-7" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
-          <div><span class="info-label">Email</span><a href={business.emailHref}>{business.email}</a></div>
-        </li>
-        <li>
-          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="9" r="2.5" fill="currentColor"/></svg></span>
-          <div><span class="info-label">Shop</span>{business.address.street}, {business.address.city}, {business.address.region} {business.address.zip}</div>
-        </li>
-        <li>
-          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
-          <div><span class="info-label">Hours</span>{business.hours}</div>
-        </li>
-      </ul>
     </div>
 
-    <QuoteForm />
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Or send us a message</h3>
+        <p class="ci-lead">
+          Fill out the form and talk to a real person. We will get you a straight answer and a fair price.
+          No pressure, no runaround.
+        </p>
+
+        <ul class="info-list">
+          <li>
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.58 3.6a1 1 0 0 1-.25 1l-2.2 2.2Z" fill="currentColor"/></svg>
+            </span>
+            <div><span class="info-label">Call or text</span><a href={business.phoneHref}>{business.phone}</a></div>
+          </li>
+          <li>
+            <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 5h18v14H3z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m3 6 9 7 9-7" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
+            <div><span class="info-label">Email</span><a href={business.emailHref}>{business.email}</a></div>
+          </li>
+          <li>
+            <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="9" r="2.5" fill="currentColor"/></svg></span>
+            <div><span class="info-label">Shop</span>{business.address.street}, {business.address.city}, {business.address.region} {business.address.zip}</div>
+          </li>
+          <li>
+            <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
+            <div><span class="info-label">Hours</span>{business.hours}</div>
+          </li>
+        </ul>
+      </div>
+
+      <QuoteForm />
+    </div>
   </div>
 </section>
 
 <style>
+  .contact { background: var(--charcoal); }
+  .band-head { text-align: center; margin-bottom: clamp(2rem, 5vw, 3.2rem); }
+  .band-head h2 { font-size: clamp(1.7rem, 3.8vw, 2.6rem); }
+  .band-phone { color: var(--yellow); white-space: nowrap; }
+  .band-phone:hover { color: var(--yellow-deep); }
+  .band-serving { margin-top: 0.9rem; font-size: 1.02rem; color: #fff; }
+  .band-towns { color: #cfcfcf; font-size: 0.95rem; max-width: 52ch; margin-inline: auto; }
+  .band-towns a { color: #fff; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,203,5,0.6); }
+  .band-towns a:hover { color: var(--yellow); }
+
   .contact-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
-  .info-list { display: grid; gap: 1.1rem; margin-top: 1.8rem; }
+  .contact-info h3 { color: #fff; }
+  .ci-lead { color: #cfcfcf; margin-top: 0.7rem; }
+  .info-list { display: grid; gap: 1.1rem; margin-top: 1.6rem; }
   .info-list li { display: flex; align-items: center; gap: 0.9rem; }
-  .ico { width: 44px; height: 44px; flex-shrink: 0; display: grid; place-items: center; border-radius: 50%; background: var(--charcoal-2); border: 1px solid rgba(255,255,255,0.1); color: var(--yellow); }
+  .ico { width: 44px; height: 44px; flex-shrink: 0; display: grid; place-items: center; border-radius: 50%; background: var(--charcoal-2); border: 1px solid rgba(255,255,255,0.12); color: var(--yellow); }
   .ico svg { width: 22px; height: 22px; }
-  .info-label { display: block; font-family: var(--font-head); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.72rem; color: var(--gold); }
-  .info-list a { font-size: 1.12rem; font-weight: 600; }
+  .info-label { display: block; font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.7rem; color: var(--gold); }
+  .info-list a { font-size: 1.08rem; font-weight: 600; }
   .info-list a:hover { color: var(--yellow); }
-  .info-list div:not(.ico) { color: #ded9cf; }
+  .info-list div:not(.ico) { color: #dedede; }
 
   @media (max-width: 860px) { .contact-grid { grid-template-columns: 1fr; } }
 </style>
