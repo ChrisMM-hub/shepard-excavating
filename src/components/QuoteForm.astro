@@ -1,11 +1,11 @@
 ---
-import { featuredServices, moreServices, towns, highlevelWebhook } from '../data/site';
+import { featuredServices, moreServices, highlevelWebhook } from '../data/site';
 
 interface Props {
   service?: string; // pre-selects the service dropdown
-  location?: string; // pre-selects the town dropdown
+  location?: string; // accepted for compatibility (town pages pass it); the town field was removed 2026-07-02
 }
-const { service = '', location = '' } = Astro.props;
+const { service = '' } = Astro.props;
 
 const services = [...featuredServices, ...moreServices].map((s) => s.title);
 ---
@@ -22,11 +22,11 @@ const services = [...featuredServices, ...moreServices].map((s) => s.title);
         <input id="qf-phone" name="phone" type="tel" autocomplete="tel" required />
       </div>
     </div>
-    <div class="field">
-      <label for="qf-email">Email</label>
-      <input id="qf-email" name="email" type="email" autocomplete="email" />
-    </div>
     <div class="row">
+      <div class="field">
+        <label for="qf-email">Email</label>
+        <input id="qf-email" name="email" type="email" autocomplete="email" />
+      </div>
       <div class="field">
         <label for="qf-service">Service needed</label>
         <select id="qf-service" name="service">
@@ -35,26 +35,14 @@ const services = [...featuredServices, ...moreServices].map((s) => s.title);
           <option value="Something else" selected={service === 'Something else'}>Something else</option>
         </select>
       </div>
-      <div class="field">
-        <label for="qf-town">Town</label>
-        <select id="qf-town" name="town">
-          <option value="">Select your town</option>
-          {towns.map((t) => (<option value={t} selected={t === location}>{t}</option>))}
-          <option value="Other" selected={location === 'Other'}>Other / nearby</option>
-        </select>
-      </div>
     </div>
     <div class="field">
-      <span class="label-as">How soon?</span>
-      <div class="urgency">
-        <label><input type="radio" name="urgency" value="Routine" checked /> <span>Routine</span></label>
-        <label><input type="radio" name="urgency" value="This week" /> <span>This week</span></label>
-        <label class="urg-emer"><input type="radio" name="urgency" value="Emergency" /> <span>Emergency</span></label>
-      </div>
+      <label for="qf-address">Address</label>
+      <input id="qf-address" name="address" type="text" autocomplete="street-address" placeholder="Property address or nearest town" />
     </div>
     <div class="field">
-      <label for="qf-message">Brief description</label>
-      <textarea id="qf-message" name="message" rows="3" placeholder="Tell us a little about the job, the property, and timing."></textarea>
+      <label for="qf-message">Let us know how we can help.</label>
+      <textarea id="qf-message" name="message" rows="4" placeholder="Please enter details about your project or property here."></textarea>
     </div>
     <button type="submit" class="btn btn-primary btn-lg btn-block">Request My Free Estimate</button>
     <p class="form-fine">We answer fast. Your info goes straight to the Shepard family, never sold or shared.</p>
@@ -69,29 +57,24 @@ const services = [...featuredServices, ...moreServices].map((s) => s.title);
 
 <style>
   .form-card { background: #fff; color: var(--ink); border-radius: var(--r-lg); padding: clamp(1.4rem, 3vw, 2rem); box-shadow: var(--shadow-lg); }
-  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; }
   .field { margin-bottom: 1rem; }
-  label, .label-as { display: block; font-family: var(--font-head); font-weight: 700; font-size: 0.92rem; margin-bottom: 0.35rem; color: var(--ink); }
+  label { display: block; font-family: var(--font-head); font-weight: 700; font-size: 0.92rem; margin-bottom: 0.35rem; color: var(--ink); }
   .req { color: var(--red); }
   input, select, textarea {
-    width: 100%; font: inherit; font-size: 1rem; padding: 0.75rem 0.85rem;
+    width: 100%; min-width: 0; font: inherit; font-size: 1rem; padding: 0.75rem 0.85rem;
     border: 1.5px solid var(--line); border-radius: var(--r); background: var(--paper); color: var(--ink);
     transition: border-color 0.15s, box-shadow 0.15s;
   }
-  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px rgba(224,122,23,0.18); background: #fff; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(194,19,19,0.15); background: #fff; }
   textarea { resize: vertical; }
-  .urgency { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-  .urgency label { display: inline-flex; align-items: center; gap: 0.45rem; font-family: var(--font-body); font-weight: 600; font-size: 0.98rem; padding: 0.55rem 0.9rem; border: 1.5px solid var(--line); border-radius: var(--r); cursor: pointer; margin: 0; }
-  .urgency input { width: auto; }
-  .urgency label:has(input:checked) { border-color: var(--ink); background: var(--stone); }
-  .urgency .urg-emer:has(input:checked) { border-color: var(--red); background: #fbeae8; color: var(--red-deep); }
   .form-fine { font-size: 0.84rem; color: var(--slate); margin-top: 0.8rem; text-align: center; }
 
   .form-success { text-align: center; padding: 2.5rem 1rem; }
-  .form-success .check { width: 64px; height: 64px; margin: 0 auto 1rem; border-radius: 50%; background: var(--grad); color: var(--ink); font-size: 2rem; font-weight: 800; display: grid; place-items: center; }
+  .form-success .check { width: 64px; height: 64px; margin: 0 auto 1rem; border-radius: 50%; background: var(--yellow); color: var(--ink); font-size: 2rem; font-weight: 800; display: grid; place-items: center; }
   .form-success h3 { font-size: 1.5rem; }
   .form-success p { color: var(--slate); margin-top: 0.5rem; }
-  .form-success a { color: var(--orange-deep); font-weight: 700; }
+  .form-success a { color: var(--red); font-weight: 700; }
 
   @media (max-width: 460px) { .row { grid-template-columns: 1fr; } }
 </style>
@@ -113,21 +96,24 @@ const services = [...featuredServices, ...moreServices].map((s) => s.title);
       if (!name) { field('name')?.focus(); return; }
       if (!phone) { field('phone')?.focus(); return; }
 
+      const address = field('address')?.value.trim() || '';
+      const note = field('message')?.value.trim() || '';
       const payload = {
         name,
         phone,
         email: field('email')?.value.trim() || '',
         service: field('service')?.value || '',
-        location: field('town')?.value || '',
-        urgency: (form.querySelector('[name="urgency"]:checked') as HTMLInputElement | null)?.value || '',
-        message: field('message')?.value.trim() || '',
+        address,
+        // Address rides along inside the message too, so the existing HighLevel
+        // notification email shows it without any workflow changes.
+        message: address ? `${note}${note ? '\n\n' : ''}Address: ${address}` : note,
         source: 'Website quote form',
         page: window.location.href,
       };
 
       // GA4 / GTM conversion signal
       (window as any).dataLayer = (window as any).dataLayer || [];
-      (window as any).dataLayer.push({ event: 'generate_lead', form: 'quote', service: payload.service, urgency: payload.urgency });
+      (window as any).dataLayer.push({ event: 'generate_lead', form: 'quote', service: payload.service });
 
       const webhook = form.dataset.webhook;
       if (webhook) {

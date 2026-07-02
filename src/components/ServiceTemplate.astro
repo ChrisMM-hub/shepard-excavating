@@ -119,7 +119,7 @@ const hero = img(service.heroImage);
           {related.map((r) => (
             <a class="related-card" href={'/' + r.slug}>
               <Image src={img(r.heroImage)} alt={r.navLabel} widths={[300, 600]} sizes="280px" quality={70} />
-              <span>{r.navLabel} <span aria-hidden="true">→</span></span>
+              <span class="rc-label" set:html={r.navLabel + '&nbsp;<span class="arr" aria-hidden="true">&rarr;</span>'} />
             </a>
           ))}
         </div>
@@ -165,9 +165,9 @@ const hero = img(service.heroImage);
   .ticks { display: grid; gap: 0.6rem; margin-top: 1rem; }
   .ticks.two-col { grid-template-columns: 1fr 1fr; gap: 0.6rem 1.6rem; }
   .ticks li { position: relative; padding-left: 1.6rem; color: var(--ink); line-height: 1.4; }
-  .ticks li::before { content: ''; position: absolute; left: 0; top: 0.45em; width: 11px; height: 11px; border-radius: 2px; background: var(--grad); }
+  .ticks li::before { content: ''; position: absolute; left: 0; top: 0.45em; width: 11px; height: 11px; border-radius: 2px; background: var(--yellow); }
 
-  .detail-aside { position: sticky; top: 96px; }
+  .detail-aside { position: sticky; top: calc(var(--header-h) + 1.2rem); }
   .aside-card { background: var(--stone); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 1.5rem; }
   .aside-card h3 { font-size: 1.3rem; }
   .aside-card > p { color: var(--slate); margin: 0.5rem 0 1.1rem; }
@@ -195,7 +195,8 @@ const hero = img(service.heroImage);
   .related-card { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.16s, box-shadow 0.16s; }
   .related-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
   .related-card :global(img) { width: 100%; height: 150px; object-fit: cover; }
-  .related-card span { padding: 0.9rem 1rem; font-family: var(--font-head); font-weight: 700; color: var(--ink); }
+  .related-card .rc-label { padding: 0.9rem 1rem; font-family: var(--font-head); font-weight: 700; color: var(--ink); }
+  .related-card :global(.arr) { color: var(--red); }
   .area-line { margin-top: 2rem; font-family: var(--font-head); font-weight: 600; color: var(--slate); text-align: center; }
 
   .contact-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }

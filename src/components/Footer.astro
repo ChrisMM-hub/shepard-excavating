@@ -23,32 +23,34 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
 
 <footer class="footer">
   <div class="container foot-inner">
-    <a href="/" class="foot-brand" aria-label={business.shortName + ' home'}>
-      <Image src={logo} alt={business.name} width={240} height={104} quality={88} loading="lazy" />
-    </a>
+    <!-- brand + contact facts, one anchored column -->
+    <div class="foot-brand">
+      <a href="/" aria-label={business.shortName + ' home'}>
+        <Image src={logo} alt={business.name} width={240} height={104} quality={88} loading="lazy" />
+      </a>
+      <ul class="foot-facts">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="9" r="2.5" fill="currentColor"/></svg>
+          <a href={mapsUrl} rel="noopener" target="_blank">{business.address.street}, {business.address.city}, {business.address.region} {business.address.zip}</a>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.58 3.6a1 1 0 0 1-.25 1l-2.2 2.2Z" fill="currentColor"/></svg>
+          <a href={business.phoneHref}>Phone: {business.phone}</a>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <span>Monday &ndash; Friday: 7:00am &ndash; 5:00pm<br />Saturday: By appointment<br />Sunday: Closed</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8.5h2.5V5.5H14c-2 0-3.5 1.6-3.5 3.6v1.9H8v3h2.5V21h3v-7h2.3l.5-3h-2.8V9.4c0-.5.4-.9.9-.9Z" fill="currentColor"/></svg>
+          <a href={business.facebook} rel="noopener" target="_blank">Follow us on Facebook</a>
+        </li>
+      </ul>
+    </div>
 
-    <ul class="foot-facts">
-      <li>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="9" r="2.5" fill="currentColor"/></svg>
-        <a href={mapsUrl} rel="noopener" target="_blank">{business.address.street}, {business.address.city}, {business.address.region} {business.address.zip}</a>
-      </li>
-      <li>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.58 3.6a1 1 0 0 1-.25 1l-2.2 2.2Z" fill="currentColor"/></svg>
-        <a href={business.phoneHref}>Phone: {business.phone}</a>
-      </li>
-      <li class="hours">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        <span>Monday &ndash; Friday: 7:00am &ndash; 5:00pm<br />Saturday: By appointment<br />Sunday: Closed</span>
-      </li>
-      <li>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8.5h2.5V5.5H14c-2 0-3.5 1.6-3.5 3.6v1.9H8v3h2.5V21h3v-7h2.3l.5-3h-2.8V9.4c0-.5.4-.9.9-.9Z" fill="currentColor"/></svg>
-        <a href={business.facebook} rel="noopener" target="_blank">Follow us on Facebook</a>
-      </li>
-    </ul>
-
-    <nav class="foot-links" aria-label="Services">
+    <nav class="foot-links foot-services" aria-label="Services">
       <p class="fl-label">Services</p>
-      <ul>
+      <ul class="fl-two">
         {services.map((s) => (<li><a href={'/' + s.slug}>{s.title}</a></li>))}
       </ul>
     </nav>
@@ -58,7 +60,10 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
       <ul>
         {townLinks.map(([town, href]) => (<li><a href={href}>{town}, MN</a></li>))}
       </ul>
-      <p class="fl-label fl-more">More</p>
+    </nav>
+
+    <nav class="foot-links" aria-label="More pages">
+      <p class="fl-label">More</p>
       <ul>
         <li><a href="/material-calculator">Material Calculator</a></li>
         <li><a href="/about">About Shepard</a></li>
@@ -79,26 +84,33 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
 <style>
   .footer { background: var(--stone); border-top: 1px solid var(--line); }
   .foot-inner {
-    display: grid; grid-template-columns: 1.2fr 1.3fr 1fr 1fr;
-    gap: clamp(1.6rem, 4vw, 3rem);
-    padding-block: clamp(2.4rem, 5vw, 3.6rem);
+    display: grid; grid-template-columns: 1.45fr 1.75fr 0.9fr 1fr;
+    gap: clamp(1.6rem, 4vw, 2.8rem);
+    padding-block: clamp(2.4rem, 5vw, 3.4rem);
   }
-  .foot-brand :global(img) { width: 210px; height: auto; }
+  .foot-brand :global(img) { width: 200px; height: auto; }
 
-  .foot-facts { display: grid; gap: 0.85rem; align-content: start; }
-  .foot-facts li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.95rem; color: var(--slate); }
-  .foot-facts svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 0.2rem; color: var(--red); }
+  .foot-facts { display: grid; gap: 0.8rem; align-content: start; margin-top: 1.1rem; }
+  .foot-facts li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.93rem; color: var(--slate); line-height: 1.5; }
+  .foot-facts svg { width: 17px; height: 17px; flex-shrink: 0; margin-top: 0.2rem; color: var(--red); }
   .foot-facts a:hover { color: var(--red-deep); }
 
-  .fl-label { font-family: var(--font-head); font-weight: 700; font-size: 1.02rem; margin-bottom: 0.6rem; }
-  .fl-more { margin-top: 1.1rem; }
-  .foot-links ul { display: grid; gap: 0.35rem; }
-  .foot-links a { font-size: 0.93rem; color: var(--slate); }
+  .fl-label { font-family: var(--font-head); font-weight: 700; font-size: 1.02rem; margin-bottom: 0.7rem; }
+  .foot-links ul { display: grid; gap: 0.4rem; align-content: start; }
+  .fl-two { grid-template-columns: 1fr 1fr; column-gap: 1.4rem; }
+  .foot-links a { font-size: 0.92rem; color: var(--slate); line-height: 1.45; }
   .foot-links a:hover { color: var(--red-deep); }
 
   .foot-bottom { background: var(--ink); color: #cfcfcf; }
   .foot-bottom p { padding-block: 0.9rem; font-size: 0.82rem; text-align: center; }
 
-  @media (max-width: 980px) { .foot-inner { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 560px) { .foot-inner { grid-template-columns: 1fr; } }
+  @media (max-width: 1060px) {
+    .foot-inner { grid-template-columns: 1fr 1fr; }
+    .foot-services { order: 3; }
+  }
+  @media (max-width: 560px) {
+    .foot-inner { grid-template-columns: 1fr; }
+    .fl-two { grid-template-columns: 1fr 1fr; }
+    .foot-services { order: 0; }
+  }
 </style>
