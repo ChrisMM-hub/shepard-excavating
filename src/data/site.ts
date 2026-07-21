@@ -21,7 +21,9 @@ export const business = {
     zip: '56461', // PLACEHOLDER: confirm with Janele
   },
   geo: { lat: 47.2167, lng: -94.75 },
-  hours: 'Mon–Fri 7:00am – 5:00pm · Sat by appointment · Sun closed', // verified from their original site; confirm any after-hours/emergency availability
+  // Client asked us to drop all 24/7 messaging (2026-07-21). Emergency copy says we get a
+  // truck out as fast as we can; do not put a time promise back on the site.
+  hours: 'Mon–Fri 7:00am – 5:00pm · Sat by appointment · Sun closed', // verified from their original site
   facebook: 'https://www.facebook.com/ShepardExcavating/',
   bbb:
     'https://www.bbb.org/us/mn/laporte/profile/excavating-contractors/shepard-excavating-septic-service-0704-96159257',
@@ -105,7 +107,7 @@ export const featuredServices = [
 
 // The rest of the lineup, shown as a compact secondary row so all 10 services are covered.
 export const moreServices = [
-  { slug: 'septic-emergency', title: 'Septic Emergency', blurb: 'Frozen lines and backups, 24/7.', img: 'svc-emergency' },
+  { slug: 'septic-emergency', title: 'Septic Emergency', blurb: 'Frozen lines and backups handled fast.', img: 'svc-emergency' },
   { slug: 'snow-removal', title: 'Snow Removal', blurb: 'Driveways and commercial lots.', img: 'svc-snow' },
   { slug: 'fisher-snowplows', title: 'Fisher Snowplow Dealer', blurb: 'Sales, parts, and service.', img: 'svc-fisher' },
   { slug: 'roll-off-boxes', title: 'Roll-Off Dumpsters', blurb: 'Cleanouts and job debris.', img: 'svc-dumpster' },
