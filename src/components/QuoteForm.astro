@@ -1,31 +1,34 @@
 ---
-import { featuredServices, moreServices, highlevelWebhook } from '../data/site';
+import { featuredServices, moreServices, leadEndpoint } from '../data/site';
 
 interface Props {
   service?: string; // pre-selects the service dropdown
-  location?: string; // accepted for compatibility (town pages pass it); the town field was removed 2026-07-02
+  location?: string; // preserves which service-area page generated the lead
 }
-const { service = '' } = Astro.props;
+const { service = '', location = '' } = Astro.props;
 
-const services = [...featuredServices, ...moreServices].map((s) => s.title);
+const standardServices = [...featuredServices, ...moreServices].map((s) => s.title);
+const services = service && !standardServices.includes(service)
+  ? [service, ...standardServices]
+  : standardServices;
 ---
 
 <div class="form-card">
-  <form class="quote-form" novalidate data-webhook={highlevelWebhook}>
+  <form class="quote-form" method="post" action={leadEndpoint} data-endpoint={leadEndpoint}>
     <div class="row">
       <div class="field">
-        <label for="qf-name">Name</label>
-        <input id="qf-name" name="name" type="text" autocomplete="name" required />
+        <label for="qf-name">Name <span class="req">*</span></label>
+        <input id="qf-name" name="name" type="text" autocomplete="name" maxlength="120" required />
       </div>
       <div class="field">
         <label for="qf-phone">Phone <span class="req">*</span></label>
-        <input id="qf-phone" name="phone" type="tel" autocomplete="tel" required />
+        <input id="qf-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="40" required />
       </div>
     </div>
     <div class="row">
       <div class="field">
         <label for="qf-email">Email</label>
-        <input id="qf-email" name="email" type="email" autocomplete="email" />
+        <input id="qf-email" name="email" type="email" autocomplete="email" maxlength="254" />
       </div>
       <div class="field">
         <label for="qf-service">Service needed</label>
@@ -38,21 +41,24 @@ const services = [...featuredServices, ...moreServices].map((s) => s.title);
     </div>
     <div class="field">
       <label for="qf-address">Address</label>
-      <input id="qf-address" name="address" type="text" autocomplete="street-address" placeholder="Property address or nearest town" />
+      <input id="qf-address" name="address" type="text" autocomplete="street-address" maxlength="240" placeholder="Property address or nearest town" />
     </div>
     <div class="field">
       <label for="qf-message">Let us know how we can help.</label>
-      <textarea id="qf-message" name="message" rows="4" placeholder="Please enter details about your project or property here."></textarea>
+      <textarea id="qf-message" name="message" rows="4" maxlength="4000" placeholder="Please enter details about your project or property here."></textarea>
+    </div>
+    <input type="hidden" name="location" value={location} />
+    <div class="form-hp" aria-hidden="true">
+      <label for="qf-company-website">Company website</label>
+      <input id="qf-company-website" name="companyWebsite" type="url" tabindex="-1" autocomplete="off" />
     </div>
     <button type="submit" class="btn btn-primary btn-lg btn-block">Request My Free Estimate</button>
-    <p class="form-fine">We answer fast. Your info goes straight to the Shepard family, never sold or shared.</p>
+    <p class="form-error" role="alert" tabindex="-1" hidden>
+      We could not send your request. Please try again, or call <a href="tel:+12182242754">(218) 224-2754</a>.
+    </p>
+    <p class="form-fine">We use your information only to respond to your request. See our <a href="/privacy-policy/">privacy policy</a>.</p>
   </form>
 
-  <div class="form-success" hidden>
-    <div class="check" aria-hidden="true">✓</div>
-    <h3>Thanks, we got it.</h3>
-    <p>Your request is in. We will reach out shortly. Need us right now? Call <a href="tel:+12182242754">(218) 224-2754</a>.</p>
-  </div>
 </div>
 
 <style>
@@ -69,76 +75,112 @@ const services = [...featuredServices, ...moreServices].map((s) => s.title);
   input:focus, select:focus, textarea:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(194,19,19,0.15); background: #fff; }
   textarea { resize: vertical; }
   .form-fine { font-size: 0.84rem; color: var(--slate); margin-top: 0.8rem; text-align: center; }
-
-  .form-success { text-align: center; padding: 2.5rem 1rem; }
-  .form-success .check { width: 64px; height: 64px; margin: 0 auto 1rem; border-radius: 50%; background: var(--yellow); color: var(--ink); font-size: 2rem; font-weight: 800; display: grid; place-items: center; }
-  .form-success h3 { font-size: 1.5rem; }
-  .form-success p { color: var(--slate); margin-top: 0.5rem; }
-  .form-success a { color: var(--red); font-weight: 700; }
+  .form-fine a, .form-error a { color: var(--red); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+  .form-error { margin-top: 0.85rem; padding: 0.8rem; border: 1px solid rgba(194,19,19,0.35); border-radius: var(--r); background: rgba(194,19,19,0.07); color: #7f1111; }
+  .form-hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 
   @media (max-width: 460px) { .row { grid-template-columns: 1fr; } }
 </style>
 
 <script>
-  // The form posts to a HighLevel inbound webhook when one is configured (data-webhook),
-  // then redirects to /thank-you. With no webhook set it shows the inline success state,
-  // so the demo keeps working until HighLevel is connected.
+  // Submit through the same-origin lead endpoint. It validates the request and only
+  // returns success after HighLevel accepts the lead.
   document.querySelectorAll('.form-card').forEach((card) => {
     const form = card.querySelector('form') as HTMLFormElement | null;
-    const success = card.querySelector('.form-success') as HTMLElement | null;
+    const error = card.querySelector('.form-error') as HTMLElement | null;
     if (!form) return;
     const field = (n: string) => form.querySelector(`[name="${n}"]`) as HTMLInputElement | null;
+    const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+    const initialButtonText = submitButton?.textContent || 'Request My Free Estimate';
+
+    const showError = () => {
+      if (error) {
+        error.hidden = false;
+        error.focus();
+      }
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Try Again';
+      }
+    };
+
+    if (new URLSearchParams(window.location.search).get('lead_error') === '1') {
+      showError();
+      const cleanUrl = new URL(window.location.href);
+      cleanUrl.searchParams.delete('lead_error');
+      history.replaceState(null, '', cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
+    }
+
+    field('phone')?.addEventListener('input', () => field('phone')?.setCustomValidity(''));
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (error) error.hidden = true;
+
       const name = field('name')?.value.trim() || '';
       const phone = field('phone')?.value.trim() || '';
-      if (!name) { field('name')?.focus(); return; }
-      if (!phone) { field('phone')?.focus(); return; }
+      const phoneDigits = phone.replace(/\D/g, '');
+      if (!name || !phone) {
+        form.reportValidity();
+        return;
+      }
+      if (phoneDigits.length < 7 || phoneDigits.length > 15) {
+        field('phone')?.setCustomValidity('Enter a valid phone number.');
+        form.reportValidity();
+        field('phone')?.focus();
+        return;
+      }
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
 
-      const address = field('address')?.value.trim() || '';
-      const note = field('message')?.value.trim() || '';
       const payload = {
         name,
         phone,
         email: field('email')?.value.trim() || '',
         service: field('service')?.value || '',
-        address,
-        // Address rides along inside the message too, so the existing HighLevel
-        // notification email shows it without any workflow changes.
-        message: address ? `${note}${note ? '\n\n' : ''}Address: ${address}` : note,
-        source: 'Website quote form',
+        address: field('address')?.value.trim() || '',
+        location: field('location')?.value.trim() || '',
+        message: field('message')?.value.trim() || '',
+        companyWebsite: field('companyWebsite')?.value || '',
         page: window.location.href,
       };
 
-      // GA4 / GTM conversion signal
-      (window as any).dataLayer = (window as any).dataLayer || [];
-      (window as any).dataLayer.push({ event: 'generate_lead', form: 'quote', service: payload.service });
-
-      const webhook = form.dataset.webhook;
-      if (webhook) {
-        const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
-        if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
-        try {
-          // HighLevel's inbound webhook needs a JSON body (it rejects text/plain)
-          // and it answers the CORS preflight with Access-Control-Allow-Origin: *,
-          // so a standard application/json POST works cross-origin from the browser.
-          await fetch(webhook, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-          });
-        } catch (err) {
-          console.error('Lead webhook error', err);
-        }
-        window.location.href = '/thank-you';
-        return;
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sending…';
       }
 
-      // No webhook configured yet: inline success (demo mode).
-      form.hidden = true;
-      if (success) success.hidden = false;
-      success?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      try {
+        const response = await fetch(form.dataset.endpoint || form.action, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) throw new Error(`Lead endpoint returned HTTP ${response.status}`);
+        const result = await response.json();
+        if (result?.ok !== true || typeof result.accepted !== 'boolean') {
+          throw new Error('Lead endpoint returned an invalid success response');
+        }
+
+        // Count a conversion only after the lead endpoint confirms HighLevel accepted it.
+        if (result.accepted) {
+          (window as any).dataLayer = (window as any).dataLayer || [];
+          (window as any).dataLayer.push({ event: 'generate_lead', form: 'quote', service: payload.service });
+        }
+        window.location.assign('/thank-you/');
+      } catch (err) {
+        console.error('Lead submission failed', err);
+        showError();
+        if (submitButton && submitButton.textContent === 'Try Again') {
+          submitButton.setAttribute('aria-label', `${initialButtonText} — try again`);
+        }
+      }
     });
   });
 </script>

@@ -39,13 +39,10 @@ export const video = {
   mp4: '',
 };
 
-// HighLevel lead routing for the quote form.
-// Leave empty to keep the inline "thanks, we got it" success state (demo mode).
-// Live: the form POSTs the lead to this Inbound Webhook, which runs the
-// "Website Lead Intake" workflow (create contact -> opportunity -> email Janele),
-// then redirects to /thank-you (GA4 conversion). Sub-account: Shepard Excavating.
-export const highlevelWebhook =
-  'https://services.leadconnectorhq.com/hooks/o43aKWYnDo6IBr5XtAxK/webhook-trigger/8b17dfdd-18aa-4662-8194-9fa4f7d925a1';
+// Same-origin lead endpoint. The Vercel function keeps the HighLevel webhook out of
+// the browser, validates submissions, and only
+// reports success after HighLevel accepts the request.
+export const leadEndpoint = '/api/lead';
 
 // GA4 measurement ID. Property "Shepard Excavating" (account "Shepard Excavating")
 // under admin@minnesotamarketing.com, created 2026-08-11. Stream: Shepard Excavating
