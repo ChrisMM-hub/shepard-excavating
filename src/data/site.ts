@@ -47,6 +47,12 @@ export const video = {
 export const highlevelWebhook =
   'https://services.leadconnectorhq.com/hooks/o43aKWYnDo6IBr5XtAxK/webhook-trigger/8b17dfdd-18aa-4662-8194-9fa4f7d925a1';
 
+// GA4 measurement ID. Property "Shepard Excavating" (account "Shepard Excavating")
+// under admin@minnesotamarketing.com, created 2026-08-11. Stream: Shepard Excavating
+// Website -> https://www.shepardexcavating.com. Only loads in production builds, so
+// `npm run dev` never pollutes the client's analytics. Empty string disables the tag.
+export const ga4Id = 'G-TC5EQEJWTB';
+
 // Plain-language service-area towns (location pages get built later).
 export const towns = [
   'Bemidji',

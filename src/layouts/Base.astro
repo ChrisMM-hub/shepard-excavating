@@ -23,7 +23,10 @@ const fontFaces = [
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MobileCallBar from '../components/MobileCallBar.astro';
-import { business, towns } from '../data/site';
+import { business, towns, ga4Id } from '../data/site';
+
+// Only tag production builds so local dev traffic never lands in the client's GA4.
+const gaEnabled = import.meta.env.PROD && !!ga4Id;
 
 interface Props {
   title?: string;
@@ -150,6 +153,18 @@ const localBusiness = {
 
     <script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
     {jsonLd.map((s) => (<script type="application/ld+json" set:html={JSON.stringify(s)} />))}
+
+    {/* GA4. Kept last in <head> so it never delays the hero LCP preload; async so it
+        does not block render. Production-only (see gaEnabled). */}
+    {gaEnabled && (
+      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}></script>
+    )}
+    {gaEnabled && (
+      <script
+        is:inline
+        set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${ga4Id}');`}
+      />
+    )}
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>
