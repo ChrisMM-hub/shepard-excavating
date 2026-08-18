@@ -1,5 +1,7 @@
 // Service-page content. Plain-spoken voice, details grounded in the client's original site.
-// Edit copy here; pages render from this data via src/pages/[slug].astro.
+// Copy is editable in TinaCMS (content/services/*.json overlays the values here);
+// structure (slugs, buckets, related, galleries) stays in this file only.
+import { contentJson } from '../lib/content';
 
 export interface ServiceFaq { q: string; a: string; }
 export interface Service {
@@ -20,9 +22,10 @@ export interface Service {
   related: string[];          // sibling service slugs
   gallery: string[];          // gallery image basenames
   emphasizePhone?: boolean;
+  heroUpload?: string;        // CMS-uploaded hero override (path under /uploads)
 }
 
-export const services: Service[] = [
+const baseServices: Service[] = [
   {
     slug: 'septic-pumping',
     navLabel: 'Septic Pumping & Maintenance',
@@ -432,5 +435,12 @@ export const services: Service[] = [
     gallery: ['demolition-1.jpg', 'demolition-2.jpg'],
   },
 ];
+
+// CMS overlay: copy edited in TinaCMS (content/services/*.json) wins over the
+// TS fallback above. See src/lib/content.ts.
+export const services: Service[] = baseServices.map((s) => ({
+  ...s,
+  ...(contentJson<Partial<Service>>(`services/${s.slug}`) ?? {}),
+}));
 
 export const serviceBySlug = Object.fromEntries(services.map((s) => [s.slug, s]));

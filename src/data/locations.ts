@@ -1,5 +1,7 @@
 // Location-page content. Each town gets genuine local detail so the pages are distinct.
-// Pages render from this data via src/pages/[slug].astro.
+// Copy is editable in TinaCMS (content/locations/*.json overlays the values here);
+// structure (slugs, counties, map queries) stays in this file only.
+import { contentJson } from '../lib/content';
 
 export interface Location {
   slug: string;       // e.g. 'bemidji-mn'
@@ -13,9 +15,10 @@ export interface Location {
   local: string;      // local landmarks / lakes color
   mapQuery: string;   // for the Google Maps embed
   faqs: { q: string; a: string }[];
+  heroUpload?: string; // CMS-uploaded hero override (path under /uploads)
 }
 
-export const locations: Location[] = [
+const baseLocations: Location[] = [
   {
     slug: 'bemidji-mn',
     name: 'Bemidji',
@@ -157,5 +160,12 @@ export const locations: Location[] = [
     ],
   },
 ];
+
+// CMS overlay: copy edited in TinaCMS (content/locations/*.json) wins over the
+// TS fallback above. See src/lib/content.ts.
+export const locations: Location[] = baseLocations.map((l) => ({
+  ...l,
+  ...(contentJson<Partial<Location>>(`locations/${l.slug}`) ?? {}),
+}));
 
 export const locationBySlug = Object.fromEntries(locations.map((l) => [l.slug, l]));

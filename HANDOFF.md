@@ -87,3 +87,10 @@ you control, note the time, and verify:
 Do not delete historical contacts or opportunities unless the exact test record is
 uniquely identified and deletion is explicitly approved. SMS notification remains
 intentionally unconfigured.
+
+## TinaCMS (added 2026-08-18, local only so far)
+
+A git-backed CMS is built and verified locally but NOT yet live. Content the
+staff editor can change lives in `/content` (JSON overlays on the TS data);
+uploads land in `public/uploads` and are auto-compressed at build. Full details
+and the go-live checklist: `TINA-SETUP.md`.

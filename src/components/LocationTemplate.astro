@@ -14,7 +14,11 @@ const moreLinks = moreServices;
 
 <!-- Hero -->
 <section class="loc-hero" aria-label={location.name}>
-  <Image src={hero} alt={'Shepard Excavating working in ' + location.name + ', MN'} class="loc-hero-bg" widths={[768, 1280, 1920]} sizes="100vw" loading="eager" fetchpriority="high" quality={76} />
+  {location.heroUpload ? (
+    <img src={location.heroUpload} alt={'Shepard Excavating working in ' + location.name + ', MN'} class="loc-hero-bg" loading="eager" fetchpriority="high" />
+  ) : (
+    <Image src={hero} alt={'Shepard Excavating working in ' + location.name + ', MN'} class="loc-hero-bg" widths={[768, 1280, 1920]} sizes="100vw" loading="eager" fetchpriority="high" quality={76} />
+  )}
   <div class="loc-hero-overlay"></div>
   <div class="container loc-hero-inner">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>{location.name}</span></nav>

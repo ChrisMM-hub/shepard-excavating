@@ -8,6 +8,10 @@ node_modules/
 # astro
 .astro/
 
+# tinacms generated output (rebuilt by `tinacms dev` / `tinacms build`)
+public/admin/
+tina/__generated__/
+
 # vercel
 .vercel/
 

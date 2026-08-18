@@ -1,5 +1,7 @@
 // Central content + business data for the Shepard Excavating homepage prototype.
 // All facts pulled from the project brief. Items flagged PLACEHOLDER need Janele to confirm.
+// Reviews and FAQs are editable in TinaCMS (content/site/*.json overlays the values here).
+import { contentJson } from '../lib/content';
 
 export const business = {
   name: 'Shepard Excavating and Septic Service, LLC',
@@ -144,7 +146,7 @@ export const whyUs = [
 ];
 
 // Real reviews: Google Business Profile + recommendations from the Facebook page.
-export const reviews = [
+const baseReviews = [
   {
     quote:
       'Todd from Shepard Excavating is the best! He dug out the manhole cover and pumped the tank clean. He explained everything thoroughly and we are permanent customers now. Thank you Shepard for such fantastic service. We will spread the word.',
@@ -175,8 +177,11 @@ export const reviews = [
   },
 ];
 
+export const reviews =
+  contentJson<{ reviews: typeof baseReviews }>('site/reviews')?.reviews ?? baseReviews;
+
 // Answers use real details pulled from the client's original site for accuracy.
-export const faqs = [
+const baseFaqs = [
   {
     q: 'Is it Shepard or Shepherd Excavating?',
     a: 'Our family name is Shepard, but folks often write it as Shepherd Excavating. Both point to the same business: Shepard Excavating and Septic Service, LLC, based in Laporte, MN.',
@@ -206,3 +211,5 @@ export const faqs = [
     a: 'That is the whole idea. Septic, excavating, land clearing, demolition, sand and gravel, dumpsters, and snow removal, all under one roof since 1997. One call instead of juggling four contractors.',
   },
 ];
+
+export const faqs = contentJson<{ faqs: typeof baseFaqs }>('site/faqs')?.faqs ?? baseFaqs;

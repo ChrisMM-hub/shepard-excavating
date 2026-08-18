@@ -13,7 +13,11 @@ const hero = img(service.heroImage);
 
 <!-- Hero -->
 <section class="svc-hero" aria-label={service.navLabel}>
-  <Image src={hero} alt={service.navLabel + ' by Shepard Excavating'} class="svc-hero-bg" widths={[768, 1280, 1920]} sizes="100vw" loading="eager" fetchpriority="high" quality={76} />
+  {service.heroUpload ? (
+    <img src={service.heroUpload} alt={service.navLabel + ' by Shepard Excavating'} class="svc-hero-bg" loading="eager" fetchpriority="high" />
+  ) : (
+    <Image src={hero} alt={service.navLabel + ' by Shepard Excavating'} class="svc-hero-bg" widths={[768, 1280, 1920]} sizes="100vw" loading="eager" fetchpriority="high" quality={76} />
+  )}
   <div class="svc-hero-overlay"></div>
   <div class="container svc-hero-inner">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>{service.navLabel}</span></nav>

@@ -4,9 +4,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
+    "dev": "tinacms dev -c \"astro dev\"",
+    "dev:site": "astro dev",
     "start": "astro dev",
+    "prebuild": "node scripts/optimize-uploads.mjs",
     "build": "astro build",
+    "build:tina": "node scripts/optimize-uploads.mjs && tinacms build && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "test": "node --test tests/*.test.mjs"
@@ -17,6 +20,8 @@
     "@fontsource/barlow-semi-condensed": "^5.1.0",
     "@fontsource/josefin-sans": "^5.2.8",
     "@fontsource/quicksand": "^5.2.10",
-    "astro": "^5.7.0"
+    "@tinacms/cli": "^2.6.0",
+    "astro": "^5.7.0",
+    "tinacms": "^3.12.0"
   }
 }
