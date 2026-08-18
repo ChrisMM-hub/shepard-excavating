@@ -1,5 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build:auto",
   "redirects": [
     { "source": "/emergency", "destination": "/septic-emergency", "permanent": true },
     { "source": "/septic-pumping-maintenance", "destination": "/septic-pumping", "permanent": true },
