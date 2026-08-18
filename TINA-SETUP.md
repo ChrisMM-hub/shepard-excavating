@@ -54,7 +54,10 @@ plain Astro without the CMS.
    `ChrisMM-hub/shepard-excavating` GitHub repo, branch `main`.
 2. Copy the project's **Client ID** and generate a **read-only token**.
 3. In Vercel → shepard-excavating → Settings → Environment Variables, add
-   `TINA_PUBLIC_CLIENT_ID` and `TINA_TOKEN`.
+   `TINA_PUBLIC_CLIENT_ID`, `TINA_TOKEN` (read-only content token), and
+   `TINA_SEARCH_TOKEN` (search token; powers the editor's search box and is
+   required once the search block is in tina/config.ts, since the schema must
+   match what the cloud indexed).
 4. In Vercel → Settings → Build & Development, set the build command to
    `npm run build:tina` (builds the admin UI + indexes content).
 5. Push/redeploy. The CMS is then live at shepardexcavating.com/admin.

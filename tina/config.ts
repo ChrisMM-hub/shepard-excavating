@@ -38,6 +38,18 @@ export default defineConfig({
   token: process.env.TINA_TOKEN || null,
   build: { outputFolder: 'admin', publicFolder: 'public' },
   media: { tina: { mediaRoot: 'uploads', publicFolder: 'public' } },
+  // Search is only wired when the token is present, so builds without it
+  // (or a token rotation gap) still succeed, just without editor search.
+  ...(process.env.TINA_SEARCH_TOKEN
+    ? {
+        search: {
+          tina: {
+            indexerToken: process.env.TINA_SEARCH_TOKEN,
+            stopwordLanguages: ['eng'],
+          },
+        },
+      }
+    : {}),
   schema: {
     collections: [
       {
