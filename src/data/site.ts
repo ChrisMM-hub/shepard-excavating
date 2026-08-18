@@ -143,25 +143,35 @@ export const whyUs = [
   },
 ];
 
-// Real recommendations from the Shepard Excavating Facebook page.
+// Real reviews: Google Business Profile + recommendations from the Facebook page.
 export const reviews = [
+  {
+    quote:
+      'Todd from Shepard Excavating is the best! He dug out the manhole cover and pumped the tank clean. He explained everything thoroughly and we are permanent customers now. Thank you Shepard for such fantastic service. We will spread the word.',
+    name: 'Faith Bammer',
+    date: 'August 2026',
+    source: 'google',
+  },
   {
     quote:
       'My septic alarm was going off last Saturday so I called them. They walked me through a few things I could check myself. We came to the conclusion my pump was not working and the tank was full. They came out right away Monday and fixed us up. Great service, fair price.',
     name: 'Chuck Savage',
     date: 'March 2020',
+    source: 'facebook',
   },
   {
     quote:
       "Amazing work. They truly care about what you want and need. Highly recommend. Great people. Do good at what they do. It's so cool that it's a family. We will always support them!",
     name: 'Jaime Duffy',
     date: 'October 2021',
+    source: 'facebook',
   },
   {
     quote:
       'Shepard Excavating recently removed an old concrete slab and block foundation for us and brought in fill to make this old foundation a thing of the past.',
     name: 'Marcus C. Curtis',
     date: 'April 2020',
+    source: 'facebook',
   },
 ];
 

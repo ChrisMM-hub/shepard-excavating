@@ -23,7 +23,7 @@ export const locations: Location[] = [
     h1: 'Excavating, Septic & More in Bemidji, MN',
     metaTitle: 'Excavating & Septic in Bemidji, MN | Shepard',
     metaDesc:
-      'Septic, excavating, land clearing, demolition, gravel, and snow removal in Bemidji, MN and the surrounding lakes. Family-owned since 1997. Call (218) 224-2754.',
+      'Septic, excavating, gravel, and snow removal in Bemidji, MN and the surrounding lakes. Family-owned since 1997. Call (218) 224-2754.',
     heroImage: 'hero.jpg',
     intro:
       'Shepard Excavating has worked the Bemidji area for years. From septic systems out on the lake to basements, driveways, gravel, and winter plowing around town, we are the one call for dirt work and septic in Beltrami County.',
@@ -63,7 +63,7 @@ export const locations: Location[] = [
     h1: 'Excavating, Septic & More in Park Rapids, MN',
     metaTitle: 'Excavating & Septic in Park Rapids, MN | Shepard',
     metaDesc:
-      'Septic, excavating, land clearing, demolition, sand and gravel, and snow removal in Park Rapids, MN. Licensed in Hubbard County since 1997. Call (218) 224-2754.',
+      'Septic, excavating, gravel, and snow removal in Park Rapids, MN. Licensed in Hubbard County since 1997. Call (218) 224-2754.',
     heroImage: 'svc-excavating.jpg',
     intro:
       'Park Rapids is home turf. As a licensed installer in Hubbard County, we handle septic systems, excavating, land clearing, gravel, and more for homes, cabins, and businesses across the area.',
@@ -103,7 +103,7 @@ export const locations: Location[] = [
     h1: 'Excavating, Septic & More in Cass Lake, MN',
     metaTitle: 'Excavating & Septic in Cass Lake, MN | Shepard',
     metaDesc:
-      'Septic, excavating, land clearing, demolition, gravel, and snow removal in Cass Lake, MN and the Chippewa National Forest area. Since 1997. Call (218) 224-2754.',
+      'Septic, excavating, gravel, and snow removal in Cass Lake, MN and the Chippewa National Forest area. Since 1997. Call (218) 224-2754.',
     heroImage: 'svc-aggregate.jpg',
     intro:
       'Around Cass Lake and the Chippewa National Forest, we take care of septic systems, excavating, gravel, land clearing, and winter plowing. One local outfit for the whole job, wherever your place sits.',

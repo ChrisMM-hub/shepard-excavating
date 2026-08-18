@@ -141,7 +141,7 @@ export const services: Service[] = [
     h1: 'Septic System Care & Education',
     metaTitle: 'Septic System Care & Education | Shepard Excavating',
     metaDesc:
-      'How to take care of your septic system and avoid an expensive failure: drain field tips, pumping schedules, and what not to flush, from a Laporte, MN installer.',
+      'Septic system care from an MPCA-certified installer: pumping schedules, drain field tips, and what not to flush. Shepard Excavating, Laporte, MN.',
     heroImage: 'gal-septic.jpg',
     lead:
       'A healthy septic system can last for decades. Here is how to get the most out of yours and steer clear of an expensive surprise.',
