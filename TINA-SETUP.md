@@ -1,7 +1,12 @@
 # TinaCMS Setup (Shepard Excavating)
 
-Status: **built and verified locally; not yet live.** The production site is
-unaffected until the go-live steps below are done.
+Status: **Tina Cloud connected and verified (2026-08-18).** Project
+`shepard-excavating` exists at app.tina.io (ChrisMM-hub org), main branch is
+indexed, and `npm run build:tina` succeeds locally with the credentials in
+`.env`. Vercel builds with `npm run build:auto`, which uses Tina only when
+`TINA_PUBLIC_CLIENT_ID` is present, so the deploy is safe in either state.
+Remaining to go live: add the two env vars in Vercel and redeploy (step 3
+below), then invite the editor (step 6).
 
 ## What the CMS covers
 

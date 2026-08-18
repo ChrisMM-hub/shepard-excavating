@@ -9,7 +9,7 @@
     "start": "astro dev",
     "prebuild": "node scripts/optimize-uploads.mjs",
     "build": "astro build",
-    "build:tina": "node scripts/optimize-uploads.mjs && tinacms build && astro build",
+    "build:tina": "node scripts/optimize-uploads.mjs && tinacms build && node scripts/brand-admin.mjs && astro build",
     "build:auto": "if [ -n \"$TINA_PUBLIC_CLIENT_ID\" ]; then npm run build:tina; else npm run build; fi",
     "preview": "astro preview",
     "astro": "astro",
