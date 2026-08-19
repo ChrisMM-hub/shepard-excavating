@@ -14,19 +14,20 @@ const townLinks: Array<[string, string | null]> = [
   ['Longville', '/longville-mn'],
   ['Park Rapids', '/park-rapids-mn'],
 ];
+const regionalTownLinks = townLinks.filter(([town]) => town !== 'Laporte');
 ---
 
 <section class="section section--dark contact" id="contact" aria-labelledby="contact-h">
   <div class="container">
     <div class="band-head">
       <h2 id="contact-h">Give us a call <a href={business.phoneHref} class="band-phone">218-224-2754</a></h2>
-      <p class="band-serving"><strong>Proudly serving the Northern Minnesota area.</strong></p>
+      <p class="band-serving"><strong>Serving communities across Northern Minnesota.</strong></p>
       <p class="band-towns">
-        Including {townLinks.map(([town, href], i) => (
+        Based in <a href="/laporte-mn">Laporte</a>, we travel throughout the region for projects in {regionalTownLinks.map(([town, href], i) => (
           <>
-            {href ? <a href={href}>{town}</a> : town}{i < townLinks.length - 2 ? ', ' : i === townLinks.length - 2 ? ' and ' : ''}
+            {href ? <a href={href}>{town}</a> : town}{i < regionalTownLinks.length - 1 ? ', ' : ''}
           </>
-        ))}
+        ))}, and beyond.
       </p>
     </div>
 
