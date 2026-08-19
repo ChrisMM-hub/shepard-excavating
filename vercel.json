@@ -2,8 +2,12 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "npm run build:auto",
   "redirects": [
-    { "source": "/emergency", "destination": "/septic-emergency", "permanent": true },
+    { "source": "/emergency", "destination": "/septic-pumping", "permanent": true },
+    { "source": "/septic-emergency", "destination": "/septic-pumping", "permanent": true },
     { "source": "/septic-pumping-maintenance", "destination": "/septic-pumping", "permanent": true },
     { "source": "/septic-system-education", "destination": "/septic-education", "permanent": true }
+  ],
+  "routes": [
+    { "src": "^/roll-off-boxes/?$", "status": 410 }
   ]
 }

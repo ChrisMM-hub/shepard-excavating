@@ -8,7 +8,7 @@ const heroImg = img('fleet-1.jpg');
 const crewImg = img('crew.jpg');
 const title = 'About Shepard Excavating | Family-Owned Since 1997';
 const description =
-  'Shepard Excavating is a family-run, MPCA-certified outfit in Laporte, MN, handling septic and dirt work across the Bemidji and Leech Lake area since 1997.';
+  'Shepard Excavating is a family-run, MPCA-certified outfit in Laporte, MN, handling septic and dirt work across Northern Minnesota since 1997.';
 ---
 
 <Base title={title} description={description} ogImage="/og/about.jpg">
@@ -27,7 +27,7 @@ const description =
       <div class="ab-text">
         <p class="eyebrow">Our story</p>
         <h2>{business.years} years of dirt, done right</h2>
-        <p>We started in {business.founded}, and we have been digging, hauling, pumping, and plowing across Northern Minnesota ever since. Septic systems, excavating, land clearing, demolition, sand and gravel, dumpsters, and snow removal. It is all under one roof, so you make one call instead of lining up four different contractors.</p>
+        <p>We started in {business.founded}, and we have been digging, hauling, pumping, and plowing across Northern Minnesota ever since. Septic systems, excavating, land clearing, demolition, sand and gravel, and snow removal. It is all under one roof, so you make one call instead of lining up four different contractors.</p>
         <p>Brian Shepard runs the show, and when you call, you get the people whose name is on the truck. We are an MPCA-certified septic installer, licensed and bonded, and licensed to install and maintain systems in Hubbard and Beltrami counties.</p>
         <p>We like to say we are #1 in the #2 business. It gets a laugh, but it is true. Septic is right there in our name, and we take it seriously, from a routine pump to a brand-new mound system.</p>
       </div>
@@ -54,7 +54,7 @@ const description =
   <section class="section section--dark ab-cta">
     <div class="container center">
       <h2>One call for the whole job</h2>
-      <p class="lead">Serving {towns.slice(0, -1).join(', ')}, and {towns[towns.length - 1]} across {counties.join(', ')} counties.</p>
+      <p class="lead">Serving Northern Minnesota, including {towns.slice(0, -1).join(', ')}, and {towns[towns.length - 1]} across {counties.join(', ')} counties.</p>
       <div class="ab-cta-row">
         <a href="/contact" class="btn btn-primary btn-lg">Get a Free Estimate</a>
         <a href={business.phoneHref} class="btn btn-outline btn-lg">Call {business.phone}</a>

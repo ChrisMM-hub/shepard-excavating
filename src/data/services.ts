@@ -30,10 +30,10 @@ const baseServices: Service[] = [
     slug: 'septic-pumping',
     navLabel: 'Septic Pumping & Maintenance',
     bucket: 'Septic',
-    h1: 'Septic Pumping & Maintenance in the Bemidji & Leech Lake Area',
-    metaTitle: 'Septic Pumping & Maintenance in Bemidji, MN | Shepard',
+    h1: 'Septic Pumping & Maintenance in Northern Minnesota',
+    metaTitle: 'Septic Pumping in Northern Minnesota | Shepard',
     metaDesc:
-      'Septic tank pumping, inspections, and line cleaning across Bemidji, Park Rapids, and the Leech Lake area. Septic pros since 1997. Call (218) 224-2754.',
+      'Septic tank pumping, inspections, and line cleaning across Northern Minnesota. Septic professionals since 1997. Call (218) 224-2754.',
     heroImage: 'svc-septic-pumping.jpg',
     lead:
       'Routine pumping, inspections, and line cleaning that keep your system healthy and out of trouble. With proper maintenance, a system can last for years, so most folks have theirs pumped every two to three years.',
@@ -54,26 +54,26 @@ const baseServices: Service[] = [
       'Anything we find that needs repair',
     ],
     timeline:
-      'A routine pump-and-inspect visit is usually a couple of hours. Backups and other emergencies we schedule as fast as we can get a truck to you.',
+      'A routine pump-and-inspect visit is usually a couple of hours. Backups and line issues are scheduled as soon as a truck is available during business hours.',
     expect:
       'We locate and uncover the tank, pump it down, and check the lid and baffles. If we spot something that needs attention, we tell you straight and what it will cost. Then we leave the site clean.',
     faqs: [
       { q: 'How often should I have my tank pumped?', a: 'Most experts recommend every two to three years. If you are not sure when yours was last done, give us a call and we will get you on the schedule.' },
       { q: 'Why bring the manhole up to grade?', a: 'It is a newer state code, and it makes maintaining and inspecting your tank faster and easier every time, with no digging to find the lid.' },
       { q: 'Can you clear a frozen line?', a: 'Yes. We steam frozen septic and water lines to thaw them out the right way, which matters in a Northern Minnesota winter.' },
-      { q: 'My septic alarm is going off. What do I do?', a: 'Call us at (218) 224-2754. We will walk you through a couple of things to check and get a truck headed your way if you need one.' },
+      { q: 'My septic alarm is going off. What do I do?', a: 'Call us at (218) 224-2754. We will walk you through a couple of things to check and help you schedule the right service.' },
     ],
-    related: ['septic-system', 'septic-emergency', 'septic-education'],
+    related: ['septic-system', 'septic-education'],
     gallery: ['septic-1.jpg', 'septic-2.jpg', 'septic-4.jpg'],
   },
   {
     slug: 'septic-system',
     navLabel: 'Septic System Installation',
     bucket: 'Septic',
-    h1: 'Septic System Installation in the Bemidji & Leech Lake Area',
-    metaTitle: 'Septic System Installation in Bemidji, MN | Shepard',
+    h1: 'Septic System Installation in Northern Minnesota',
+    metaTitle: 'Septic Installation in Northern Minnesota | Shepard',
     metaDesc:
-      'MPCA-certified septic installer with 20+ years. Mound and conventional systems designed, permitted, and installed across the Bemidji and Leech Lake area.',
+      'MPCA-certified septic installer with 20+ years. Mound and conventional systems designed, permitted, and installed across Northern Minnesota.',
     heroImage: 'svc-septic-install.jpg',
     lead:
       'New mound and conventional systems, designed, permitted, and installed to code. We are an MPCA-certified installer with more than 20 years putting systems in the ground, and we are here for you from the first drawing to the final inspection.',
@@ -107,37 +107,6 @@ const baseServices: Service[] = [
     gallery: ['septic-3.jpg', 'septic-5.jpg', 'septic-6.jpg'],
   },
   {
-    slug: 'septic-emergency',
-    navLabel: 'Septic Emergency',
-    bucket: 'Septic',
-    h1: 'Emergency Septic Service in the Bemidji & Leech Lake Area',
-    metaTitle: 'Emergency Septic Service in Bemidji, MN | Shepard',
-    metaDesc:
-      'Septic backups, frozen lines, and failures handled fast across the Bemidji and Leech Lake area. Call Shepard Excavating now at (218) 224-2754.',
-    heroImage: 'svc-emergency.jpg',
-    lead:
-      'Backups, frozen lines, and failures do not wait for a good time, and neither do we. Call and we will get a truck headed your way as fast as we can.',
-    includedHeading: 'What we handle',
-    included: [
-      'Septic backups and overflows',
-      'Frozen septic and water line thawing and steaming',
-      'Sewer rooter and line cleaning',
-      'Emergency pumping',
-      'Figuring out what went wrong and what it takes to fix it',
-    ],
-    expect:
-      'Call (218) 224-2754 and tell us what is happening. We will talk you through anything you can safely check yourself, then get out to you and get it handled. If your system is backing up, stop running water and call.',
-    faqs: [
-      { q: 'What counts as a septic emergency?', a: 'A backup into the house, an overflow, a frozen line, a screaming alarm, or standing water over the drain field. When in doubt, call and we will help you figure it out.' },
-      { q: 'Can you thaw a frozen line?', a: 'Yes. We steam frozen septic and water lines to open them back up, which is common work for us in the winter.' },
-      { q: 'Should I keep using water if it is backing up?', a: 'No. Stop running water to keep it from getting worse, and give us a call right away.' },
-      { q: 'How fast can you get here?', a: 'As fast as we can get a truck on the road. We serve the whole Bemidji and Leech Lake area, so we are usually not far.' },
-    ],
-    related: ['septic-pumping', 'septic-system'],
-    gallery: ['septic-2.jpg', 'septic-4.jpg'],
-    emphasizePhone: true,
-  },
-  {
     slug: 'septic-education',
     navLabel: 'Septic Education',
     bucket: 'Septic',
@@ -165,17 +134,17 @@ const baseServices: Service[] = [
       { q: 'Why can I not park on the drain field?', a: 'The weight compacts the soil and can crush the pipes, and once the field fails it has to be replaced. Keep vehicles and structures off of it.' },
       { q: 'How do I know if my system is failing?', a: 'Slow drains, odors, soggy spots or lush grass over the drain field, or an alarm. If you notice any of those, call us before it gets worse.' },
     ],
-    related: ['septic-pumping', 'septic-system', 'septic-emergency'],
+    related: ['septic-pumping', 'septic-system'],
     gallery: ['septic-5.jpg', 'septic-6.jpg'],
   },
   {
     slug: 'excavating',
     navLabel: 'Excavating',
     bucket: 'Site Work',
-    h1: 'Excavating in the Bemidji & Leech Lake Area',
-    metaTitle: 'Excavating Contractor in Bemidji, MN | Shepard',
+    h1: 'Excavating in Northern Minnesota',
+    metaTitle: 'Excavating in Northern Minnesota | Shepard',
     metaDesc:
-      'Basements, foundations, site prep, grading, and road building across the Bemidji and Leech Lake area. Licensed and bonded since 1997. Call (218) 224-2754.',
+      'Basements, foundations, site prep, grading, and road building across Northern Minnesota. Licensed and bonded since 1997. Call (218) 224-2754.',
     heroImage: 'svc-excavating.jpg',
     lead:
       'Basements, foundations, site prep, grading, and road building, large or small, handled by a licensed and bonded team that takes the job from the first cut to final grade.',
@@ -213,8 +182,8 @@ const baseServices: Service[] = [
     slug: 'land-clearing',
     navLabel: 'Land Clearing',
     bucket: 'Site Work',
-    h1: 'Land Clearing in the Bemidji & Leech Lake Area',
-    metaTitle: 'Land Clearing in Bemidji & Leech Lake, MN | Shepard',
+    h1: 'Land Clearing in Northern Minnesota',
+    metaTitle: 'Land Clearing in Northern Minnesota | Shepard',
     metaDesc:
       'Lot clearing, tree and stump removal for lake lots and new builds across Northern Minnesota. Family-owned since 1997. Call Shepard at (218) 224-2754.',
     heroImage: 'svc-land-clearing.jpg',
@@ -252,50 +221,50 @@ const baseServices: Service[] = [
     slug: 'demolition',
     navLabel: 'Demolition',
     bucket: 'Site Work',
-    h1: 'Demolition in the Bemidji & Leech Lake Area',
-    metaTitle: 'Demolition Contractor in Bemidji, MN | Shepard',
+    h1: 'Demolition in Northern Minnesota',
+    metaTitle: 'Demolition in Northern Minnesota | Shepard',
     metaDesc:
-      'Cabin teardowns, garages, and small commercial demolition, hauled away clean, across the Bemidji and Leech Lake area. Call Shepard at (218) 224-2754.',
+      'Cabin teardowns, garages, and small commercial demolition, hauled away clean, across Northern Minnesota. Call Shepard at (218) 224-2754.',
     heroImage: 'svc-demolition.jpg',
     lead:
-      'Old cabins, garages, sheds, and small commercial structures, torn down and hauled away clean. We bring the equipment and the dumpsters, so it is all one call.',
+      'Old cabins, garages, sheds, and small commercial structures, torn down and hauled away clean. We handle the equipment, hauling, and disposal, so it is all one call.',
     includedHeading: 'What we do',
     included: [
       'Cabin and house teardowns',
       'Garage and outbuilding demolition',
       'Small commercial demolition',
       'Concrete and old foundation removal',
-      'Debris haul-off with our own roll-off dumpsters',
+      'Debris haul-off with our own trucks and containers',
       'Grading the site afterward',
     ],
     factors: [
       'Size and type of the structure',
       'What it is built of',
       'Whether there is concrete or a foundation to remove',
-      'Disposal and dumpster needs',
+      'Debris volume and disposal needs',
       'Site access',
     ],
     timeline:
       'Most residential teardowns are a few days, including cleanup and haul-off.',
     expect:
-      'We knock it down, load it out, and grade the spot back so you would hardly know it was there. Roll-off dumpsters and hauling are part of what we do, so you are not chasing down a separate company.',
+      'We knock it down, load it out with our own equipment, and grade the spot back so you would hardly know it was there. One crew handles the teardown, hauling, and cleanup.',
     faqs: [
       { q: 'Do you tear down cabins and garages?', a: 'Yes. Cabin teardowns, old garages, sheds, and small commercial buildings are regular work for us.' },
       { q: 'Can you remove an old foundation?', a: 'Yes. We remove concrete slabs and block foundations and bring in fill to grade the site back. Have a look at the before and after on our homepage.' },
-      { q: 'Do you haul the debris?', a: 'We do, with our own roll-off dumpsters and trucks. One call covers the teardown and the cleanup.' },
+      { q: 'Do you haul the debris?', a: 'We do. Our trucks and containers stay with our demolition crew, so one call covers the teardown and the cleanup.' },
       { q: 'Do I need a permit?', a: 'Some demolition needs a permit. We will let you know what your job requires and help you sort it out.' },
     ],
-    related: ['excavating', 'roll-off-boxes', 'land-clearing'],
+    related: ['excavating', 'land-clearing'],
     gallery: ['demolition-1.jpg', 'demolition-2.jpg', 'demolition-3.jpg'],
   },
   {
     slug: 'aggregate',
     navLabel: 'Sand, Gravel & Aggregate',
     bucket: 'Materials',
-    h1: 'Sand, Gravel & Aggregate in the Bemidji & Leech Lake Area',
-    metaTitle: 'Sand & Gravel in Bemidji & Park Rapids, MN | Shepard',
+    h1: 'Sand, Gravel & Aggregate in Northern Minnesota',
+    metaTitle: 'Sand & Gravel in Northern Minnesota | Shepard',
     metaDesc:
-      'Fill, sand, Class 5 gravel, washed rock, and boulders, delivered or picked up across the Bemidji and Leech Lake area. Call Shepard for pricing today.',
+      'Fill, sand, Class 5 gravel, washed rock, and boulders, delivered or picked up across Northern Minnesota. Call Shepard for pricing today.',
     heroImage: 'svc-aggregate.jpg',
     lead:
       'Fill, sand, gravel, and rock, delivered to your site or picked up at the pit. We can spread it for you too.',
@@ -332,10 +301,10 @@ const baseServices: Service[] = [
     slug: 'snow-removal',
     navLabel: 'Snow Removal',
     bucket: 'Seasonal',
-    h1: 'Snow Removal in the Bemidji & Leech Lake Area',
-    metaTitle: 'Snow Removal in Bemidji, MN | Shepard Excavating',
+    h1: 'Snow Removal in Northern Minnesota',
+    metaTitle: 'Snow Removal in Northern Minnesota | Shepard',
     metaDesc:
-      'Driveway and commercial snow plowing across the Bemidji and Leech Lake area all winter. Seasonal routes fill up, so call (218) 224-2754 early.',
+      'Driveway and commercial snow plowing across Northern Minnesota all winter. Seasonal routes fill up, so call (218) 224-2754 early.',
     heroImage: 'svc-snow.jpg',
     lead:
       'Driveways and commercial lots cleared through the long Northern Minnesota winter. Reliable plowing so you can get where you are going.',
@@ -373,7 +342,7 @@ const baseServices: Service[] = [
     h1: 'Fisher Snowplow Dealer in Northern Minnesota',
     metaTitle: 'Fisher Snowplow Dealer in Northern Minnesota | Shepard',
     metaDesc:
-      'Fisher snowplow sales, parts, installation, and service in the Bemidji and Leech Lake area. We run Fisher on our own trucks. Call (218) 224-2754.',
+      'Fisher snowplow sales, parts, installation, and service across Northern Minnesota. We run Fisher on our own trucks. Call (218) 224-2754.',
     heroImage: 'svc-fisher.jpg',
     lead:
       'We are a Fisher snowplow dealer, so we sell, install, and service the plows we trust on our own trucks.',
@@ -395,44 +364,6 @@ const baseServices: Service[] = [
     ],
     related: ['snow-removal'],
     gallery: ['snow-2.jpg', 'snow-4.jpg'],
-  },
-  {
-    slug: 'roll-off-boxes',
-    navLabel: 'Roll-Off Dumpsters',
-    bucket: 'Materials',
-    h1: 'Roll-Off Dumpster Rental in the Bemidji & Leech Lake Area',
-    metaTitle: 'Roll-Off Dumpster Rental in Bemidji, MN | Shepard',
-    metaDesc:
-      'Roll-off dumpsters for cleanouts, remodels, roofing, and demolition debris across the Bemidji and Leech Lake area. Flat-rate pricing. Call (218) 224-2754.',
-    heroImage: 'svc-dumpster.jpg',
-    lead:
-      'Roll-off dumpsters for cleanouts, remodels, roofing, and job debris. Dropped and picked up on your schedule, with straightforward flat-rate pricing.',
-    includedHeading: 'What we haul',
-    included: [
-      'Construction and demolition debris',
-      'Remodel and cleanout debris',
-      'Roofing tear-off',
-      'Yard and property cleanups',
-      'Drop-off and pickup on your schedule',
-    ],
-    factors: [
-      'Dumpster size',
-      'How long you keep it',
-      'Type and weight of the debris',
-      'Delivery location',
-    ],
-    timeline:
-      'We drop it when you need it and pick it up when you are done. Flat-rate pricing means no surprises.',
-    expect:
-      'Tell us what you are working on and we will get the right box to your site. Doing a teardown? We handle the demolition and the dumpster together.',
-    faqs: [
-      { q: 'What can I put in the dumpster?', a: 'Construction and demolition debris, remodel and cleanout material, roofing, and general cleanup. No hazardous waste. Ask us if you are unsure.' },
-      { q: 'How long can I keep it?', a: 'We are flexible. Tell us your timeline and we will work with it.' },
-      { q: 'How does pricing work?', a: 'Straightforward flat-rate pricing, so you know what it costs up front.' },
-      { q: 'What size do I need?', a: 'Tell us about the project and we will match you to the right size box.' },
-    ],
-    related: ['demolition', 'excavating'],
-    gallery: ['demolition-1.jpg', 'demolition-2.jpg'],
   },
 ];
 

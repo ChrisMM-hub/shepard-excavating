@@ -1,18 +1,16 @@
 # TinaCMS Setup (Shepard Excavating)
 
-Status: **Tina Cloud connected and verified (2026-08-18).** Project
-`shepard-excavating` exists at app.tina.io (ChrisMM-hub org), main branch is
-indexed, and `npm run build:tina` succeeds locally with the credentials in
-`.env`. Vercel builds with `npm run build:auto`, which uses Tina only when
-`TINA_PUBLIC_CLIENT_ID` is present, so the deploy is safe in either state.
-Remaining to go live: add the two env vars in Vercel and redeploy (step 3
-below), then invite the editor (step 6).
+Status: **Tina Cloud is live (2026-08-18).** Project `shepard-excavating`
+exists at app.tina.io (ChrisMM-hub org), the main branch is indexed, and the
+editor is available at `/admin`. Vercel builds with `npm run build:auto`, which
+uses Tina when its environment variables are present and falls back to the
+plain Astro build otherwise.
 
 ## What the CMS covers
 
 | Collection | Files | Editable |
 |---|---|---|
-| Service Pages | `content/services/*.json` (11) | heading, search title/description, intro, included list, price factors, timeline, expectations, FAQs, optional hero photo replacement |
+| Service Pages | `content/services/*.json` (9) | heading, search title/description, intro, included list, price factors, timeline, expectations, FAQs, optional hero photo replacement |
 | Town Pages | `content/locations/*.json` (7) | heading, search title/description, intro, local paragraph, FAQs, optional hero photo replacement |
 | Customer Reviews | `content/site/reviews.json` | the homepage review cards (Google/Facebook source, quote, name, date) |
 | Homepage FAQs | `content/site/faqs.json` | the homepage FAQ section |
@@ -37,6 +35,8 @@ form) is locked in `src/data/*.ts` and not exposed to editors.
   so an editor upload can never ship uncompressed.
 - Service and town pages have an optional "Replace Hero Photo" field. Empty
   field = the art-directed photo from `src/assets` (fully optimized by Astro).
+- Homepage and project-gallery rotations remain curated site updates. Collect
+  the new original photos and preferred placements before each periodic refresh.
 
 ## Local editing (works today)
 
@@ -48,7 +48,7 @@ Local mode edits write straight to the files in `/content` and
 `public/uploads/`; commit them like any other change. `npm run dev:site` runs
 plain Astro without the CMS.
 
-## Go-live steps (when ready)
+## Go-live configuration
 
 1. Create a project at app.tina.io (free tier, 2 editors), connect it to the
    `ChrisMM-hub/shepard-excavating` GitHub repo, branch `main`.
@@ -60,7 +60,7 @@ plain Astro without the CMS.
    match what the cloud indexed).
 4. In Vercel → Settings → Build & Development, set the build command to
    `npm run build:tina` (builds the admin UI + indexes content).
-5. Push/redeploy. The CMS is then live at shepardexcavating.com/admin.
+5. Push/redeploy. The CMS is live at shepardexcavating.com/admin.
 6. In app.tina.io, invite the staff editor by email (no GitHub account needed).
    Their saves become commits to `main` by the Tina bot, and Vercel redeploys
    (~2 min).

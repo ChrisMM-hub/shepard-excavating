@@ -88,9 +88,10 @@ Do not delete historical contacts or opportunities unless the exact test record 
 uniquely identified and deletion is explicitly approved. SMS notification remains
 intentionally unconfigured.
 
-## TinaCMS (added 2026-08-18, local only so far)
+## TinaCMS (live since 2026-08-18)
 
-A git-backed CMS is built and verified locally but NOT yet live. Content the
-staff editor can change lives in `/content` (JSON overlays on the TS data);
-uploads land in `public/uploads` and are auto-compressed at build. Full details
-and the go-live checklist: `TINA-SETUP.md`.
+A git-backed CMS is live at `/admin`. Content the staff editor can change lives
+in `/content` (JSON overlays on the TS data); service and town hero photos can
+be replaced periodically, and uploads land in `public/uploads` where they are
+auto-compressed at build. Homepage and gallery photo rotations remain curated
+site updates when a new batch is provided. Full details: `TINA-SETUP.md`.

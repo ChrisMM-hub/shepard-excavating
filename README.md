@@ -27,7 +27,7 @@ src/
   data/site.ts          all business content, services, towns, reviews, FAQs
   layouts/Base.astro     <head>, SEO, OG/Twitter, LocalBusiness + FAQ JSON-LD
   components/            Header, Hero, TrustBar, Services, Materials, WhyUs,
-                         Gallery, ServiceArea, Reviews, EmergencyBand, Contact,
+                         Gallery, ServiceArea, Reviews, Contact,
                          Footer, MobileCallBar
   pages/index.astro      assembles the homepage
   assets/photos/         the client's real photos (optimized at build)
@@ -37,19 +37,17 @@ public/                  logo, favicon, og-image, robots.txt
 ## Confirmed and remaining items
 Most placeholders are now resolved from the client's original site and Facebook:
 - **Reviews** — real Facebook recommendations (Chuck Savage, Jaime Duffy, Marcus C. Curtis). Done.
-- **Hours** — verified: Mon–Fri 7am–5pm, Sat by appointment, Sun closed.
+- **Hours** — owner-confirmed: Mon–Fri 7am–5pm; closed Saturday and Sunday.
 - **ZIP 56461** — verified. MPCA-certified installer, 20+ years, pump every 2–3 years: verified and used in the FAQ.
 
 Still to confirm with Janele:
-- Whether they offer true after-hours / 24/7 emergency response. Copy is currently softened to
-  "emergency service available" (their original site never claimed 24/7).
 - **Google review link** (`gbpReview` in `site.ts`).
 - **Logo vector** (.ai/.eps/.svg) for a clean white-knockout version on dark sections.
 - Equipment / drone video (Chris is sourcing) for an optional hero or feature section.
 
 ## Pages built
 - Home, Project Gallery, About, Contact, Thank-You, Privacy Policy
-- 11 service pages and 7 location pages, generated from data via `src/pages/[slug].astro`
+- 9 service pages and 7 location pages, generated from data via `src/pages/[slug].astro`
 
 ## Editing content
 - **Business facts, reviews, homepage FAQs:** `src/data/site.ts`

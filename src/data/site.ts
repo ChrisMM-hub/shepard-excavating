@@ -23,9 +23,8 @@ export const business = {
     zip: '56461', // PLACEHOLDER: confirm with Janele
   },
   geo: { lat: 47.2167, lng: -94.75 },
-  // Client asked us to drop all 24/7 messaging (2026-07-21). Emergency copy says we get a
-  // truck out as fast as we can; do not put a time promise back on the site.
-  hours: 'Mon–Fri 7:00am – 5:00pm · Sat by appointment · Sun closed', // verified from their original site
+  // Owner-confirmed hours (2026-08-19). Do not advertise weekend availability.
+  hours: 'Monday–Friday: 7:00am–5:00pm · Saturday–Sunday: Closed',
   facebook: 'https://www.facebook.com/ShepardExcavating/',
   bbb:
     'https://www.bbb.org/us/mn/laporte/profile/excavating-contractors/shepard-excavating-septic-service-0704-96159257',
@@ -110,18 +109,16 @@ export const featuredServices = [
   },
 ];
 
-// The rest of the lineup, shown as a compact secondary row so all 10 services are covered.
+// The rest of the lineup, shown as a compact secondary row so all eight services are covered.
 export const moreServices = [
-  { slug: 'septic-emergency', title: 'Septic Emergency', blurb: 'Frozen lines and backups handled fast.', img: 'svc-emergency' },
   { slug: 'snow-removal', title: 'Snow Removal', blurb: 'Driveways and commercial lots.', img: 'svc-snow' },
   { slug: 'fisher-snowplows', title: 'Fisher Snowplow Dealer', blurb: 'Sales, parts, and service.', img: 'svc-fisher' },
-  { slug: 'roll-off-boxes', title: 'Roll-Off Dumpsters', blurb: 'Cleanouts and job debris.', img: 'svc-dumpster' },
 ];
 
 // Trust-bar stats.
 export const stats = [
   { value: '29', label: 'Years in business' },
-  { value: '10', label: 'Services, one call' },
+  { value: '8', label: 'Services, one call' },
   { value: '7', label: 'Towns served' },
   { value: '3', label: 'Counties served' },
 ];
@@ -133,7 +130,7 @@ export const whyUs = [
   },
   {
     title: 'One call does it all',
-    body: 'Septic, dirt work, gravel, demolition, dumpsters, and snow. Skip juggling four contractors for one job.',
+    body: 'Septic, dirt work, gravel, demolition, and snow. Skip juggling four contractors for one job.',
   },
   {
     title: 'Licensed septic installer',
@@ -196,11 +193,11 @@ const baseFaqs = [
   },
   {
     q: 'What areas do you serve?',
-    a: 'We work across Beltrami, Hubbard, and Cass counties, including Bemidji, Laporte, Park Rapids, Walker, Cass Lake, Hackensack, Longville, and the surrounding lake country.',
+    a: 'We serve Northern Minnesota across Beltrami, Hubbard, and Cass counties, including Bemidji, Laporte, Park Rapids, Walker, Cass Lake, Hackensack, Longville, and the surrounding lake country.',
   },
   {
-    q: 'Do you handle septic and water-line emergencies?',
-    a: 'Yes. We thaw frozen septic and water lines, clear sewer backups with our rooter and line-cleaning service, and handle other home emergencies. Give us a call at (218) 224-2754 and we will get to you as fast as we can.',
+    q: 'Can you thaw frozen septic and water lines?',
+    a: 'Yes. We steam frozen septic and water lines and clear sewer backups with our rooter and line-cleaning service. Call (218) 224-2754 during business hours to schedule service.',
   },
   {
     q: 'What kinds of sand and gravel do you sell?',
@@ -208,7 +205,7 @@ const baseFaqs = [
   },
   {
     q: 'Can one company really handle all of this?',
-    a: 'That is the whole idea. Septic, excavating, land clearing, demolition, sand and gravel, dumpsters, and snow removal, all under one roof since 1997. One call instead of juggling four contractors.',
+    a: 'That is the whole idea. Septic, excavating, land clearing, demolition, sand and gravel, and snow removal, all under one roof since 1997. One call instead of juggling four contractors.',
   },
 ];
 
