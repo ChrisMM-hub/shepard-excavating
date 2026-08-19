@@ -14,7 +14,7 @@ const services = service && !standardServices.includes(service)
 ---
 
 <div class="form-card">
-  <form class="quote-form" method="post" action={leadEndpoint} data-endpoint={leadEndpoint}>
+  <form class="quote-form" method="post" action={leadEndpoint} data-endpoint={leadEndpoint} aria-label="Request a free estimate">
     <div class="row">
       <div class="field">
         <label for="qf-name">Name <span class="req">*</span></label>
@@ -62,24 +62,28 @@ const services = service && !standardServices.includes(service)
 </div>
 
 <style>
-  .form-card { background: #fff; color: var(--ink); border-radius: var(--r-lg); padding: clamp(1.4rem, 3vw, 2rem); box-shadow: var(--shadow-lg); }
-  .row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; }
-  .field { margin-bottom: 1rem; }
-  label { display: block; font-family: var(--font-head); font-weight: 700; font-size: 0.92rem; margin-bottom: 0.35rem; color: var(--ink); }
+  .form-card { background: #fff; color: var(--ink); border: 1px solid rgba(13,13,13,0.08); border-top: 4px solid var(--yellow); border-radius: var(--r-lg); padding: clamp(1.4rem, 3vw, 2rem); box-shadow: var(--shadow-lg); }
+  .quote-form { display: grid; gap: 1rem; }
+  .row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; align-items: start; }
+  .field { display: grid; gap: 0.4rem; min-width: 0; }
+  label { display: block; font-family: var(--font-head); font-weight: 700; font-size: 0.92rem; color: var(--ink); }
   .req { color: var(--red); }
   input, select, textarea {
     width: 100%; min-width: 0; font: inherit; font-size: 1rem; padding: 0.75rem 0.85rem;
-    border: 1.5px solid var(--line); border-radius: var(--r); background: var(--paper); color: var(--ink);
+    border: 1.5px solid #8a8a8a; border-radius: var(--r); background: var(--paper); color: var(--ink);
     transition: border-color 0.15s, box-shadow 0.15s;
   }
-  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(194,19,19,0.15); background: #fff; }
-  textarea { resize: vertical; }
-  .form-fine { font-size: 0.84rem; color: var(--slate); margin-top: 0.8rem; text-align: center; }
+  input, select { height: 3.25rem; line-height: 1.25; }
+  input:focus, select:focus, textarea:focus { border-color: var(--red); background: #fff; }
+  input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; box-shadow: none; }
+  textarea { min-height: 8.25rem; line-height: 1.5; resize: vertical; }
+  .quote-form .btn { white-space: normal; line-height: 1.25; }
+  .form-fine { font-size: 0.84rem; color: var(--slate); text-align: center; }
   .form-fine a, .form-error a { color: var(--red); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
-  .form-error { margin-top: 0.85rem; padding: 0.8rem; border: 1px solid rgba(194,19,19,0.35); border-radius: var(--r); background: rgba(194,19,19,0.07); color: #7f1111; }
+  .form-error { padding: 0.8rem; border: 1px solid rgba(194,19,19,0.35); border-radius: var(--r); background: rgba(194,19,19,0.07); color: #7f1111; }
   .form-hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 
-  @media (max-width: 460px) { .row { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .row { grid-template-columns: 1fr; } }
 </style>
 
 <script>

@@ -137,7 +137,7 @@ const hero = img(service.heroImage);
 <section class="section section--dark" id="quote" aria-labelledby="quote-h">
   <div class="container contact-grid">
     <div class="contact-info">
-      <p class="eyebrow">Get a free estimate</p>
+      <p class="eyebrow quote-eyebrow">Get a free estimate</p>
       <h2 id="quote-h">Let's talk about your {service.navLabel.toLowerCase()}</h2>
       <p class="lead">Fill out the form or call and talk to a real person. Fair price, no runaround.</p>
       <p class="contact-phone"><a href={business.phoneHref}>{business.phone}</a></p>
@@ -208,7 +208,7 @@ const hero = img(service.heroImage);
   .contact-phone a { font-family: var(--font-head); font-weight: 800; font-size: 1.8rem; color: var(--yellow); }
   .contact-sub { color: #cfccc2; margin-top: 0.6rem; line-height: 1.5; }
 
-  @media (max-width: 900px) {
+  @media (max-width: 960px) {
     .detail-grid { grid-template-columns: 1fr; }
     .detail-aside { position: static; }
     .ticks.two-col { grid-template-columns: 1fr; }
