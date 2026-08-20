@@ -143,7 +143,20 @@ function validateLead(raw) {
     page: 2048,
   };
 
-  if (!lead.name || !lead.phone) return { error: 'Name and phone are required.' };
+  const requiredFields = [
+    ['name', 'Name'],
+    ['phone', 'Phone'],
+    ['email', 'Email'],
+    ['service', 'Service needed'],
+    ['address', 'Address'],
+    ['message', 'Project details'],
+  ];
+  const missingFields = requiredFields
+    .filter(([field]) => !lead[field])
+    .map(([, label]) => label);
+  if (missingFields.length) {
+    return { error: `${missingFields.join(', ')} ${missingFields.length === 1 ? 'is' : 'are'} required.` };
+  }
   if (Object.entries(limits).some(([field, limit]) => lead[field].length > limit)) {
     return { error: 'One or more fields are too long.' };
   }
@@ -221,9 +234,8 @@ export async function handleLeadRequest(request, overrides = {}) {
   const payload = {
     ...lead,
     // The existing HighLevel workflow has a validated `location` merge field.
-    // Populate it with the visitor's property address, falling back to the
-    // service-area page context when no address was entered.
-    location: lead.address || lead.location,
+    // Populate it with the required property address.
+    location: lead.address,
     page: trustedPage(lead.page, request),
     source: 'Website quote form',
     submissionId: crypto.randomUUID(),

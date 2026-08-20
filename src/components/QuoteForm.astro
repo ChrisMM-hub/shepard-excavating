@@ -27,12 +27,12 @@ const services = service && !standardServices.includes(service)
     </div>
     <div class="row">
       <div class="field">
-        <label for="qf-email">Email</label>
-        <input id="qf-email" name="email" type="email" autocomplete="email" maxlength="254" />
+        <label for="qf-email">Email <span class="req">*</span></label>
+        <input id="qf-email" name="email" type="email" autocomplete="email" maxlength="254" required />
       </div>
       <div class="field">
-        <label for="qf-service">Service needed</label>
-        <select id="qf-service" name="service">
+        <label for="qf-service">Service needed <span class="req">*</span></label>
+        <select id="qf-service" name="service" required>
           <option value="">Select a service</option>
           {services.map((s) => (<option value={s} selected={s === service}>{s}</option>))}
           <option value="Something else" selected={service === 'Something else'}>Something else</option>
@@ -40,12 +40,12 @@ const services = service && !standardServices.includes(service)
       </div>
     </div>
     <div class="field">
-      <label for="qf-address">Address</label>
-      <input id="qf-address" name="address" type="text" autocomplete="street-address" maxlength="240" placeholder="Property address or nearest town" />
+      <label for="qf-address">Address <span class="req">*</span></label>
+      <input id="qf-address" name="address" type="text" autocomplete="street-address" maxlength="240" placeholder="Property address or nearest town" required />
     </div>
     <div class="field">
-      <label for="qf-message">Let us know how we can help.</label>
-      <textarea id="qf-message" name="message" rows="4" maxlength="4000" placeholder="Please enter details about your project or property here."></textarea>
+      <label for="qf-message">Let us know how we can help. <span class="req">*</span></label>
+      <textarea id="qf-message" name="message" rows="4" maxlength="4000" placeholder="Please enter details about your project or property here." required></textarea>
     </div>
     <input type="hidden" name="location" value={location} />
     <div class="form-hp" aria-hidden="true">

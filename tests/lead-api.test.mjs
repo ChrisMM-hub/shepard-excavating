@@ -69,18 +69,19 @@ test('forwards a valid lead and returns success only after HighLevel accepts it'
   assert.match(forwarded.body.submissionId, /^[0-9a-f-]{36}$/);
 });
 
-test('uses the service-area page location when no property address is supplied', async () => {
-  let forwarded;
+test('requires an address even when a service-area page location is present', async () => {
+  let calls = 0;
   const response = await handleLeadRequest(
     request(validLead({ address: '', location: 'Bemidji' }), { ip: '203.0.113.20' }),
     options(async (url, init) => {
-      forwarded = JSON.parse(init.body);
+      calls += 1;
       return new Response(null, { status: 200 });
     }),
   );
 
-  assert.equal(response.status, 202);
-  assert.equal(forwarded.location, 'Bemidji');
+  assert.equal(response.status, 422);
+  assert.deepEqual(await response.json(), { ok: false, error: 'Address is required.' });
+  assert.equal(calls, 0);
 });
 
 test('does not report success when HighLevel returns an error', async () => {
@@ -115,6 +116,24 @@ test('rejects invalid lead data before calling HighLevel', async () => {
   );
 
   assert.equal(response.status, 422);
+  assert.equal(calls, 0);
+});
+
+test('requires the contact details and project message before calling HighLevel', async () => {
+  let calls = 0;
+  const response = await handleLeadRequest(
+    request(validLead({ email: '', service: '', address: '', message: '' }), { ip: '203.0.113.22' }),
+    options(async () => {
+      calls += 1;
+      return new Response(null, { status: 200 });
+    }),
+  );
+
+  assert.equal(response.status, 422);
+  assert.deepEqual(await response.json(), {
+    ok: false,
+    error: 'Email, Service needed, Address, Project details are required.',
+  });
   assert.equal(calls, 0);
 });
 
