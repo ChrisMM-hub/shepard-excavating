@@ -101,7 +101,6 @@ const services = service && !standardServices.includes(service)
         sitekey: string;
         action: string;
         theme: 'light';
-        'response-field': false;
         callback: (token: string) => void;
         'expired-callback': () => void;
         'error-callback': () => void;
@@ -166,7 +165,6 @@ const services = service && !standardServices.includes(service)
             sitekey,
             action: 'quote_request',
             theme: 'light',
-            'response-field': false,
             callback: (token) => { turnstileToken = token; },
             'expired-callback': () => { turnstileToken = ''; },
             'error-callback': () => { turnstileToken = ''; },
