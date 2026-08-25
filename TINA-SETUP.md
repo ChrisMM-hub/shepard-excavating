@@ -10,13 +10,18 @@ plain Astro build otherwise.
 
 | Collection | Files | Editable |
 |---|---|---|
-| Service Pages | `content/services/*.json` (9) | heading, search title/description, intro, included list, price factors, timeline, expectations, FAQs, optional hero photo replacement |
+| Service Pages | `content/services/*.json` (9) | heading, search title/description, intro, included list, price factors, timeline, expectations, FAQs, optional hero photo replacement, optional photo-strip replacement |
 | Town Pages | `content/locations/*.json` (7) | heading, search title/description, intro, local paragraph, FAQs, optional hero photo replacement |
+| Homepage | `content/site/homepage.json` | hero headline + call button + optional background photo, the three feature bands (heading, paragraphs, button label, optional photo), the calculator banner |
 | Customer Reviews | `content/site/reviews.json` | the homepage review cards (Google/Facebook source, quote, name, date) |
 | Homepage FAQs | `content/site/faqs.json` | the homepage FAQ section |
+| Project Gallery | `content/site/gallery.json` | the full gallery: remove, reorder, recategorize, add uploads (seeded with the 35 curated photos) |
+| About Page Photos | `content/site/about.json` | optional replacements for the banner and crew photos |
 
-Everything else (nav, slugs, layout, phone/schema data, galleries, the quote
-form) is locked in `src/data/*.ts` and not exposed to editors.
+Everything else (nav, slugs, layout, phone/schema data, the quote form,
+photo art direction like crops and section order) is locked in the code and
+not exposed to editors. All uploads land in `public/uploads` and are
+compressed by `scripts/optimize-uploads.mjs` on every build.
 
 ## How the data flows
 
