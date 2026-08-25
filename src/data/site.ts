@@ -223,9 +223,11 @@ const baseHomepage = {
     {
       key: 'excavating',
       heading: 'Helping you make room',
+      // Paragraphs are {text} objects (not bare strings) so the CMS can give
+      // each paragraph its own textarea; see the homepage collection in tina/.
       paragraphs: [
-        'We have the equipment and expertise to help with any and all of your excavation and demolition projects. From making room for your new dream home to driveway building we got you covered.',
-        'Work with us and we will handle all of your land clearing done in a timely fashion.',
+        { text: 'We have the equipment and expertise to help with any and all of your excavation and demolition projects. From making room for your new dream home to driveway building we got you covered.' },
+        { text: 'Work with us and we will handle all of your land clearing done in a timely fashion.' },
       ],
       btnLabel: 'Excavating',
     },
@@ -233,8 +235,8 @@ const baseHomepage = {
       key: 'septic',
       heading: 'Septic pumping & maintenance',
       paragraphs: [
-        'Routine pumping, inspections, and line cleaning help keep your system healthy and out of trouble.',
-        'We also steam frozen septic and water lines and can help you get on a regular maintenance schedule.',
+        { text: 'Routine pumping, inspections, and line cleaning help keep your system healthy and out of trouble.' },
+        { text: 'We also steam frozen septic and water lines and can help you get on a regular maintenance schedule.' },
       ],
       btnLabel: 'Septic Pumping',
     },
@@ -242,9 +244,9 @@ const baseHomepage = {
       key: 'fisher',
       heading: 'Fisher Snowplows',
       paragraphs: [
-        'Come check out our line up of Fisher snowplows for sale. We have a variety of snowplows on hand or can order anything you need.',
-        "We can get v-plows or straight blades for 1/2 ton vehicles. Meaning we can set you up to push snow with just about anything! As well as ATV's! We also sell a variety of salters.",
-        'We can order snow plows year round. So you are prepared before winter hits.',
+        { text: 'Come check out our line up of Fisher snowplows for sale. We have a variety of snowplows on hand or can order anything you need.' },
+        { text: "We can get v-plows or straight blades for 1/2 ton vehicles. Meaning we can set you up to push snow with just about anything! As well as ATV's! We also sell a variety of salters." },
+        { text: 'We can order snow plows year round. So you are prepared before winter hits.' },
       ],
       btnLabel: 'Fisher Snowplows',
     },

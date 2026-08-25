@@ -2,6 +2,8 @@ const MAX_BODY_BYTES = 24 * 1024;
 const RATE_LIMIT = 5;
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 const MAX_RATE_LIMIT_KEYS = 1000;
+const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+const TURNSTILE_ACTION = 'quote_request';
 
 // Best-effort protection for repeated requests that land on the same warm function
 // instance. The origin check and honeypot provide the durable application layers;
@@ -120,6 +122,60 @@ function clean(value) {
   return typeof value === 'string' ? value.replaceAll('\0', '').trim() : '';
 }
 
+function isValidNorthAmericanPhone(value) {
+  const digits = value.replace(/\D/g, '');
+  const nationalNumber = digits.length === 11 && digits.startsWith('1') ? digits.slice(1) : digits;
+  return /^[2-9]\d{2}[2-9]\d{6}$/.test(nationalNumber);
+}
+
+function hostnameAllowlist(value) {
+  return new Set(
+    clean(value)
+      .split(',')
+      .map((hostname) => hostname.trim().toLowerCase())
+      .filter(Boolean),
+  );
+}
+
+async function verifyTurnstile(raw, request, overrides, logger) {
+  const token = clean(raw['cf-turnstile-response']);
+  const secret = overrides.turnstileSecret ?? process.env.TURNSTILE_SECRET;
+  const expectedHostnames = hostnameAllowlist(
+    overrides.turnstileHostnames ?? process.env.TURNSTILE_HOSTNAMES,
+  );
+
+  if (!token || token.length > 2048 || !secret || expectedHostnames.size === 0) {
+    logger.error('Turnstile verification is missing a token or server configuration.');
+    return false;
+  }
+
+  const body = new URLSearchParams({ secret, response: token });
+  const ip = requestIp(request);
+  if (ip !== 'unknown') body.set('remoteip', ip);
+
+  let result;
+  try {
+    const verify = await (overrides.turnstileFetchImpl ?? fetch)(TURNSTILE_VERIFY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body,
+      signal: AbortSignal.timeout(10_000),
+    });
+    if (!verify.ok) throw new Error(`Turnstile Siteverify returned HTTP ${verify.status}`);
+    result = await verify.json();
+  } catch (error) {
+    logger.error('Turnstile verification failed before a valid response was received.', error);
+    return false;
+  }
+
+  return (
+    result?.success === true &&
+    result.action === TURNSTILE_ACTION &&
+    typeof result.hostname === 'string' &&
+    expectedHostnames.has(result.hostname.toLowerCase())
+  );
+}
+
 function validateLead(raw) {
   const lead = {
     name: clean(raw.name),
@@ -161,9 +217,8 @@ function validateLead(raw) {
     return { error: 'One or more fields are too long.' };
   }
 
-  const phoneDigits = lead.phone.replace(/\D/g, '');
-  if (phoneDigits.length < 7 || phoneDigits.length > 15) {
-    return { error: 'Enter a valid phone number.' };
+  if (!isValidNorthAmericanPhone(lead.phone)) {
+    return { error: 'Enter a valid 10-digit U.S. or Canadian phone number.' };
   }
 
   if (lead.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.email)) {
@@ -220,11 +275,15 @@ export async function handleLeadRequest(request, overrides = {}) {
   // success without sending anything so the field remains an effective trap.
   if (clean(raw.companyWebsite)) return success(request, false);
 
+  const logger = overrides.logger ?? console;
+  if (!(await verifyTurnstile(raw, request, overrides, logger))) {
+    return failure(request, 'Spam protection could not verify this request.', 403);
+  }
+
   const validation = validateLead(raw);
   if (validation.error) return failure(request, validation.error, 422);
 
   const webhookUrl = overrides.webhookUrl ?? process.env.HIGHLEVEL_WEBHOOK_URL;
-  const logger = overrides.logger ?? console;
   if (!webhookUrl) {
     logger.error('Lead endpoint is missing its HighLevel configuration.');
     return failure(request, 'Lead delivery is temporarily unavailable.', 503);

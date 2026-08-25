@@ -184,12 +184,22 @@ export default defineConfig({
               },
               { type: 'string', name: 'heading', label: 'Heading', required: true },
               {
-                type: 'string',
+                // One textarea per paragraph. A plain string list with a
+                // textarea component renders the whole list as one comma-joined
+                // text box, which both confuses editors and corrupts the list
+                // shape on save.
+                type: 'object',
                 name: 'paragraphs',
                 label: 'Paragraphs',
                 list: true,
-                required: true,
-                ui: { component: 'textarea' },
+                ui: {
+                  itemProps: (item: Record<string, string>) => ({
+                    label: item?.text ? item.text.slice(0, 48) + (item.text.length > 48 ? '…' : '') : 'Paragraph',
+                  }),
+                },
+                fields: [
+                  { type: 'string', name: 'text', label: 'Paragraph Text', required: true, ui: { component: 'textarea' } },
+                ],
               },
               { type: 'string', name: 'btnLabel', label: 'Button Label', required: true },
             ],

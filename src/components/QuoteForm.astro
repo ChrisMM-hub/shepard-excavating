@@ -6,6 +6,7 @@ interface Props {
   location?: string; // preserves which service-area page generated the lead
 }
 const { service = '', location = '' } = Astro.props;
+const turnstileSitekey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
 
 const standardServices = [...featuredServices, ...moreServices].map((s) => s.title);
 const services = service && !standardServices.includes(service)
@@ -52,6 +53,11 @@ const services = service && !standardServices.includes(service)
       <label for="qf-company-website">Company website</label>
       <input id="qf-company-website" name="companyWebsite" type="url" tabindex="-1" autocomplete="off" />
     </div>
+    <div
+      class="turnstile-check"
+      data-turnstile-sitekey={turnstileSitekey}
+      aria-label="Automated spam protection"
+    ></div>
     <button type="submit" class="btn btn-primary btn-lg btn-block">Request My Free Estimate</button>
     <p class="form-error" role="alert" tabindex="-1" hidden>
       We could not send your request. Please try again, or call <a href="tel:+12182242754">(218) 224-2754</a>.
@@ -82,11 +88,62 @@ const services = service && !standardServices.includes(service)
   .form-fine a, .form-error a { color: var(--red); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
   .form-error { padding: 0.8rem; border: 1px solid rgba(194,19,19,0.35); border-radius: var(--r); background: rgba(194,19,19,0.07); color: #7f1111; }
   .form-hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .turnstile-check { min-height: 65px; display: flex; justify-content: center; align-items: center; }
 
   @media (max-width: 600px) { .row { grid-template-columns: 1fr; } }
 </style>
 
 <script>
+  type TurnstileApi = {
+    render: (
+      container: HTMLElement,
+      options: {
+        sitekey: string;
+        action: string;
+        theme: 'light';
+        'response-field': false;
+        callback: (token: string) => void;
+        'expired-callback': () => void;
+        'error-callback': () => void;
+      },
+    ) => string;
+    reset: (widgetId: string) => void;
+  };
+
+  const turnstileWindow = window as Window & { turnstile?: TurnstileApi };
+  let turnstileLoader: Promise<void> | undefined;
+
+  const loadTurnstile = () => {
+    if (turnstileWindow.turnstile) return Promise.resolve();
+    if (turnstileLoader) return turnstileLoader;
+
+    turnstileLoader = new Promise((resolve, reject) => {
+      const existing = document.querySelector<HTMLScriptElement>('script[data-shepard-turnstile]');
+      if (existing) {
+        existing.addEventListener('load', () => resolve(), { once: true });
+        existing.addEventListener('error', () => reject(new Error('Turnstile failed to load')), { once: true });
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+      script.async = true;
+      script.defer = true;
+      script.dataset.shepardTurnstile = 'true';
+      script.addEventListener('load', () => resolve(), { once: true });
+      script.addEventListener('error', () => reject(new Error('Turnstile failed to load')), { once: true });
+      document.head.appendChild(script);
+    });
+
+    return turnstileLoader;
+  };
+
+  const isValidNorthAmericanPhone = (value: string) => {
+    const digits = value.replace(/\D/g, '');
+    const nationalNumber = digits.length === 11 && digits.startsWith('1') ? digits.slice(1) : digits;
+    return /^[2-9]\d{2}[2-9]\d{6}$/.test(nationalNumber);
+  };
+
   // Submit through the same-origin lead endpoint. It validates the request and only
   // returns success after HighLevel accepts the lead.
   document.querySelectorAll('.form-card').forEach((card) => {
@@ -95,7 +152,28 @@ const services = service && !standardServices.includes(service)
     if (!form) return;
     const field = (n: string) => form.querySelector(`[name="${n}"]`) as HTMLInputElement | null;
     const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+    const turnstileContainer = card.querySelector('[data-turnstile-sitekey]') as HTMLElement | null;
     const initialButtonText = submitButton?.textContent || 'Request My Free Estimate';
+    let turnstileWidgetId: string | undefined;
+    let turnstileToken = '';
+
+    const sitekey = turnstileContainer?.dataset.turnstileSitekey || '';
+    if (turnstileContainer && sitekey) {
+      loadTurnstile()
+        .then(() => {
+          if (!turnstileWindow.turnstile || turnstileWidgetId !== undefined) return;
+          turnstileWidgetId = turnstileWindow.turnstile.render(turnstileContainer, {
+            sitekey,
+            action: 'quote_request',
+            theme: 'light',
+            'response-field': false,
+            callback: (token) => { turnstileToken = token; },
+            'expired-callback': () => { turnstileToken = ''; },
+            'error-callback': () => { turnstileToken = ''; },
+          });
+        })
+        .catch((err) => console.error('Spam protection failed to load', err));
+    }
 
     const showError = () => {
       if (error) {
@@ -123,19 +201,22 @@ const services = service && !standardServices.includes(service)
 
       const name = field('name')?.value.trim() || '';
       const phone = field('phone')?.value.trim() || '';
-      const phoneDigits = phone.replace(/\D/g, '');
       if (!name || !phone) {
         form.reportValidity();
         return;
       }
-      if (phoneDigits.length < 7 || phoneDigits.length > 15) {
-        field('phone')?.setCustomValidity('Enter a valid phone number.');
+      if (!isValidNorthAmericanPhone(phone)) {
+        field('phone')?.setCustomValidity('Enter a valid 10-digit U.S. or Canadian phone number.');
         form.reportValidity();
         field('phone')?.focus();
         return;
       }
       if (!form.checkValidity()) {
         form.reportValidity();
+        return;
+      }
+      if (!turnstileToken) {
+        showError();
         return;
       }
 
@@ -148,6 +229,7 @@ const services = service && !standardServices.includes(service)
         location: field('location')?.value.trim() || '',
         message: field('message')?.value.trim() || '',
         companyWebsite: field('companyWebsite')?.value || '',
+        'cf-turnstile-response': turnstileToken,
         page: window.location.href,
       };
 
@@ -183,6 +265,11 @@ const services = service && !standardServices.includes(service)
         showError();
         if (submitButton && submitButton.textContent === 'Try Again') {
           submitButton.setAttribute('aria-label', `${initialButtonText} — try again`);
+        }
+      } finally {
+        if (turnstileWidgetId !== undefined) {
+          turnstileWindow.turnstile?.reset(turnstileWidgetId);
+          turnstileToken = '';
         }
       }
     });

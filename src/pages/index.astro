@@ -24,7 +24,7 @@ const feat = Object.fromEntries(homepage.features.map((f) => [f.key, f]));
 
   <HomeFeature
     heading={feat.excavating.heading}
-    paragraphs={feat.excavating.paragraphs}
+    paragraphs={feat.excavating.paragraphs.map((p) => p.text)}
     btnLabel={feat.excavating.btnLabel}
     btnHref="/excavating"
     img={pitImg}
@@ -33,7 +33,7 @@ const feat = Object.fromEntries(homepage.features.map((f) => [f.key, f]));
 
   <HomeFeature
     heading={feat.septic.heading}
-    paragraphs={feat.septic.paragraphs}
+    paragraphs={feat.septic.paragraphs.map((p) => p.text)}
     btnLabel={feat.septic.btnLabel}
     btnHref="/septic-pumping"
     img={pumpTruckImg}
@@ -44,7 +44,7 @@ const feat = Object.fromEntries(homepage.features.map((f) => [f.key, f]));
 
   <HomeFeature
     heading={feat.fisher.heading}
-    paragraphs={feat.fisher.paragraphs}
+    paragraphs={feat.fisher.paragraphs.map((p) => p.text)}
     btnLabel={feat.fisher.btnLabel}
     btnHref="/fisher-snowplows"
     img={fisherImg}

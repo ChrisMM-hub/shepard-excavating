@@ -25,11 +25,13 @@ list of PLACEHOLDER items to confirm with Janele (reviews, hours, ZIP, logo vect
 Vercel builds the Astro site to `dist/` and serves the same-origin serverless function
 at `api/lead.js`. Pushes to `main` auto-deploy after the linked GitHub author check.
 
-The Vercel project must have the sensitive environment variable
-`HIGHLEVEL_WEBHOOK_URL` in Production and Preview. Its value belongs only in Vercel,
-never in source or this file. The production firewall rule **Protect lead form** limits
-POST `/api/lead` to five requests per IP per 600 seconds and returns HTTP 429 after the
-limit.
+The Vercel project must have the sensitive environment variables
+`HIGHLEVEL_WEBHOOK_URL` and `TURNSTILE_SECRET` in Production. It must also have
+`PUBLIC_TURNSTILE_SITEKEY` and `TURNSTILE_HOSTNAMES`; production hostnames are
+`shepardexcavating.com,www.shepardexcavating.com`. Secret values belong only in
+Vercel, never in source or this file. The production firewall rule **Protect lead
+form** limits POST `/api/lead` to five requests per IP per 600 seconds and returns
+HTTP 429 after the limit.
 
 ## HighLevel lead pipeline (configured 2026-08-11)
 
@@ -37,10 +39,12 @@ limit.
   the `highlevel-router` credentials CSV, so use the authenticated HighLevel UI until
   credentials are added.
 - **Website boundary:** `src/components/QuoteForm.astro` POSTs JSON to `/api/lead`.
-  `api/lead.js` validates origin and fields, applies honeypot/size/rate checks,
-  forwards to the protected HighLevel URL, requires a successful upstream response,
-  and only then returns success. A native no-JavaScript POST fallback uses the same
-  endpoint. GA4 `generate_lead` fires only after HighLevel accepts the request.
+  `api/lead.js` validates origin and fields, applies honeypot/size/rate checks, requires
+  a valid single-use Cloudflare Turnstile token for action `quote_request` from an
+  approved hostname, forwards to the protected HighLevel URL, requires a successful
+  upstream response, and only then returns success. Phone numbers must be valid
+  10-digit U.S./Canadian NANP numbers. A native no-JavaScript POST fallback uses the
+  same endpoint. GA4 `generate_lead` fires only after HighLevel accepts the request.
 - **Pipeline:** **Website Leads** → New Lead / Contacted / Quoted / won/lost.
 - **Workflow:** **Website Lead Intake** (published; ID
   `1aae254c-167b-40ee-8932-6cd54f041bea`). Inbound Webhook →

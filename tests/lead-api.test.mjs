@@ -34,6 +34,7 @@ function validLead(overrides = {}) {
     message: 'Please call about a site-prep estimate.',
     page: 'https://www.shepardexcavating.com/excavating/',
     companyWebsite: '',
+    'cf-turnstile-response': 'fresh-turnstile-token',
     ...overrides,
   };
 }
@@ -45,6 +46,13 @@ function options(fetchImpl, overrides = {}) {
     now: () => 5_000,
     disableRateLimit: true,
     logger: quietLogger,
+    turnstileSecret: 'test-turnstile-secret',
+    turnstileHostnames: 'www.shepardexcavating.com,shepardexcavating.com',
+    turnstileFetchImpl: async () => Response.json({
+      success: true,
+      action: 'quote_request',
+      hostname: 'www.shepardexcavating.com',
+    }),
     ...overrides,
   };
 }
@@ -117,6 +125,76 @@ test('rejects invalid lead data before calling HighLevel', async () => {
 
   assert.equal(response.status, 422);
   assert.equal(calls, 0);
+});
+
+test('rejects invalid North American phone numbers before calling HighLevel', async () => {
+  for (const phone of ['120-120-1200', '+1 852-622-52216', '218-155-0142']) {
+    let calls = 0;
+    const response = await handleLeadRequest(
+      request(validLead({ phone }), { ip: `203.0.113.${30 + calls}` }),
+      options(async () => {
+        calls += 1;
+        return new Response(null, { status: 200 });
+      }),
+    );
+
+    assert.equal(response.status, 422);
+    assert.deepEqual(await response.json(), {
+      ok: false,
+      error: 'Enter a valid 10-digit U.S. or Canadian phone number.',
+    });
+    assert.equal(calls, 0);
+  }
+});
+
+test('rejects a missing or unsuccessful Turnstile token before calling HighLevel', async () => {
+  for (const turnstileResult of [
+    { lead: validLead({ 'cf-turnstile-response': '' }) },
+    { lead: validLead(), result: { success: false, action: 'quote_request', hostname: origin } },
+    { lead: validLead(), result: { success: true, action: 'wrong_action', hostname: origin } },
+    { lead: validLead(), result: { success: true, action: 'quote_request', hostname: 'spam.invalid' } },
+  ]) {
+    let calls = 0;
+    const response = await handleLeadRequest(
+      request(turnstileResult.lead, { ip: '203.0.113.40' }),
+      options(async () => {
+        calls += 1;
+        return new Response(null, { status: 200 });
+      }, turnstileResult.result ? {
+        turnstileFetchImpl: async () => Response.json(turnstileResult.result),
+      } : {}),
+    );
+
+    assert.equal(response.status, 403);
+    assert.equal(calls, 0);
+  }
+});
+
+test('accepts a fresh Turnstile token once and rejects its replay', async () => {
+  let redeemed = false;
+  let highLevelCalls = 0;
+  const lead = validLead({ 'cf-turnstile-response': 'single-use-token' });
+  const sharedOptions = options(async () => {
+    highLevelCalls += 1;
+    return new Response(null, { status: 200 });
+  }, {
+    turnstileFetchImpl: async () => {
+      if (redeemed) return Response.json({ success: false, 'error-codes': ['timeout-or-duplicate'] });
+      redeemed = true;
+      return Response.json({
+        success: true,
+        action: 'quote_request',
+        hostname: 'www.shepardexcavating.com',
+      });
+    },
+  });
+
+  const first = await handleLeadRequest(request(lead, { ip: '203.0.113.41' }), sharedOptions);
+  const replay = await handleLeadRequest(request(lead, { ip: '203.0.113.41' }), sharedOptions);
+
+  assert.equal(first.status, 202);
+  assert.equal(replay.status, 403);
+  assert.equal(highLevelCalls, 1);
 });
 
 test('requires the contact details and project message before calling HighLevel', async () => {
@@ -208,6 +286,13 @@ test('requires server-side HighLevel configuration', async () => {
       now: () => 5_000,
       disableRateLimit: true,
       logger: quietLogger,
+      turnstileSecret: 'test-turnstile-secret',
+      turnstileHostnames: 'www.shepardexcavating.com,shepardexcavating.com',
+      turnstileFetchImpl: async () => Response.json({
+        success: true,
+        action: 'quote_request',
+        hostname: 'www.shepardexcavating.com',
+      }),
     },
   );
 
