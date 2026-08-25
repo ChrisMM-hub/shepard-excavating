@@ -15,19 +15,34 @@ const MAX_WIDTH = 1920;
 const MAX_BYTES = 350 * 1024;
 const EXTS = new Set(['.jpg', '.jpeg', '.png', '.webp']);
 
-let files = [];
-try {
-  files = await readdir(uploads);
-} catch {
-  console.log('optimize-uploads: no uploads folder, nothing to do');
+// Recursive: the Tina media manager supports folders inside the media root.
+async function walk(dir) {
+  let entries = [];
+  try {
+    entries = await readdir(dir, { withFileTypes: true });
+  } catch {
+    return [];
+  }
+  const out = [];
+  for (const e of entries) {
+    const full = path.join(dir, e.name);
+    if (e.isDirectory()) out.push(...(await walk(full)));
+    else out.push(full);
+  }
+  return out;
+}
+
+const files = await walk(uploads);
+if (files.length === 0) {
+  console.log('optimize-uploads: no uploads, nothing to do');
   process.exit(0);
 }
 
 let touched = 0;
-for (const name of files) {
+for (const file of files) {
+  const name = path.relative(uploads, file);
   const ext = path.extname(name).toLowerCase();
   if (!EXTS.has(ext)) continue;
-  const file = path.join(uploads, name);
   const { size } = await stat(file);
   const meta = await sharp(file).metadata();
   if (size <= MAX_BYTES && (meta.width ?? 0) <= MAX_WIDTH) continue;
