@@ -230,6 +230,7 @@ const baseHomepage = {
         { text: 'Work with us and we will handle all of your land clearing done in a timely fashion.' },
       ],
       btnLabel: 'Excavating',
+      photoUpload: '',
     },
     {
       key: 'septic',
@@ -239,6 +240,7 @@ const baseHomepage = {
         { text: 'We also steam frozen septic and water lines and can help you get on a regular maintenance schedule.' },
       ],
       btnLabel: 'Septic Pumping',
+      photoUpload: '',
     },
     {
       key: 'fisher',
@@ -249,6 +251,7 @@ const baseHomepage = {
         { text: 'We can order snow plows year round. So you are prepared before winter hits.' },
       ],
       btnLabel: 'Fisher Snowplows',
+      photoUpload: '',
     },
   ],
   calculator: {

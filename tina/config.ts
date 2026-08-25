@@ -202,6 +202,13 @@ export default defineConfig({
                 ],
               },
               { type: 'string', name: 'btnLabel', label: 'Button Label', required: true },
+              {
+                type: 'image',
+                name: 'photoUpload',
+                label: 'Replace Photo (optional)',
+                description:
+                  'Leave empty to keep the standard photo. Uploads are compressed automatically at publish time.',
+              },
             ],
           },
           {

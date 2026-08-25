@@ -12,8 +12,9 @@ interface Props {
   alt: string;
   flip?: boolean;
   tint?: boolean; // subtle alt background
+  photoUpload?: string; // CMS-uploaded photo override (path under /uploads)
 }
-const { heading, paragraphs, btnLabel, btnHref, img, alt, flip = false, tint = false } = Astro.props;
+const { heading, paragraphs, btnLabel, btnHref, img, alt, flip = false, tint = false, photoUpload } = Astro.props;
 ---
 
 <section class={'feature section' + (tint ? ' feature--tint' : '')}>
@@ -24,7 +25,11 @@ const { heading, paragraphs, btnLabel, btnHref, img, alt, flip = false, tint = f
       <a href={btnHref} class="btn btn-red">{btnLabel}</a>
     </div>
     <div class="feat-media">
-      <Image src={img} alt={alt} widths={[480, 760, 1100]} sizes="(max-width: 880px) 100vw, 560px" quality={64} loading="lazy" />
+      {photoUpload ? (
+        <img src={photoUpload} alt={alt} loading="lazy" />
+      ) : (
+        <Image src={img} alt={alt} widths={[480, 760, 1100]} sizes="(max-width: 880px) 100vw, 560px" quality={64} loading="lazy" />
+      )}
     </div>
   </div>
 </section>
