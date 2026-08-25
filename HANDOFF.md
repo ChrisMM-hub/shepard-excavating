@@ -44,7 +44,9 @@ limit.
 - **Pipeline:** **Website Leads** → New Lead / Contacted / Quoted / won/lost.
 - **Workflow:** **Website Lead Intake** (published; ID
   `1aae254c-167b-40ee-8932-6cd54f041bea`). Inbound Webhook →
-  1. Create/Update Contact — full name, phone, email, and source.
+  1. Create/Update Contact — full name, phone, email, source, and the webhook
+     `message` saved to the multi-line **Website Lead Message** contact field under
+     Additional Info.
   2. Create/Update Opportunity — Website Leads / New Lead / open, named
      `name - service`, with website source.
   3. Internal Notification → `Shepardexcavating@gmail.com` from
@@ -61,7 +63,10 @@ limit.
 - **External Forms tracking:** the HighLevel location's external-tracking script is
   installed production-only in `src/layouts/Base.astro`. It records page views and
   makes the site's native, named quote-form fields available under HighLevel → Sites
-  → Forms → Submissions → External Forms. Local development does not send analytics.
+  → Forms → Submissions → External Forms. Page View Analytics, Form Analytics, and
+  Form Submissions are enabled in HighLevel. The External Forms submission list may
+  remain unavailable until HighLevel receives the first tracked form submission.
+  Local development does not send analytics.
 
 ## Email authentication
 
