@@ -12,7 +12,11 @@ import sharp from 'sharp';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const uploads = path.join(root, 'public', 'uploads');
 const MAX_WIDTH = 1920;
-const MAX_BYTES = 350 * 1024;
+// A file already within MAX_WIDTH is only reprocessed above this size. The gap
+// between the two byte limits keeps the pass idempotent: a photo that q78
+// compression leaves at, say, 400KB must not be re-encoded on every build
+// (repo churn + generation loss), but a 1MB upload still gets crushed.
+const MAX_BYTES = 600 * 1024;
 const EXTS = new Set(['.jpg', '.jpeg', '.png', '.webp']);
 
 // Recursive: the Tina media manager supports folders inside the media root.
