@@ -145,6 +145,67 @@ export default defineConfig({
         ],
       },
       {
+        name: 'homepage',
+        label: 'Homepage',
+        path: 'content/site',
+        format: 'json',
+        match: { include: 'homepage' },
+        ui: { allowedActions: { create: false, delete: false } },
+        fields: [
+          {
+            type: 'object',
+            name: 'hero',
+            label: 'Top of Page (Hero)',
+            fields: [
+              {
+                type: 'string',
+                name: 'title',
+                label: 'Big Headline',
+                required: true,
+                ui: { component: 'textarea' },
+                description: 'Line breaks here become line breaks on the page.',
+              },
+              { type: 'string', name: 'phonePill', label: 'Call Button Text', required: true },
+            ],
+          },
+          {
+            type: 'object',
+            name: 'features',
+            label: 'Feature Sections',
+            list: true,
+            ui: { itemProps: (item: Record<string, string>) => ({ label: item?.heading || 'Section' }) },
+            fields: [
+              {
+                type: 'string',
+                name: 'key',
+                label: 'System Name',
+                required: true,
+                description: 'Used by the site to place this section. Please leave as is.',
+              },
+              { type: 'string', name: 'heading', label: 'Heading', required: true },
+              {
+                type: 'string',
+                name: 'paragraphs',
+                label: 'Paragraphs',
+                list: true,
+                required: true,
+                ui: { component: 'textarea' },
+              },
+              { type: 'string', name: 'btnLabel', label: 'Button Label', required: true },
+            ],
+          },
+          {
+            type: 'object',
+            name: 'calculator',
+            label: 'Material Calculator Banner',
+            fields: [
+              { type: 'string', name: 'heading', label: 'Heading', required: true },
+              { type: 'string', name: 'body', label: 'Text', required: true, ui: { component: 'textarea' } },
+            ],
+          },
+        ],
+      },
+      {
         name: 'faqs',
         label: 'Homepage FAQs',
         path: 'content/site',

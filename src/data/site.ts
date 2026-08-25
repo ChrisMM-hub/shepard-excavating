@@ -210,3 +210,61 @@ const baseFaqs = [
 ];
 
 export const faqs = contentJson<{ faqs: typeof baseFaqs }>('site/faqs')?.faqs ?? baseFaqs;
+
+// Homepage copy, editable in TinaCMS (content/site/homepage.json overlays these
+// fallbacks). Structure stays in the components: feature-band order, photos,
+// button destinations, and section layout are not editable.
+const baseHomepage = {
+  hero: {
+    title: 'Top Quality Work\nwith Honesty and Integrity',
+    phonePill: 'Give us a call today 218-224-2754',
+  },
+  features: [
+    {
+      key: 'excavating',
+      heading: 'Helping you make room',
+      paragraphs: [
+        'We have the equipment and expertise to help with any and all of your excavation and demolition projects. From making room for your new dream home to driveway building we got you covered.',
+        'Work with us and we will handle all of your land clearing done in a timely fashion.',
+      ],
+      btnLabel: 'Excavating',
+    },
+    {
+      key: 'septic',
+      heading: 'Septic pumping & maintenance',
+      paragraphs: [
+        'Routine pumping, inspections, and line cleaning help keep your system healthy and out of trouble.',
+        'We also steam frozen septic and water lines and can help you get on a regular maintenance schedule.',
+      ],
+      btnLabel: 'Septic Pumping',
+    },
+    {
+      key: 'fisher',
+      heading: 'Fisher Snowplows',
+      paragraphs: [
+        'Come check out our line up of Fisher snowplows for sale. We have a variety of snowplows on hand or can order anything you need.',
+        "We can get v-plows or straight blades for 1/2 ton vehicles. Meaning we can set you up to push snow with just about anything! As well as ATV's! We also sell a variety of salters.",
+        'We can order snow plows year round. So you are prepared before winter hits.',
+      ],
+      btnLabel: 'Fisher Snowplows',
+    },
+  ],
+  calculator: {
+    heading: 'How much material will your project need?',
+    body: 'Use our free Material Calculator for a quick cubic-yard estimate on fill, gravel, sand, or topsoil before you order. No guesswork, no coming up short.',
+  },
+};
+
+export const homepage = (() => {
+  const copy = contentJson<Partial<typeof baseHomepage>>('site/homepage');
+  if (!copy) return baseHomepage;
+  return {
+    hero: { ...baseHomepage.hero, ...(copy.hero ?? {}) },
+    // Merge by key so a reordered or partial CMS list can never break the bands.
+    features: baseHomepage.features.map((f) => ({
+      ...f,
+      ...(copy.features?.find((c) => c && c.key === f.key) ?? {}),
+    })),
+    calculator: { ...baseHomepage.calculator, ...(copy.calculator ?? {}) },
+  };
+})();

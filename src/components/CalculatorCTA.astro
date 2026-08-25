@@ -1,6 +1,7 @@
 ---
 // Homepage band for the Material Calculator tool, styled to the original site's
 // plain aesthetic: light section, dark heading, crimson button.
+import { homepage } from '../data/site';
 ---
 <section class="calc-cta section--stone" aria-labelledby="calc-cta-h">
   <div class="container cta-inner">
@@ -8,8 +9,8 @@
       <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="2.5" width="16" height="19" rx="2.5" stroke="currentColor" stroke-width="1.8"/><rect x="7" y="5" width="10" height="3.5" rx="1" fill="currentColor"/><circle cx="8.5" cy="12" r="1.1" fill="currentColor"/><circle cx="12" cy="12" r="1.1" fill="currentColor"/><circle cx="15.5" cy="12" r="1.1" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1.1" fill="currentColor"/><circle cx="12" cy="15.5" r="1.1" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.1" fill="currentColor"/><circle cx="8.5" cy="18.8" r="1.1" fill="currentColor"/></svg>
     </div>
     <div class="cta-text">
-      <h2 id="calc-cta-h">How much material will your project need?</h2>
-      <p>Use our free Material Calculator for a quick cubic-yard estimate on fill, gravel, sand, or topsoil before you order. No guesswork, no coming up short.</p>
+      <h2 id="calc-cta-h">{homepage.calculator.heading}</h2>
+      <p>{homepage.calculator.body}</p>
     </div>
     <a href="/material-calculator" class="btn btn-red btn-lg cta-btn">Material Calculator</a>
   </div>

@@ -1,7 +1,7 @@
 ---
 import { getImage } from 'astro:assets';
 import heroImg from '../assets/photos/v3-hero-trucks.jpg';
-import { business } from '../data/site';
+import { business, homepage } from '../data/site';
 
 // The original site's hero: the truck lineup, darkened, with centered text.
 // Kept LCP-safe: resolved via getImage so we can preload it and decode synchronously
@@ -32,8 +32,10 @@ const hero = await getImage({
   <div class="hero-overlay"></div>
 
   <div class="container hero-inner">
-    <h1>Top Quality Work<br />with Honesty and Integrity</h1>
-    <a href={business.phoneHref} class="hero-pill">Give us a call today 218-224-2754</a>
+    <h1>{homepage.hero.title.split('\n').map((line, i) => (
+      <Fragment>{i > 0 && <br />}{line}</Fragment>
+    ))}</h1>
+    <a href={business.phoneHref} class="hero-pill">{homepage.hero.phonePill}</a>
   </div>
 </section>
 
