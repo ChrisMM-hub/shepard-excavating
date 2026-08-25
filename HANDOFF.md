@@ -58,6 +58,10 @@ limit.
 - **Payload keys:** name, phone, email, service, address, location, message, source,
   page, and submissionId. Source, trusted page, location precedence, and submissionId
   are finalized server-side.
+- **External Forms tracking:** the HighLevel location's external-tracking script is
+  installed production-only in `src/layouts/Base.astro`. It records page views and
+  makes the site's native, named quote-form fields available under HighLevel → Sites
+  → Forms → Submissions → External Forms. Local development does not send analytics.
 
 ## Email authentication
 
