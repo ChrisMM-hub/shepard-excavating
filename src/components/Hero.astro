@@ -15,20 +15,33 @@ const hero = await getImage({
 });
 ---
 
-<link rel="preload" as="image" href={hero.src} imagesrcset={hero.srcSet.attribute} imagesizes="100vw" fetchpriority="high" />
+{!homepage.hero.heroUpload && (
+  <link rel="preload" as="image" href={hero.src} imagesrcset={hero.srcSet.attribute} imagesizes="100vw" fetchpriority="high" />
+)}
 <section class="hero" aria-label="Introduction">
-  <img
-    src={hero.src}
-    srcset={hero.srcSet.attribute}
-    sizes="100vw"
-    alt="The Shepard Excavating truck fleet lined up in front of the shop in Laporte, Minnesota"
-    class="hero-bg"
-    width="1920"
-    height="830"
-    loading="eager"
-    fetchpriority="high"
-    decoding="sync"
-  />
+  {homepage.hero.heroUpload ? (
+    <img
+      src={homepage.hero.heroUpload}
+      alt="The Shepard Excavating truck fleet lined up in front of the shop in Laporte, Minnesota"
+      class="hero-bg"
+      loading="eager"
+      fetchpriority="high"
+      decoding="sync"
+    />
+  ) : (
+    <img
+      src={hero.src}
+      srcset={hero.srcSet.attribute}
+      sizes="100vw"
+      alt="The Shepard Excavating truck fleet lined up in front of the shop in Laporte, Minnesota"
+      class="hero-bg"
+      width="1920"
+      height="830"
+      loading="eager"
+      fetchpriority="high"
+      decoding="sync"
+    />
+  )}
   <div class="hero-overlay"></div>
 
   <div class="container hero-inner">

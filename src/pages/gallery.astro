@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { Image } from 'astro:assets';
 import { business } from '../data/site';
+import { contentJson } from '../lib/content';
 
 // Pull every curated gallery image; category is the filename prefix.
 const modules = import.meta.glob<{ default: ImageMetadata }>('../assets/gallery/*.jpg', { eager: true });
@@ -17,13 +18,34 @@ const labels: Record<string, string> = {
 };
 const order = ['excavating', 'septic', 'landclearing', 'demolition', 'aggregate', 'snow', 'fleet'];
 
-const items = Object.entries(modules)
+const builtinItems = Object.entries(modules)
   .map(([path, mod]) => {
     const file = path.split('/').pop() as string;
     const cat = file.replace(/-\d+\.jpg$/, '');
     return { cat, img: mod.default, file };
   })
   .sort((a, b) => order.indexOf(a.cat) - order.indexOf(b.cat) || a.file.localeCompare(b.file));
+const byFile = Object.fromEntries(builtinItems.map((i) => [i.file, i]));
+
+// CMS overlay (content/site/gallery.json): editors can remove, reorder,
+// recategorize, and add uploaded photos. An entry keeps its optimized built-in
+// rendering when it references a curated file; uploads render from /uploads
+// (compressed at build). Empty doc falls back to the curated set.
+type GalleryEntry = { builtin?: string; photo?: string; category?: string };
+type Item = { cat: string; img?: ImageMetadata; upload?: string; file: string };
+const doc = contentJson<{ items?: GalleryEntry[] }>('site/gallery');
+const items: Item[] = doc?.items?.length
+  ? doc.items
+      .map((e, n): Item | null => {
+        const cat = e.category && labels[e.category] ? e.category : undefined;
+        if (e.photo) return { cat: cat ?? 'fleet', upload: e.photo, file: `upload-${n}` };
+        if (e.builtin && byFile[e.builtin]) {
+          return { cat: cat ?? byFile[e.builtin].cat, img: byFile[e.builtin].img, file: e.builtin };
+        }
+        return null;
+      })
+      .filter((i): i is Item => i !== null)
+  : builtinItems;
 
 const cats = order.filter((c) => items.some((i) => i.cat === c));
 
@@ -51,7 +73,11 @@ const description =
       <div class="gal-grid">
         {items.map((it, i) => (
           <figure class="gal-cell" data-cat={it.cat}>
-            <Image src={it.img} alt={`${labels[it.cat]} project by Shepard Excavating (${i + 1})`} widths={[320, 640]} sizes="(max-width: 640px) 50vw, 320px" quality={72} />
+            {it.upload ? (
+              <img src={it.upload} alt={`${labels[it.cat]} project by Shepard Excavating (${i + 1})`} loading="lazy" />
+            ) : (
+              <Image src={it.img!} alt={`${labels[it.cat]} project by Shepard Excavating (${i + 1})`} widths={[320, 640]} sizes="(max-width: 640px) 50vw, 320px" quality={72} />
+            )}
             <figcaption>{labels[it.cat]}</figcaption>
           </figure>
         ))}

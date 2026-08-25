@@ -82,6 +82,16 @@ export default defineConfig({
             description:
               'Leave empty to keep the standard photo. Uploads are compressed automatically at publish time.',
           },
+          {
+            type: 'object',
+            name: 'photos',
+            label: 'Photo Strip (optional)',
+            list: true,
+            ui: { itemProps: () => ({ label: 'Photo' }) },
+            description:
+              'Photos shown in the strip partway down the page. Leave this list empty to keep the standard photos; adding any photo here replaces the whole strip with your list.',
+            fields: [{ type: 'image', name: 'image', label: 'Photo', required: true }],
+          },
         ],
       },
       {
@@ -166,6 +176,13 @@ export default defineConfig({
                 description: 'Line breaks here become line breaks on the page.',
               },
               { type: 'string', name: 'phonePill', label: 'Call Button Text', required: true },
+              {
+                type: 'image',
+                name: 'heroUpload',
+                label: 'Replace Background Photo (optional)',
+                description:
+                  'The big photo behind the headline. Leave empty to keep the standard truck photo. A wide photo (landscape) works best here.',
+              },
             ],
           },
           {
@@ -237,6 +254,77 @@ export default defineConfig({
             list: true,
             ui: { itemProps: (item: Record<string, string>) => ({ label: item?.q || 'FAQ' }) },
             fields: faqFields,
+          },
+        ],
+      },
+      {
+        name: 'gallery',
+        label: 'Project Gallery',
+        path: 'content/site',
+        format: 'json',
+        match: { include: 'gallery' },
+        ui: { allowedActions: { create: false, delete: false } },
+        fields: [
+          {
+            type: 'object',
+            name: 'items',
+            label: 'Gallery Photos',
+            list: true,
+            ui: {
+              itemProps: (item: Record<string, string>) => ({
+                label: `${item?.category || 'photo'}: ${item?.photo ? 'uploaded photo' : item?.builtin || 'new'}`,
+              }),
+            },
+            fields: [
+              {
+                type: 'image',
+                name: 'photo',
+                label: 'Uploaded Photo',
+                description: 'For a new photo, upload it here and pick a category below.',
+              },
+              {
+                type: 'string',
+                name: 'builtin',
+                label: 'Standard Photo Name',
+                description: 'Existing site photos are referenced by name. Please leave as is; use Uploaded Photo above for new pictures.',
+              },
+              {
+                type: 'string',
+                name: 'category',
+                label: 'Category',
+                options: [
+                  { value: 'excavating', label: 'Excavating & Site Work' },
+                  { value: 'septic', label: 'Septic' },
+                  { value: 'landclearing', label: 'Land Clearing' },
+                  { value: 'demolition', label: 'Demolition' },
+                  { value: 'aggregate', label: 'Sand & Gravel' },
+                  { value: 'snow', label: 'Snow & Fisher' },
+                  { value: 'fleet', label: 'Our Fleet' },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        name: 'about',
+        label: 'About Page Photos',
+        path: 'content/site',
+        format: 'json',
+        match: { include: 'about' },
+        ui: { allowedActions: { create: false, delete: false } },
+        fields: [
+          {
+            type: 'image',
+            name: 'heroUpload',
+            label: 'Replace Top Banner Photo (optional)',
+            description: 'The wide photo behind the About page heading. Leave empty to keep the standard fleet photo.',
+          },
+          {
+            type: 'image',
+            name: 'crewUpload',
+            label: 'Replace Crew Photo (optional)',
+            description: 'The team photo partway down the page. Leave empty to keep the standard photo.',
           },
         ],
       },

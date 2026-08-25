@@ -83,18 +83,37 @@ const hero = img(service.heroImage);
   </div>
 </section>
 
-<!-- Photos -->
-{service.gallery && service.gallery.length > 0 && (
-  <section class="section section--stone">
-    <div class="container">
-      <div class="svc-gallery" data-count={service.gallery.length}>
-        {service.gallery.map((g) => (
-          <figure><Image src={img(g)} alt={service.navLabel + ' work by Shepard Excavating'} widths={[400, 800]} sizes="(max-width: 700px) 100vw, 360px" quality={74} /></figure>
-        ))}
-      </div>
-    </div>
-  </section>
-)}
+<!-- Photos: CMS-uploaded strip wins when set; otherwise the curated gallery. -->
+{(() => {
+  const uploads = (service.photos ?? []).filter((p) => p && p.image);
+  if (uploads.length > 0) {
+    return (
+      <section class="section section--stone">
+        <div class="container">
+          <div class="svc-gallery" data-count={uploads.length}>
+            {uploads.map((p) => (
+              <figure><img src={p.image} alt={service.navLabel + ' work by Shepard Excavating'} loading="lazy" /></figure>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+  if (service.gallery && service.gallery.length > 0) {
+    return (
+      <section class="section section--stone">
+        <div class="container">
+          <div class="svc-gallery" data-count={service.gallery.length}>
+            {service.gallery.map((g) => (
+              <figure><Image src={img(g)} alt={service.navLabel + ' work by Shepard Excavating'} widths={[400, 800]} sizes="(max-width: 700px) 100vw, 360px" quality={74} /></figure>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+  return null;
+})()}
 
 <!-- FAQ -->
 {service.faqs && service.faqs.length > 0 && (

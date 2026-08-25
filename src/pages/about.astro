@@ -3,9 +3,16 @@ import Base from '../layouts/Base.astro';
 import { Image } from 'astro:assets';
 import { img } from '../lib/images';
 import { business, whyUs, towns, counties } from '../data/site';
+import { contentJson } from '../lib/content';
 
 const heroImg = img('fleet-1.jpg');
 const crewImg = img('crew.jpg');
+// CMS photo overrides (content/site/about.json); empty keeps the optimized originals.
+const aboutPhotos = {
+  heroUpload: '',
+  crewUpload: '',
+  ...(contentJson<{ heroUpload?: string; crewUpload?: string }>('site/about') ?? {}),
+};
 const title = 'About Shepard Excavating | Family-Owned Since 1997';
 const description =
   'Shepard Excavating is a family-run, MPCA-certified outfit in Laporte, MN, handling septic and dirt work across Northern Minnesota since 1997.';
@@ -13,7 +20,11 @@ const description =
 
 <Base title={title} description={description} ogImage="/og/about.jpg">
   <section class="ab-hero" aria-label="About">
-    <Image src={heroImg} alt="Shepard Excavating truck fleet at the shop in Laporte, MN" class="ab-hero-bg" widths={[768, 1280, 1920]} sizes="100vw" loading="eager" fetchpriority="high" quality={76} />
+    {aboutPhotos.heroUpload ? (
+      <img src={aboutPhotos.heroUpload} alt="Shepard Excavating truck fleet at the shop in Laporte, MN" class="ab-hero-bg" loading="eager" fetchpriority="high" />
+    ) : (
+      <Image src={heroImg} alt="Shepard Excavating truck fleet at the shop in Laporte, MN" class="ab-hero-bg" widths={[768, 1280, 1920]} sizes="100vw" loading="eager" fetchpriority="high" quality={76} />
+    )}
     <div class="ab-hero-overlay"></div>
     <div class="container ab-hero-inner">
       <p class="eyebrow eyebrow--light">Family-owned since {business.founded}</p>
@@ -32,7 +43,11 @@ const description =
         <p>We like to say we are #1 in the #2 business. It gets a laugh, but it is true. Septic is right there in our name, and we take it seriously, from a routine pump to a brand-new mound system.</p>
       </div>
       <figure class="ab-photo">
-        <Image src={crewImg} alt="The Shepard Excavating and Septic Service team in front of a company truck" widths={[600, 1000]} sizes="(max-width: 900px) 100vw, 460px" quality={78} />
+        {aboutPhotos.crewUpload ? (
+          <img src={aboutPhotos.crewUpload} alt="The Shepard Excavating and Septic Service team in front of a company truck" loading="lazy" />
+        ) : (
+          <Image src={crewImg} alt="The Shepard Excavating and Septic Service team in front of a company truck" widths={[600, 1000]} sizes="(max-width: 900px) 100vw, 460px" quality={78} />
+        )}
       </figure>
     </div>
   </section>

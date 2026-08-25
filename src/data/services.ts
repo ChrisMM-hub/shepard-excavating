@@ -23,6 +23,7 @@ export interface Service {
   gallery: string[];          // gallery image basenames
   emphasizePhone?: boolean;
   heroUpload?: string;        // CMS-uploaded hero override (path under /uploads)
+  photos?: { image: string }[]; // CMS photo strip override; replaces gallery when non-empty
 }
 
 const baseServices: Service[] = [

@@ -218,6 +218,7 @@ const baseHomepage = {
   hero: {
     title: 'Top Quality Work\nwith Honesty and Integrity',
     phonePill: 'Give us a call today 218-224-2754',
+    heroUpload: '',
   },
   features: [
     {
