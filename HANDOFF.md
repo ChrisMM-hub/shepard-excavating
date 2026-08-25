@@ -28,10 +28,10 @@ at `api/lead.js`. Pushes to `main` auto-deploy after the linked GitHub author ch
 The Vercel project must have the sensitive environment variables
 `HIGHLEVEL_WEBHOOK_URL` and `TURNSTILE_SECRET` in Production. It must also have
 `PUBLIC_TURNSTILE_SITEKEY` and `TURNSTILE_HOSTNAMES`; production hostnames are
-`shepardexcavating.com,www.shepardexcavating.com`. Secret values belong only in
-Vercel, never in source or this file. The production firewall rule **Protect lead
-form** limits POST `/api/lead` to five requests per IP per 600 seconds and returns
-HTTP 429 after the limit.
+`shepardexcavating.com,www.shepardexcavating.com,shepard-excavating.vercel.app`.
+Secret values belong only in Vercel, never in source or this file. The production
+firewall rule **Protect lead form** limits POST `/api/lead` to five requests per IP
+per 600 seconds and returns HTTP 429 after the limit.
 
 ## HighLevel lead pipeline (configured 2026-08-11)
 
