@@ -59,8 +59,8 @@ inert cleanup items and are not required by the current site.
      contains the validated name, phone, and email merge fields and points staff to
      the permanent note for service, address, and project details.
 - **Legacy workflow:** **Website Lead Intake** (ID
-  `1aae254c-167b-40ee-8932-6cd54f041bea`) is the retired inbound-webhook path. Keep it
-  only for historical execution records; it is not used by the native form.
+  `1aae254c-167b-40ee-8932-6cd54f041bea`) is disabled and retained only for historical
+  execution records; it is not used by the native form.
 
 ## Email authentication
 
