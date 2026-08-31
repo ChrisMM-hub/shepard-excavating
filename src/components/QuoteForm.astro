@@ -32,6 +32,36 @@ const formId = '8f2xiLQaiGhgx6T5O7az';
 </div>
 
 <script is:inline src="https://link.msgsndr.com/js/form_embed.js"></script>
+<script is:inline>
+  // GA4 lead tracking for the embedded HighLevel form. The iframe posts a
+  // message on successful submission (event.data is an array carrying the
+  // lead payload JSON); standard GTM integrations key off the same signal.
+  // Fires gtag('generate_lead') once per page view; gtag only exists in
+  // production builds, so dev never records leads.
+  (function () {
+    if (window.__shepLeadListener) return;
+    window.__shepLeadListener = true;
+    var fired = false;
+    window.addEventListener('message', function (e) {
+      if (fired) return;
+      var origin = String(e.origin || '');
+      if (origin.indexOf('leadconnectorhq.com') === -1 && origin.indexOf('msgsndr.com') === -1) return;
+      var payload = '';
+      try { payload = JSON.stringify(e.data) || ''; } catch (err) { return; }
+      var isSubmit =
+        (payload.indexOf('customer_id') !== -1 && payload.indexOf('email') !== -1) ||
+        payload.indexOf('msgsndr-booking-complete') !== -1;
+      if (!isSubmit) return;
+      fired = true;
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'generate_lead', {
+          form_id: '8f2xiLQaiGhgx6T5O7az',
+          page_location: window.location.href,
+        });
+      }
+    });
+  })();
+</script>
 
 <style>
   .form-card {
