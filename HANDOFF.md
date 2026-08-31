@@ -22,55 +22,45 @@ hardcoded content in `src/data/site.ts`. See `README.md` for run/build/deploy an
 list of PLACEHOLDER items to confirm with Janele (reviews, hours, ZIP, logo vector).
 
 ## Deploy
-Vercel builds the Astro site to `dist/` and serves the same-origin serverless function
-at `api/lead.js`. Pushes to `main` auto-deploy after the linked GitHub author check.
+Vercel builds the Astro site to `dist/`. Pushes to `main` auto-deploy after the
+linked GitHub author check. The old `/api/lead` serverless function is retired;
+the site now embeds HighLevel's native form directly. Any old
+`HIGHLEVEL_WEBHOOK_URL`, `TURNSTILE_SECRET`, `PUBLIC_TURNSTILE_SITEKEY`, and
+`TURNSTILE_HOSTNAMES` variables and the **Protect lead form** firewall rule are
+inert cleanup items and are not required by the current site.
 
-The Vercel project must have the sensitive environment variables
-`HIGHLEVEL_WEBHOOK_URL` and `TURNSTILE_SECRET` in Production. It must also have
-`PUBLIC_TURNSTILE_SITEKEY` and `TURNSTILE_HOSTNAMES`; production hostnames are
-`shepardexcavating.com,www.shepardexcavating.com,shepard-excavating.vercel.app`.
-Secret values belong only in Vercel, never in source or this file. The production
-firewall rule **Protect lead form** limits POST `/api/lead` to five requests per IP
-per 600 seconds and returns HTTP 429 after the limit.
-
-## HighLevel lead pipeline (configured 2026-08-11)
+## HighLevel lead pipeline (native-form migration 2026-08-31)
 
 - **Sub-account:** Shepard Excavating (location `o43aKWYnDo6IBr5XtAxK`). It is not in
   the `highlevel-router` credentials CSV, so use the authenticated HighLevel UI until
   credentials are added.
-- **Website boundary:** `src/components/QuoteForm.astro` POSTs JSON to `/api/lead`.
-  `api/lead.js` validates origin and fields, applies honeypot/size/rate checks, requires
-  a valid single-use Cloudflare Turnstile token for action `quote_request` from an
-  approved hostname, forwards to the protected HighLevel URL, requires a successful
-  upstream response, and only then returns success. Phone numbers must be valid
-  10-digit U.S./Canadian NANP numbers. A native no-JavaScript POST fallback uses the
-  same endpoint. GA4 `generate_lead` fires only after HighLevel accepts the request.
+- **Website boundary:** `src/components/QuoteForm.astro` embeds the native HighLevel
+  form **Shepard Website Estimate Request** (ID `8f2xiLQaiGhgx6T5O7az`) using the
+  same inline embed pattern as Storlie Construction. The form redirects to
+  `https://www.shepardexcavating.com/thank-you/` after a successful submission.
+- **Fields:** Full Name (required), Email (optional), Phone (required), structured
+  HighLevel Address (required and selected through address search), Service Needed
+  (required), and Project Details (optional). Service Needed is the contact custom
+  field `contact.service_needed`; Project Details uses
+  `contact.website_lead_message`.
 - **Pipeline:** **Website Leads** → New Lead / Contacted / Quoted / won/lost.
-- **Workflow:** **Website Lead Intake** (published; ID
-  `1aae254c-167b-40ee-8932-6cd54f041bea`). Inbound Webhook →
-  1. Create/Update Contact — full name, phone, email, source, and the webhook
-     `message` saved to the multi-line **Website Lead Message** contact field under
-     Additional Info.
-  2. Create/Update Opportunity — Website Leads / New Lead / open, named
-     `name - service`, with website source.
-  3. Internal Notification → `Shepardexcavating@gmail.com` from
-     **Shepard Excavating Website** `<website@mail.shepardexcavating.com>`.
-- **Notification subject:** `New website lead: name — service` using the corresponding
-  inbound-webhook merge tokens.
-- **Notification body:** name, phone, email, service, property address/area, project
-  details, source, and page. The saved webhook schema predates the `address` key, so
-  the server mirrors `address` into the validated `location` compatibility key and
-  falls back to the service-area page location when address is empty.
-- **Payload keys:** name, phone, email, service, address, location, message, source,
-  page, and submissionId. Source, trusted page, location precedence, and submissionId
-  are finalized server-side.
-- **External Forms tracking:** the HighLevel location's external-tracking script is
-  installed production-only in `src/layouts/Base.astro`. It records page views and
-  makes the site's native, named quote-form fields available under HighLevel → Sites
-  → Forms → Submissions → External Forms. Page View Analytics, Form Analytics, and
-  Form Submissions are enabled in HighLevel. The External Forms submission list may
-  remain unavailable until HighLevel receives the first tracked form submission.
-  Local development does not send analytics.
+- **Opportunity behavior:** **Allow multiple opportunities per contact** is enabled at
+  Settings → Objects → Opportunities so repeat project requests create separate cards
+  while contact deduplication remains intact.
+- **Workflow:** **Website Lead Intake | Native Form v2** (ID
+  `c0106d7c-93ac-49bf-9063-fcf3769ce31c`; published). Native Form Submitted trigger, limited to
+  the Shepard form, then:
+  1. Add a permanent **Website estimate request** note containing service, structured
+     address, project details, phone, and email at submission time.
+  2. Create a **Website Leads / New Lead** opportunity named
+     `Contact.Full Name - Contact.Custom Fields.Service Needed`.
+  3. Email an internal notification to `Shepardexcavating@gmail.com` from
+     **Shepard Excavating Website** `<website@mail.shepardexcavating.com>`. The email
+     contains the validated name, phone, and email merge fields and points staff to
+     the permanent note for service, address, and project details.
+- **Legacy workflow:** **Website Lead Intake** (ID
+  `1aae254c-167b-40ee-8932-6cd54f041bea`) is the retired inbound-webhook path. Keep it
+  only for historical execution records; it is not used by the native form.
 
 ## Email authentication
 
@@ -87,9 +77,10 @@ per 600 seconds and returns HTTP 429 after the limit.
 
 ## Verification status and next action
 
-No live lead was submitted during the 2026-08-11 configuration work. Chris chose to
-submit the production test manually. After deployment, submit once with contact details
-you control, note the time, and verify:
+Status: **PROVISIONED_NOT_LAUNCH_VERIFIED**. The form and workflow were configured,
+the website integration tests passed, and the production build completed. No live lead
+was submitted during the 2026-08-31 migration. After deployment, submit once with
+contact details you control, note the time, and verify:
 
 1. the website reaches `/thank-you/` with no error;
 2. one matching HighLevel contact and one New Lead opportunity exist;

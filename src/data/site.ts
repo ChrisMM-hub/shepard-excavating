@@ -40,11 +40,6 @@ export const video = {
   mp4: '',
 };
 
-// Same-origin lead endpoint. The Vercel function keeps the HighLevel webhook out of
-// the browser, validates submissions, and only
-// reports success after HighLevel accepts the request.
-export const leadEndpoint = '/api/lead';
-
 // GA4 measurement ID. Property "Shepard Excavating" (account "Shepard Excavating")
 // under admin@minnesotamarketing.com, created 2026-08-11. Stream: Shepard Excavating
 // Website -> https://www.shepardexcavating.com. Only loads in production builds, so

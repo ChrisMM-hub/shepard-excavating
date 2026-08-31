@@ -27,7 +27,6 @@ import { business, towns, ga4Id } from '../data/site';
 
 // Only tag production builds so local dev traffic never lands in the client's GA4.
 const gaEnabled = import.meta.env.PROD && !!ga4Id;
-const highLevelExternalTrackingEnabled = import.meta.env.PROD;
 
 interface Props {
   title?: string;
@@ -173,14 +172,5 @@ const localBusiness = {
     </main>
     <Footer />
     <MobileCallBar />
-    {/* Connect the external quote form to HighLevel's External Forms reporting.
-        Production-only so local development never creates client analytics. */}
-    {highLevelExternalTrackingEnabled && (
-      <script
-        is:inline
-        src="https://link.msgsndr.com/js/external-tracking.js"
-        data-tracking-id="tk_efacd2b154b14393ab59eb75e60bf5cb"
-      ></script>
-    )}
   </body>
 </html>

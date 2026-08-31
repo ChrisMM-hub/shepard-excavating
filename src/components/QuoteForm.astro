@@ -1,275 +1,73 @@
 ---
-import { featuredServices, moreServices, leadEndpoint } from '../data/site';
-
 interface Props {
-  service?: string; // pre-selects the service dropdown
-  location?: string; // preserves which service-area page generated the lead
+  service?: string;
+  location?: string;
 }
-const { service = '', location = '' } = Astro.props;
-const turnstileSitekey = import.meta.env.PUBLIC_TURNSTILE_SITEKEY || '';
 
-const standardServices = [...featuredServices, ...moreServices].map((s) => s.title);
-const services = service && !standardServices.includes(service)
-  ? [service, ...standardServices]
-  : standardServices;
+const formId = '8f2xiLQaiGhgx6T5O7az';
 ---
 
 <div class="form-card">
-  <form class="quote-form" method="post" action={leadEndpoint} data-endpoint={leadEndpoint} aria-label="Request a free estimate">
-    <div class="row">
-      <div class="field">
-        <label for="qf-name">Name <span class="req">*</span></label>
-        <input id="qf-name" name="name" type="text" autocomplete="name" maxlength="120" required />
-      </div>
-      <div class="field">
-        <label for="qf-phone">Phone <span class="req">*</span></label>
-        <input id="qf-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="40" required />
-      </div>
-    </div>
-    <div class="row">
-      <div class="field">
-        <label for="qf-email">Email <span class="req">*</span></label>
-        <input id="qf-email" name="email" type="email" autocomplete="email" maxlength="254" required />
-      </div>
-      <div class="field">
-        <label for="qf-service">Service needed <span class="req">*</span></label>
-        <select id="qf-service" name="service" required>
-          <option value="">Select a service</option>
-          {services.map((s) => (<option value={s} selected={s === service}>{s}</option>))}
-          <option value="Something else" selected={service === 'Something else'}>Something else</option>
-        </select>
-      </div>
-    </div>
-    <div class="field">
-      <label for="qf-address">Address <span class="req">*</span></label>
-      <input id="qf-address" name="address" type="text" autocomplete="street-address" maxlength="240" placeholder="Property address or nearest town" required />
-    </div>
-    <div class="field">
-      <label for="qf-message">Let us know how we can help. <span class="req">*</span></label>
-      <textarea id="qf-message" name="message" rows="4" maxlength="4000" placeholder="Please enter details about your project or property here." required></textarea>
-    </div>
-    <input type="hidden" name="location" value={location} />
-    <div class="form-hp" aria-hidden="true">
-      <label for="qf-company-website">Company website</label>
-      <input id="qf-company-website" name="companyWebsite" type="url" tabindex="-1" autocomplete="off" />
-    </div>
-    <div
-      class="turnstile-check"
-      data-turnstile-sitekey={turnstileSitekey}
-      aria-label="Automated spam protection"
-    ></div>
-    <button type="submit" class="btn btn-primary btn-lg btn-block">Request My Free Estimate</button>
-    <p class="form-error" role="alert" tabindex="-1" hidden>
-      We could not send your request. Please try again, or call <a href="tel:+12182242754">(218) 224-2754</a>.
-    </p>
-    <p class="form-fine">We use your information only to respond to your request. See our <a href="/privacy-policy/">privacy policy</a>.</p>
-  </form>
-
+  <iframe
+    src={`https://api.leadconnectorhq.com/widget/form/${formId}`}
+    id={`inline-${formId}`}
+    data-layout='{"id":"INLINE"}'
+    data-trigger-type="alwaysShow"
+    data-trigger-value=""
+    data-activation-type="alwaysActivated"
+    data-activation-value=""
+    data-deactivation-type="neverDeactivate"
+    data-deactivation-value=""
+    data-form-name="Shepard Website Estimate Request"
+    data-height="undefined"
+    data-layout-iframe-id={`inline-${formId}`}
+    data-form-id={formId}
+    data-cookie-consent="true"
+    data-cookie-consent-provider="auto"
+    title="Shepard Website Estimate Request"
+  ></iframe>
+  <p class="form-fine">
+    We use your information only to respond to your request. See our <a href="/privacy-policy/">privacy policy</a>.
+  </p>
 </div>
 
+<script is:inline src="https://link.msgsndr.com/js/form_embed.js"></script>
+
 <style>
-  .form-card { background: #fff; color: var(--ink); border: 1px solid rgba(13,13,13,0.08); border-top: 4px solid var(--yellow); border-radius: var(--r-lg); padding: clamp(1.4rem, 3vw, 2rem); box-shadow: var(--shadow-lg); }
-  .quote-form { display: grid; gap: 1rem; }
-  .row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; align-items: start; }
-  .field { display: grid; gap: 0.4rem; min-width: 0; }
-  label { display: block; font-family: var(--font-head); font-weight: 700; font-size: 0.92rem; color: var(--ink); }
-  .req { color: var(--red); }
-  input, select, textarea {
-    width: 100%; min-width: 0; font: inherit; font-size: 1rem; padding: 0.75rem 0.85rem;
-    border: 1.5px solid #8a8a8a; border-radius: var(--r); background: var(--paper); color: var(--ink);
-    transition: border-color 0.15s, box-shadow 0.15s;
+  .form-card {
+    background: #fff;
+    color: var(--ink);
+    border: 1px solid rgba(13, 13, 13, 0.08);
+    border-top: 4px solid var(--yellow);
+    border-radius: var(--r-lg);
+    padding: clamp(1rem, 2vw, 1.5rem);
+    box-shadow: var(--shadow-lg);
   }
-  input, select { height: 3.25rem; line-height: 1.25; }
-  input:focus, select:focus, textarea:focus { border-color: var(--red); background: #fff; }
-  input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; box-shadow: none; }
-  textarea { min-height: 8.25rem; line-height: 1.5; resize: vertical; }
-  .quote-form .btn { white-space: normal; line-height: 1.25; }
-  .form-fine { font-size: 0.84rem; color: var(--slate); text-align: center; }
-  .form-fine a, .form-error a { color: var(--red); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
-  .form-error { padding: 0.8rem; border: 1px solid rgba(194,19,19,0.35); border-radius: var(--r); background: rgba(194,19,19,0.07); color: #7f1111; }
-  .form-hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
-  .turnstile-check { min-height: 65px; display: flex; justify-content: center; align-items: center; }
 
-  @media (max-width: 600px) { .row { grid-template-columns: 1fr; } }
+  iframe {
+    display: block;
+    width: 100%;
+    min-height: 820px;
+    border: 0;
+    border-radius: var(--r);
+  }
+
+  .form-fine {
+    margin: 0.75rem 0 0;
+    font-size: 0.84rem;
+    color: var(--slate);
+    text-align: center;
+  }
+
+  .form-fine a {
+    color: var(--red);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  @media (max-width: 600px) {
+    .form-card { padding: 0.75rem; }
+    iframe { min-height: 900px; }
+  }
 </style>
-
-<script>
-  type TurnstileApi = {
-    render: (
-      container: HTMLElement,
-      options: {
-        sitekey: string;
-        action: string;
-        theme: 'light';
-        callback: (token: string) => void;
-        'expired-callback': () => void;
-        'error-callback': () => void;
-      },
-    ) => string;
-    reset: (widgetId: string) => void;
-  };
-
-  const turnstileWindow = window as Window & { turnstile?: TurnstileApi };
-  let turnstileLoader: Promise<void> | undefined;
-
-  const loadTurnstile = () => {
-    if (turnstileWindow.turnstile) return Promise.resolve();
-    if (turnstileLoader) return turnstileLoader;
-
-    turnstileLoader = new Promise((resolve, reject) => {
-      const existing = document.querySelector<HTMLScriptElement>('script[data-shepard-turnstile]');
-      if (existing) {
-        existing.addEventListener('load', () => resolve(), { once: true });
-        existing.addEventListener('error', () => reject(new Error('Turnstile failed to load')), { once: true });
-        return;
-      }
-
-      const script = document.createElement('script');
-      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
-      script.async = true;
-      script.defer = true;
-      script.dataset.shepardTurnstile = 'true';
-      script.addEventListener('load', () => resolve(), { once: true });
-      script.addEventListener('error', () => reject(new Error('Turnstile failed to load')), { once: true });
-      document.head.appendChild(script);
-    });
-
-    return turnstileLoader;
-  };
-
-  const isValidNorthAmericanPhone = (value: string) => {
-    const digits = value.replace(/\D/g, '');
-    const nationalNumber = digits.length === 11 && digits.startsWith('1') ? digits.slice(1) : digits;
-    return /^[2-9]\d{2}[2-9]\d{6}$/.test(nationalNumber);
-  };
-
-  // Submit through the same-origin lead endpoint. It validates the request and only
-  // returns success after HighLevel accepts the lead.
-  document.querySelectorAll('.form-card').forEach((card) => {
-    const form = card.querySelector('form') as HTMLFormElement | null;
-    const error = card.querySelector('.form-error') as HTMLElement | null;
-    if (!form) return;
-    const field = (n: string) => form.querySelector(`[name="${n}"]`) as HTMLInputElement | null;
-    const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
-    const turnstileContainer = card.querySelector('[data-turnstile-sitekey]') as HTMLElement | null;
-    const initialButtonText = submitButton?.textContent || 'Request My Free Estimate';
-    let turnstileWidgetId: string | undefined;
-    let turnstileToken = '';
-
-    const sitekey = turnstileContainer?.dataset.turnstileSitekey || '';
-    if (turnstileContainer && sitekey) {
-      loadTurnstile()
-        .then(() => {
-          if (!turnstileWindow.turnstile || turnstileWidgetId !== undefined) return;
-          turnstileWidgetId = turnstileWindow.turnstile.render(turnstileContainer, {
-            sitekey,
-            action: 'quote_request',
-            theme: 'light',
-            callback: (token) => { turnstileToken = token; },
-            'expired-callback': () => { turnstileToken = ''; },
-            'error-callback': () => { turnstileToken = ''; },
-          });
-        })
-        .catch((err) => console.error('Spam protection failed to load', err));
-    }
-
-    const showError = () => {
-      if (error) {
-        error.hidden = false;
-        error.focus();
-      }
-      if (submitButton) {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Try Again';
-      }
-    };
-
-    if (new URLSearchParams(window.location.search).get('lead_error') === '1') {
-      showError();
-      const cleanUrl = new URL(window.location.href);
-      cleanUrl.searchParams.delete('lead_error');
-      history.replaceState(null, '', cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
-    }
-
-    field('phone')?.addEventListener('input', () => field('phone')?.setCustomValidity(''));
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (error) error.hidden = true;
-
-      const name = field('name')?.value.trim() || '';
-      const phone = field('phone')?.value.trim() || '';
-      if (!name || !phone) {
-        form.reportValidity();
-        return;
-      }
-      if (!isValidNorthAmericanPhone(phone)) {
-        field('phone')?.setCustomValidity('Enter a valid 10-digit U.S. or Canadian phone number.');
-        form.reportValidity();
-        field('phone')?.focus();
-        return;
-      }
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-      if (!turnstileToken) {
-        showError();
-        return;
-      }
-
-      const payload = {
-        name,
-        phone,
-        email: field('email')?.value.trim() || '',
-        service: field('service')?.value || '',
-        address: field('address')?.value.trim() || '',
-        location: field('location')?.value.trim() || '',
-        message: field('message')?.value.trim() || '',
-        companyWebsite: field('companyWebsite')?.value || '',
-        'cf-turnstile-response': turnstileToken,
-        page: window.location.href,
-      };
-
-      if (submitButton) {
-        submitButton.disabled = true;
-        submitButton.textContent = 'Sending…';
-      }
-
-      try {
-        const response = await fetch(form.dataset.endpoint || form.action, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify(payload),
-        });
-
-        if (!response.ok) throw new Error(`Lead endpoint returned HTTP ${response.status}`);
-        const result = await response.json();
-        if (result?.ok !== true || typeof result.accepted !== 'boolean') {
-          throw new Error('Lead endpoint returned an invalid success response');
-        }
-
-        // Count a conversion only after the lead endpoint confirms HighLevel accepted it.
-        if (result.accepted) {
-          (window as any).dataLayer = (window as any).dataLayer || [];
-          (window as any).dataLayer.push({ event: 'generate_lead', form: 'quote', service: payload.service });
-        }
-        window.location.assign('/thank-you/');
-      } catch (err) {
-        console.error('Lead submission failed', err);
-        showError();
-        if (submitButton && submitButton.textContent === 'Try Again') {
-          submitButton.setAttribute('aria-label', `${initialButtonText} — try again`);
-        }
-      } finally {
-        if (turnstileWidgetId !== undefined) {
-          turnstileWindow.turnstile?.reset(turnstileWidgetId);
-          turnstileToken = '';
-        }
-      }
-    });
-  });
-</script>

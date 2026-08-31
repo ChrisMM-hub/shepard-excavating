@@ -14,7 +14,7 @@ npm run preview  # serve the built dist/
 
 ## Stack
 - **Astro 5** (static output), self-hosted **Barlow** fonts, `astro:assets` for AVIF/WebP.
-- **No framework JS.** The only scripts are a small inline mobile-menu toggle and the form success state. Build ships 0 external JS bundles.
+- **No framework JS.** Site interactions stay lightweight; the estimate form uses HighLevel's native inline embed and resize script.
 - `@astrojs/sitemap` generates `sitemap-index.xml`. `robots.txt` in `public/`.
 
 ## Performance (measured at build)
@@ -56,10 +56,11 @@ Still to confirm with Janele:
 - Photos referenced by filename; the resolver lives in `src/lib/images.ts`. Drop new
   images in `src/assets/photos/` or `src/assets/gallery/` and reference the filename.
 
-## Not yet wired (next steps)
-- **Lead form** shows an inline success state. Production: POST to the HighLevel
-  webhook, then redirect to `/thank-you` (the page is built) for the GA4 conversion event.
-- **GTM / GA4** not installed yet (no IDs). Load via Partytown when ready.
+## Integrations
+- **Lead form:** native HighLevel form `Shepard Website Estimate Request` (ID
+  `8f2xiLQaiGhgx6T5O7az`), embedded anywhere `QuoteForm.astro` is used. HighLevel
+  owns validation, structured address capture, contact creation, and workflow enrollment.
+- **GA4:** production-only measurement through `G-TC5EQEJWTB`.
 - **Blog** (Phase 2): not built yet.
 - 301 redirects for the 3 renamed slugs are in `vercel.json`.
 
