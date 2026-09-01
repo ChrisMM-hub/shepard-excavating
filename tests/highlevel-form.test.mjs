@@ -14,7 +14,8 @@ test('uses the approved native HighLevel form embed', async () => {
   assert.match(source, /Shepard Website Estimate Request/);
   assert.match(source, /data-layout='\{"id":"INLINE"\}'/);
   assert.match(source, /data-cookie-consent="true"/);
-  assert.match(source, /href="\/privacy-policy\/"/);
+  assert.doesNotMatch(source, /We use your information only to respond to your request/);
+  assert.doesNotMatch(source, /form-fine/);
 });
 
 test('does not retain the retired webhook or external-form integration', async () => {
