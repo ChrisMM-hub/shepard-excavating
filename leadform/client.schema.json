@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://garagedoorwebsites.com/schemas/highlevel-native-form-client-v3.json",
+  "title": "HighLevel native form client manifest v3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "mode", "client", "site", "form", "highLevel", "controls", "review"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": 3 },
+    "mode": { "enum": ["onboard", "repair", "audit", "verify", "handoff"] },
+    "client": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slug", "name", "timezone"],
+      "properties": {
+        "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        "name": { "type": "string", "minLength": 1 },
+        "timezone": { "type": "string", "minLength": 1 }
+      }
+    },
+    "site": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["productionOrigin", "formRoutes", "privacyUrl", "termsUrl", "thankYouUrl", "embedFile", "buildOutput", "buildCommand"],
+      "properties": {
+        "productionOrigin": { "type": "string", "pattern": "^https://" },
+        "formRoutes": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^/" } },
+        "privacyUrl": { "type": "string", "pattern": "^https://" },
+        "termsUrl": { "type": "string", "pattern": "^https://" },
+        "thankYouUrl": { "type": "string", "pattern": "^https://" },
+        "embedFile": { "type": "string", "minLength": 1 },
+        "buildOutput": { "type": "string", "minLength": 1 },
+        "buildCommand": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "form": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profile", "id", "name", "submitLabel", "minHeight", "addressRequired", "compactAddress", "rejectDefaultTheme", "expectedFields", "forbiddenFields", "colors"],
+      "properties": {
+        "profile": { "enum": ["project-detail", "service-menu"] },
+        "id": { "type": "string" },
+        "name": { "type": "string", "minLength": 1 },
+        "submitLabel": { "type": "string", "minLength": 1 },
+        "minHeight": { "type": "integer", "minimum": 400, "maximum": 1600 },
+        "addressRequired": { "type": "boolean" },
+        "compactAddress": { "const": true },
+        "rejectDefaultTheme": { "const": true },
+        "expectedFields": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["queryKey", "label", "required"],
+            "properties": {
+              "queryKey": { "type": "string", "minLength": 1 },
+              "label": { "type": "string", "minLength": 1 },
+              "required": { "type": "boolean" }
+            }
+          }
+        },
+        "forbiddenFields": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "colors": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["primary", "background"],
+          "properties": {
+            "primary": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
+            "background": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" }
+          }
+        }
+      }
+    },
+    "highLevel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["locationId", "snapshotName", "snapshotId", "snapshotVersion", "workflowName", "workflowId", "workflowState", "pipelineName", "pipelineId", "stageName", "stageId", "allowDuplicateOpportunity", "notification"],
+      "properties": {
+        "locationId": { "type": "string" },
+        "snapshotName": { "type": "string", "minLength": 1 },
+        "snapshotId": { "type": "string" },
+        "snapshotVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "workflowName": { "type": "string", "minLength": 1 },
+        "workflowId": { "type": "string" },
+        "workflowState": { "enum": ["pending", "draft", "published"] },
+        "pipelineName": { "type": "string", "minLength": 1 },
+        "pipelineId": { "type": "string" },
+        "stageName": { "type": "string", "minLength": 1 },
+        "stageId": { "type": "string" },
+        "allowDuplicateOpportunity": { "const": true },
+        "notification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["to", "fromName", "fromAddress", "replyTo"],
+          "properties": {
+            "to": { "type": "string" },
+            "fromName": { "type": "string", "minLength": 1 },
+            "fromAddress": { "type": "string" },
+            "replyTo": { "type": "string" }
+          }
+        }
+      }
+    },
+    "controls": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["testMode", "clientInvite", "externalLeadMessages"],
+      "properties": {
+        "testMode": { "enum": ["undecided", "client-manual", "agent-assisted", "none"] },
+        "clientInvite": { "type": "boolean" },
+        "externalLeadMessages": { "const": false }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dataMappingReviewed", "desktopVisualReviewed", "mobileVisualReviewed", "desktopScreenshot", "mobileScreenshot", "legalLinksReviewed", "deployed", "liveTest", "launchState"],
+      "properties": {
+        "dataMappingReviewed": { "type": "boolean" },
+        "desktopVisualReviewed": { "type": "boolean" },
+        "mobileVisualReviewed": { "type": "boolean" },
+        "desktopScreenshot": { "type": "string" },
+        "mobileScreenshot": { "type": "string" },
+        "legalLinksReviewed": { "type": "boolean" },
+        "deployed": { "type": "boolean" },
+        "liveTest": { "enum": ["not-tested", "pending", "pass", "failed"] },
+        "launchState": { "enum": ["SCAFFOLD_READY_RELEASE_BLOCKED", "PROVISIONED_NOT_LAUNCH_VERIFIED", "LAUNCH_VERIFIED", "BLOCKED"] }
+      }
+    }
+  }
+}

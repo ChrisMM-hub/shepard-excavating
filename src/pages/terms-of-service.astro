@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import { business } from '../data/site';
+---
+
+<Base
+  title="Terms of Service | Shepard Excavating"
+  description="Terms governing use of the Shepard Excavating website, material calculator, and estimate request form."
+  noindex={true}
+>
+  <section class="section">
+    <div class="container prose">
+      <p class="eyebrow">Website Information</p>
+      <h1>Terms of Service</h1>
+      <p class="updated">Last updated August 31, 2026</p>
+
+      <p class="prose-intro">These terms govern use of {business.domain.replace('https://www.', '')}. By using the website, you agree to use it lawfully and understand that its information is provided for general planning and inquiry purposes.</p>
+
+      <h2>Estimates and project information</h2>
+      <p>Website descriptions, quantities, service areas, availability, timelines, and calculator results are general estimates only. They are not a bid, guarantee, or contract. Final scope, quantity, material selection, site access, schedule, and price must be confirmed directly with {business.shortName}.</p>
+
+      <h2>Estimate requests</h2>
+      <p>Submitting a website form does not create a customer relationship or obligate either party to proceed. Work begins only after {business.shortName} reviews the request and the parties agree to the applicable scope and terms.</p>
+
+      <h2>Material calculator</h2>
+      <p>The calculator provides an approximate planning quantity based on the dimensions and material assumptions entered. Site conditions, compaction, waste, moisture, grade, access, load limits, and actual material characteristics can change the amount required.</p>
+
+      <h2>Website use</h2>
+      <p>You may use the website for legitimate personal or business inquiries. You may not interfere with its operation, attempt unauthorized access, submit unlawful or deceptive material, or use automated systems to burden the website or its forms.</p>
+
+      <h2>Content and third-party services</h2>
+      <p>Website text, photography, graphics, and branding are owned by or used with permission by {business.shortName}. The website may rely on or link to third-party services. {business.shortName} is not responsible for a third party's separate website, availability, or practices.</p>
+
+      <h2>Availability and changes</h2>
+      <p>We may update, correct, suspend, or remove website content without notice. We do not promise that the website will always be available or error-free.</p>
+
+      <h2>Contact</h2>
+      <p>Questions about these terms may be directed to {business.shortName} at <a href={business.phoneHref}>{business.phone}</a>, by email at <a href={business.emailHref}>{business.email}</a>, or through the <a href="/contact/">website contact form</a>.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .prose { max-width: 760px; }
+  .prose h1 { margin-top: 0.4rem; }
+  .prose h2 { font-size: 1.4rem; margin-top: 2rem; }
+  .prose p { color: var(--slate); margin-top: 0.8rem; }
+  .prose-intro { font-size: 1.12rem; }
+  .prose a { color: var(--red); text-decoration: underline; text-underline-offset: 2px; }
+  .updated { font-size: 0.9rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+</style>

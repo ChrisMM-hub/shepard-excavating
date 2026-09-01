@@ -1,0 +1,68 @@
+{
+  "$schema": "https://garagedoorwebsites.com/schemas/highlevel-native-form-client-v3.json",
+  "schemaVersion": 3,
+  "mode": "repair",
+  "client": { "slug": "shepard-excavating", "name": "Shepard Excavating and Septic Service, LLC", "timezone": "America/Chicago" },
+  "site": {
+    "productionOrigin": "https://www.shepardexcavating.com",
+    "formRoutes": ["/", "/contact/", "/material-calculator/"],
+    "privacyUrl": "https://www.shepardexcavating.com/privacy-policy/",
+    "termsUrl": "https://www.shepardexcavating.com/terms-of-service/",
+    "thankYouUrl": "https://www.shepardexcavating.com/thank-you/",
+    "embedFile": "src/components/QuoteForm.astro",
+    "buildOutput": "dist",
+    "buildCommand": ["npm", "run", "build"]
+  },
+  "form": {
+    "profile": "service-menu",
+    "id": "8f2xiLQaiGhgx6T5O7az",
+    "name": "Shepard Website Estimate Request",
+    "submitLabel": "Request My Free Estimate",
+    "minHeight": 760,
+    "addressRequired": true,
+    "compactAddress": true,
+    "rejectDefaultTheme": true,
+    "expectedFields": [
+      { "queryKey": "full_name", "label": "Full Name", "required": true },
+      { "queryKey": "email", "label": "Email", "required": false },
+      { "queryKey": "phone", "label": "Phone", "required": true },
+      { "queryKey": "address", "label": "Address", "required": true },
+      { "queryKey": "service_needed", "label": "Service Needed", "required": true },
+      { "queryKey": "website_lead_message", "label": "Project Details", "required": false }
+    ],
+    "forbiddenFields": ["last_name", "city", "state", "country", "postal_code"],
+    "colors": { "primary": "#C21313", "background": "#FFFFFF" }
+  },
+  "highLevel": {
+    "locationId": "o43aKWYnDo6IBr5XtAxK",
+    "snapshotName": "GDW | Native Website Lead Intake | v3.0.0",
+    "snapshotId": "",
+    "snapshotVersion": "3.0.0",
+    "workflowName": "Website Lead Intake | Native Form v2",
+    "workflowId": "c0106d7c-93ac-49bf-9063-fcf3769ce31c",
+    "workflowState": "published",
+    "pipelineName": "Website Leads",
+    "pipelineId": "",
+    "stageName": "New Lead",
+    "stageId": "",
+    "allowDuplicateOpportunity": true,
+    "notification": {
+      "to": "Shepardexcavating@gmail.com",
+      "fromName": "Shepard Excavating Website",
+      "fromAddress": "website@mail.shepardexcavating.com",
+      "replyTo": "Shepardexcavating@gmail.com"
+    }
+  },
+  "controls": { "testMode": "none", "clientInvite": false, "externalLeadMessages": false },
+  "review": {
+    "dataMappingReviewed": false,
+    "desktopVisualReviewed": false,
+    "mobileVisualReviewed": false,
+    "desktopScreenshot": "qa/form-desktop.png",
+    "mobileScreenshot": "qa/form-mobile.png",
+    "legalLinksReviewed": false,
+    "deployed": false,
+    "liveTest": "not-tested",
+    "launchState": "PROVISIONED_NOT_LAUNCH_VERIFIED"
+  }
+}
