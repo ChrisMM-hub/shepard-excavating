@@ -55,13 +55,13 @@
   },
   "controls": { "testMode": "none", "clientInvite": false, "externalLeadMessages": false },
   "review": {
-    "dataMappingReviewed": false,
-    "desktopVisualReviewed": false,
-    "mobileVisualReviewed": false,
+    "dataMappingReviewed": true,
+    "desktopVisualReviewed": true,
+    "mobileVisualReviewed": true,
     "desktopScreenshot": "qa/form-desktop.png",
     "mobileScreenshot": "qa/form-mobile.png",
-    "legalLinksReviewed": false,
-    "deployed": false,
+    "legalLinksReviewed": true,
+    "deployed": true,
     "liveTest": "not-tested",
     "launchState": "PROVISIONED_NOT_LAUNCH_VERIFIED"
   }
