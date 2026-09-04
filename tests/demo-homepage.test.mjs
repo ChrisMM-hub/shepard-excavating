@@ -43,4 +43,8 @@ test('keeps the review route out of discovery surfaces', async () => {
   assert.match(astroConfig, /demo-homepage/);
   assert.match(vercelConfig, /X-Robots-Tag/);
   assert.match(vercelConfig, /noindex, nofollow, noarchive/);
+
+  const demoHeaderSources = JSON.parse(vercelConfig).headers.map(({ source }) => source);
+  assert.ok(demoHeaderSources.includes('/demo-homepage'));
+  assert.ok(demoHeaderSources.includes('/demo-homepage/'));
 });

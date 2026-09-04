@@ -7,6 +7,12 @@
       "headers": [
         { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }
       ]
+    },
+    {
+      "source": "/demo-homepage/",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }
+      ]
     }
   ],
   "redirects": [
