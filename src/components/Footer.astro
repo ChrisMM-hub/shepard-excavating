@@ -80,7 +80,7 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
 
   <div class="foot-bottom">
     <div class="container">
-      <p>Copyright &copy; {year} Shepard Excavating &amp; Septic Service. All rights reserved.</p>
+      <p>Copyright &copy; {year} Shepard Excavating &amp; Septic Service. All rights reserved. &middot; <a href="/excavation-and-septic-contractor-laporte-minnesota" class="footer-credit" rel="noopener">Site by Minnesota Marketing</a></p>
     </div>
   </div>
 </footer>
@@ -125,6 +125,8 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
 
   .foot-bottom { background: #090909; color: #bdbdbd; border-top: 1px solid rgba(255,255,255,0.1); }
   .foot-bottom p { padding-block: 0.9rem; font-size: 0.82rem; text-align: center; }
+  .footer-credit { color: inherit; opacity: 0.7; text-decoration: none; font-size: 0.9em; font-weight: 400; }
+  .footer-credit:hover { opacity: 1; text-decoration: underline; }
 
   @media (max-width: 1180px) {
     .foot-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
