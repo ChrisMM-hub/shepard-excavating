@@ -1,0 +1,74 @@
+---
+import DemoBase from '../layouts/DemoBase.astro';
+import DemoHero from '../components/DemoHero.astro';
+import HomeFeature from '../components/HomeFeature.astro';
+import CalculatorCTA from '../components/CalculatorCTA.astro';
+import Reviews from '../components/Reviews.astro';
+import DemoContact from '../components/DemoContact.astro';
+
+import pitImg from '../assets/photos/v3-pit.jpg';
+import pumpTruckImg from '../assets/photos/v3-pump-truck.jpg';
+import fisherImg from '../assets/photos/v3-fisher.jpg';
+
+import { homepage } from '../data/site';
+
+const feat = Object.fromEntries(homepage.features.map((feature) => [feature.key, feature]));
+const demoCopy = {
+  excavating: [
+    'We bring the equipment and experience for excavation, demolition, driveway work, and site preparation—from making room for a new home to reshaping an existing property.',
+    'Need land cleared? Our local crew handles the work safely and keeps your project moving.',
+  ],
+  septic: [
+    'Routine pumping helps prevent backups, protects your system, and can extend its useful life.',
+    'Most tanks should be pumped every 2–3 years. We can inspect the system and help you stay on a practical maintenance schedule.',
+  ],
+  fisher: [
+    'Shop Fisher snowplows, parts, and accessories for pickups and ATVs. We stock a range of plows and can order the setup you need.',
+    'Choose from V-plows, straight blades, and salters, with options for many half-ton trucks and smaller vehicles.',
+    'Order year-round so your equipment is ready before the first snow.',
+  ],
+};
+---
+
+<DemoBase
+  title="Shepard Excavating Video Homepage Review"
+  description="Review preview of a responsive video-led Shepard Excavating homepage."
+>
+  <DemoHero />
+
+  <HomeFeature
+    heading={feat.excavating.heading}
+    paragraphs={demoCopy.excavating}
+    btnLabel={feat.excavating.btnLabel}
+    photoUpload={feat.excavating.photoUpload}
+    btnHref="/excavating"
+    img={pitImg}
+    alt="Shepard Excavating equipment moving sand and screening material at the pit"
+  />
+
+  <HomeFeature
+    heading={feat.septic.heading}
+    paragraphs={demoCopy.septic}
+    btnLabel={feat.septic.btnLabel}
+    photoUpload={feat.septic.photoUpload}
+    btnHref="/septic-pumping"
+    img={pumpTruckImg}
+    alt="The Shepard Excavating septic pump truck P6 ready to roll in winter"
+    flip
+    tint
+  />
+
+  <HomeFeature
+    heading={feat.fisher.heading}
+    paragraphs={demoCopy.fisher}
+    btnLabel={feat.fisher.btnLabel}
+    photoUpload={feat.fisher.photoUpload}
+    btnHref="/fisher-snowplows"
+    img={fisherImg}
+    alt="A Fisher XV2 V-plow mounted on a pickup at the Shepard Excavating shop"
+  />
+
+  <CalculatorCTA />
+  <Reviews />
+  <DemoContact />
+</DemoBase>

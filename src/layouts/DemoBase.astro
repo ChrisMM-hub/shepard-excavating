@@ -1,0 +1,75 @@
+---
+import josefin600 from '@fontsource/josefin-sans/files/josefin-sans-latin-600-normal.woff2';
+import josefin700 from '@fontsource/josefin-sans/files/josefin-sans-latin-700-normal.woff2';
+import quicksand400 from '@fontsource/quicksand/files/quicksand-latin-400-normal.woff2';
+import quicksand500 from '@fontsource/quicksand/files/quicksand-latin-500-normal.woff2';
+import quicksand700 from '@fontsource/quicksand/files/quicksand-latin-700-normal.woff2';
+import '../styles/global.css';
+
+import DemoHeader from '../components/DemoHeader.astro';
+import Footer from '../components/Footer.astro';
+import DemoMobileCallBar from '../components/DemoMobileCallBar.astro';
+import { business } from '../data/site';
+
+const fontFaces = [
+  ['Josefin Sans', 600, josefin600],
+  ['Josefin Sans', 700, josefin700],
+  ['Quicksand', 400, quicksand400],
+  ['Quicksand', 500, quicksand500],
+  ['Quicksand', 700, quicksand700],
+]
+  .map(([family, weight, url]) => `@font-face{font-family:'${family}';font-style:normal;font-weight:${weight};font-display:optional;src:url(${url}) format('woff2')}`)
+  .join('');
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = 'Shepard Excavating Video Homepage Review',
+  description = 'Review preview of a video-led Shepard Excavating homepage.',
+  ogImage = '/og/home.jpg',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, business.domain).href;
+const ogImageUrl = new URL(ogImage, business.domain).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#0d0d0d" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/logo-shepard.png" />
+    <style is:inline set:html={fontFaces}></style>
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Shepard Excavating and Septic Service" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+  </head>
+  <body data-review-page>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <DemoHeader />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <DemoMobileCallBar />
+  </body>
+</html>

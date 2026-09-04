@@ -1,6 +1,14 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "npm run build:auto",
+  "headers": [
+    {
+      "source": "/demo-homepage",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }
+      ]
+    }
+  ],
   "redirects": [
     { "source": "/emergency", "destination": "/septic-pumping", "permanent": true },
     { "source": "/septic-emergency", "destination": "/septic-pumping", "permanent": true },

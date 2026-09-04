@@ -1,0 +1,61 @@
+---
+import { business } from '../data/site';
+
+const liveEstimateUrl = `${business.domain}/#contact`;
+---
+
+<aside class="form-card" aria-labelledby="estimate-card-heading">
+  <p class="form-kicker">Free estimate</p>
+  <h3 id="estimate-card-heading">Tell us about your project</h3>
+  <p class="form-copy">The live estimate form stays on Shepard&rsquo;s current website while this homepage is under review.</p>
+
+  <ul class="project-list" aria-label="Common project types">
+    <li>Septic service or installation</li>
+    <li>Excavation, demolition, or land clearing</li>
+    <li>Sand, gravel, or aggregate delivery</li>
+    <li>Snow removal or Fisher snowplows</li>
+  </ul>
+
+  <div class="form-actions">
+    <a href={liveEstimateUrl} class="btn btn-red btn-lg btn-block" target="_blank" rel="noopener">Open the Estimate Form</a>
+    <a href={business.phoneHref} class="btn btn-ghost btn-lg btn-block">Call {business.phone}</a>
+  </div>
+  <p class="review-note">This review page does not submit customer information.</p>
+</aside>
+
+<style>
+  .form-card {
+    background: #fff;
+    color: var(--ink);
+    border: 1px solid rgba(13, 13, 13, 0.08);
+    border-top: 4px solid var(--yellow);
+    border-radius: var(--r-lg);
+    padding: clamp(1.5rem, 3.5vw, 2.25rem);
+    box-shadow: var(--shadow-lg);
+  }
+  .form-kicker {
+    color: var(--red);
+    font-family: var(--font-head);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+  h3 { margin-top: 0.45rem; color: var(--ink); font-size: clamp(1.45rem, 2.5vw, 1.9rem); }
+  .form-copy { margin-top: 0.7rem; color: var(--slate); }
+  .project-list { display: grid; gap: 0.65rem; margin-top: 1.35rem; }
+  .project-list li { position: relative; padding-left: 1.4rem; color: #303030; font-weight: 600; }
+  .project-list li::before {
+    content: '';
+    position: absolute;
+    top: 0.62em;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--yellow);
+    box-shadow: 0 0 0 3px rgba(255, 203, 5, 0.2);
+  }
+  .form-actions { display: grid; gap: 0.75rem; margin-top: 1.6rem; }
+  .review-note { margin-top: 0.85rem; color: var(--slate); font-size: 0.78rem; text-align: center; }
+</style>

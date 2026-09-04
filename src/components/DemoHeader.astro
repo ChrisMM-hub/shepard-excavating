@@ -1,0 +1,246 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-shepard.png';
+import { business } from '../data/site';
+
+// v3 header mirrors the original site's masthead, rebuilt as real HTML:
+// big centered logo, yellow tagline strip, black nav bar. On the original site this
+// whole area was one flat image; here it's live text Google can read.
+const nav = [
+  { label: 'Home', href: '/demo-homepage', items: [] },
+  {
+    label: 'Excavating',
+    href: '/excavating',
+    items: [
+      ['Excavating', '/excavating'],
+      ['Sand, Gravel & Aggregate', '/aggregate'],
+      ['Demolition', '/demolition'],
+      ['Land Clearing', '/land-clearing'],
+    ],
+  },
+  {
+    label: 'Septic System',
+    href: '/septic-system',
+    items: [
+      ['Septic System Installation', '/septic-system'],
+      ['Septic Education', '/septic-education'],
+    ],
+  },
+  { label: 'Septic Pumping & Maintenance', href: '/septic-pumping', items: [] },
+  {
+    label: 'Snow Removal',
+    href: '/snow-removal',
+    items: [
+      ['Snow Removal', '/snow-removal'],
+      ['Fisher Snowplows', '/fisher-snowplows'],
+    ],
+  },
+  { label: 'Material Calculator', href: '/material-calculator', items: [] },
+  { label: 'Contact', href: '/contact', items: [] },
+];
+
+const here = Astro.url.pathname.replace(/\/$/, '') || '/';
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  `Shepard Excavating, ${business.address.street}, ${business.address.city}, ${business.address.region} ${business.address.zip}`
+)}`;
+---
+
+<header class="site-header">
+  <!-- masthead: big centered logo, like the original site -->
+  <div class="masthead">
+    <a href="/demo-homepage" class="brand" aria-label={business.shortName + ' demo homepage'}>
+      <Image src={logo} alt={business.name} widths={[440, 880]} sizes="(max-width: 640px) 300px, 440px" quality={90} loading="eager" />
+    </a>
+  </div>
+
+  <!-- yellow tagline strip -->
+  <div class="tagbar">
+    <div class="container tag-inner">
+      <span class="tag-item tag-left">We&rsquo;re #1 in the #2 business &bull; Est. {business.founded}</span>
+      <a href={business.phoneHref} class="tag-item tag-phone">218-224-2754</a>
+      <span class="tag-item tag-right">Based in Laporte &bull; Serving Northern Minnesota</span>
+    </div>
+  </div>
+
+  <!-- black nav bar (sticky). Desktop: menu; mobile: CALL / MAP / HOURS / MENU -->
+  <div class="navbar" id="navbar">
+    <nav class="nav-desktop" aria-label="Primary">
+      <ul>
+        {nav.map((g) => {
+          const act = g.href === here || g.items.some((it) => it[1] === here);
+          return (
+            <li class={g.items.length ? 'has-menu' : ''}>
+              <a href={g.href} class={act ? 'nav-active' : ''} aria-current={act ? 'page' : undefined}>
+                {g.label}{g.items.length ? <span class="caret" aria-hidden="true">▾</span> : null}
+              </a>
+              {g.items.length > 0 && (
+                <ul class="submenu">
+                  {g.items.map(([label, href]) => (
+                    <li><a href={href} class={href === here ? 'sub-active' : ''}>{label}</a></li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+
+    <div class="quickbar" aria-label="Quick actions">
+      <a href={business.phoneHref} class="qb-item">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.58 3.6a1 1 0 0 1-.25 1l-2.2 2.2Z" fill="currentColor"/></svg>
+        Call
+      </a>
+      <a href={mapsUrl} class="qb-item" rel="noopener" target="_blank">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="9" r="2.5" fill="currentColor"/></svg>
+        Map
+      </a>
+      <a href="/contact#hours" class="qb-item">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Hours
+      </a>
+      <button class="qb-item qb-menu" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+        Menu
+      </button>
+    </div>
+  </div>
+
+  <!-- mobile menu: full-screen overlay with its own close row -->
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <div class="mm-top">
+      <span class="mm-title">Menu</span>
+      <button class="mm-close" id="menu-close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <ul>
+      {nav.map((g) => (
+        <li>
+          <a href={g.href} class="m-top">{g.label}</a>
+          {g.items.length > 1 && (
+            <ul>{g.items.map(([label, href]) => (<li><a href={href}>{label}</a></li>))}</ul>
+          )}
+        </li>
+      ))}
+    </ul>
+    <div class="mobile-cta">
+      <a href={business.phoneHref} class="btn btn-dark btn-block">Call {business.phone}</a>
+      <a href="/demo-homepage#contact" class="btn btn-primary btn-block">Get a Free Estimate</a>
+    </div>
+  </div>
+</header>
+<div id="top"></div>
+
+<style>
+  .site-header { background: #fff; }
+
+  /* masthead */
+  .masthead { padding: clamp(0.7rem, 1.7vw, 1rem) var(--gutter); display: flex; justify-content: center; }
+  .brand :global(img) { width: clamp(230px, 29vw, 360px); height: auto; }
+
+  /* yellow strip */
+  .tagbar { background: var(--yellow); border-top: 1px solid rgba(0,0,0,0.06); }
+  .tag-inner {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding-block: 0.5rem;
+  }
+  .tag-item {
+    font-family: var(--font-body); font-weight: 700; font-size: 0.86rem;
+    text-transform: uppercase; letter-spacing: 0.02em; color: var(--ink); white-space: nowrap;
+  }
+  .tag-phone:hover { color: var(--red-deep); }
+  @media (max-width: 880px) {
+    .tag-left, .tag-right { display: none; }
+    .tag-inner { justify-content: center; }
+  }
+
+  /* black nav bar */
+  .navbar { position: sticky; top: 0; z-index: 100; background: var(--ink); min-height: var(--header-h); display: flex; align-items: stretch; }
+  .nav-desktop {
+    display: flex; align-items: stretch; width: 100%; max-width: 1320px;
+    margin-inline: auto; padding-inline: clamp(0.75rem, 2vw, 1.25rem);
+  }
+  .nav-desktop > ul { display: flex; align-items: stretch; justify-content: center; flex-wrap: nowrap; width: 100%; }
+  .nav-desktop > ul > li { position: relative; display: flex; flex: 0 0 auto; }
+  .nav-desktop > ul > li > a {
+    display: inline-flex; align-items: center; gap: 0.28rem;
+    min-height: var(--header-h); font-family: var(--font-body); font-weight: 700;
+    font-size: clamp(0.76rem, 0.78vw, 0.88rem); line-height: 1;
+    text-transform: uppercase; letter-spacing: 0; color: #fff;
+    padding: 0 clamp(0.45rem, 0.68vw, 0.75rem);
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  }
+  .nav-desktop > ul > li > a:hover { background: rgba(255,255,255,0.09); color: var(--yellow); }
+  .nav-desktop > ul > li > a.nav-active { background: rgba(255,255,255,0.05); color: var(--yellow); border-bottom-color: var(--yellow); }
+  .caret { font-size: 0.7em; opacity: 0.75; }
+
+  .submenu {
+    position: absolute; top: 100%; left: 0; min-width: 250px; z-index: 101;
+    background: #fff; border: 1px solid var(--line); border-top: 3px solid var(--yellow);
+    box-shadow: var(--shadow); padding: 0.35rem;
+    opacity: 0; visibility: hidden; transform: translateY(6px);
+    transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s;
+  }
+  .has-menu:hover .submenu, .has-menu:focus-within .submenu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .submenu li a {
+    display: block; padding: 0.6rem 0.7rem; border-radius: var(--r);
+    font-weight: 600; font-size: 0.95rem; color: var(--ink);
+  }
+  .submenu li a:hover, .submenu li a.sub-active { background: var(--stone); color: var(--red-deep); }
+
+  /* mobile quick bar */
+  .quickbar { display: none; width: 100%; }
+  .qb-item {
+    flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem;
+    font-family: var(--font-body); font-weight: 700; font-size: 0.88rem; text-transform: uppercase;
+    color: #fff; background: none; border: 0; padding: 1rem 0.4rem; letter-spacing: 0.03em;
+  }
+  .qb-item + .qb-item { border-left: 1px solid rgba(255,255,255,0.16); }
+  .qb-item svg { width: 18px; height: 18px; color: var(--yellow); }
+  .qb-item:active { background: rgba(255,255,255,0.1); }
+
+  @media (max-width: 1180px) {
+    .nav-desktop { display: none; }
+    .quickbar { display: flex; }
+  }
+
+  /* mobile menu overlay */
+  .mobile-menu {
+    position: fixed; inset: 0; z-index: 300; background: #fff;
+    overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+    padding: 0 var(--gutter) 2.5rem;
+  }
+  :global(body.nav-open) { overflow: hidden; }
+  .mm-top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-block: 1rem; border-bottom: 2px solid var(--yellow); margin-bottom: 0.4rem;
+  }
+  .mm-title { font-family: var(--font-head); font-weight: 700; font-size: 1.3rem; }
+  .mm-close { background: var(--ink); color: #fff; border: 0; border-radius: var(--r); width: 42px; height: 42px; display: grid; place-items: center; }
+  .mm-close svg { width: 20px; height: 20px; }
+  .mobile-menu > ul > li { border-bottom: 1px solid var(--line); }
+  .mobile-menu .m-top { display: block; font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; padding: 0.85rem 0; font-size: 1.02rem; }
+  .mobile-menu ul ul { padding: 0 0 0.6rem 0.6rem; }
+  .mobile-menu ul ul a { display: block; padding: 0.4rem 0; color: var(--slate); font-weight: 600; }
+  .mobile-cta { display: grid; gap: 0.7rem; margin-top: 1.2rem; }
+</style>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const closeBtn = document.getElementById('menu-close');
+  const menu = document.getElementById('mobile-menu');
+
+  const setOpen = (open: boolean) => {
+    if (menu) menu.hidden = !open;
+    toggle?.setAttribute('aria-expanded', String(open));
+    toggle?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    document.body.classList.toggle('nav-open', open);
+  };
+
+  toggle?.addEventListener('click', () => setOpen(menu?.hidden !== false));
+  closeBtn?.addEventListener('click', () => setOpen(false));
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+</script>
