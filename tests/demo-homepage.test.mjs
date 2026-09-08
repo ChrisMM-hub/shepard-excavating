@@ -31,6 +31,8 @@ test('ships separate desktop and mobile web video assets', async () => {
   assert.match(hero, /prefers-reduced-motion: reduce/);
   assert.match(hero, /data-motion-control/);
   assert.match(hero, /userPaused/);
+  assert.match(hero, /class="btn btn-primary btn-lg">Get a Free Estimate/);
+  assert.doesNotMatch(hero, /hero-eyebrow::before/);
   assert.doesNotMatch(hero, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.hero-video \{ display: none; \}/);
 });
 
