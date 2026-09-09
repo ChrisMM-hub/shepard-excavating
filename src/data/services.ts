@@ -319,7 +319,7 @@ const baseServices: Service[] = [
     metaTitle: 'Snow Removal in Northern Minnesota | Shepard',
     metaDesc:
       'Driveway and commercial snow plowing across Northern Minnesota all winter. Seasonal routes fill up, so call (218) 224-2754 early.',
-    heroImage: 'snow-3.jpg',
+    heroImage: 'svc-snow-removal.jpg',
     lead:
       'Driveways and commercial lots cleared through the long Northern Minnesota winter. Reliable plowing so you can get where you are going.',
     includedHeading: 'What we do',
@@ -349,7 +349,7 @@ const baseServices: Service[] = [
       { q: 'When should I get on the list?', a: 'Before the snow flies. Routes fill up, so the earlier you call, the better.' },
     ],
     related: ['fisher-snowplows', 'aggregate'],
-    gallery: ['snow-3.jpg'],
+    gallery: ['snow-removal-action.jpg'],
   },
   {
     slug: 'fisher-snowplows',
