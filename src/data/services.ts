@@ -16,6 +16,7 @@ export interface Service {
   includedHeading: string;
   included: string[];
   factors?: string[];
+  pricingNote?: string;
   timeline?: string;
   expect?: string;
   faqs: ServiceFaq[];
@@ -54,6 +55,8 @@ const baseServices: Service[] = [
       'Travel distance to your property',
       'Anything we find that needs repair',
     ],
+    pricingNote:
+      'Clear pricing starts with a look at the tank and access. We explain the work and cost before we begin.',
     timeline:
       'A routine pump-and-inspect visit is usually a couple of hours. Backups and line issues are scheduled as soon as a truck is available during business hours.',
     expect:
@@ -74,33 +77,35 @@ const baseServices: Service[] = [
     h1: 'Septic System Installation in Northern Minnesota',
     metaTitle: 'Septic Installation in Northern Minnesota | Shepard',
     metaDesc:
-      'MPCA-certified septic installer with 20+ years. Mound and conventional systems designed, permitted, and installed across Northern Minnesota.',
+      'MPCA-certified septic installer with 20+ years. Inground, mound, and holding-tank systems designed, permitted, and installed across Northern Minnesota.',
     heroImage: 'svc-septic-install.jpg',
     lead:
-      'New mound and conventional systems, designed, permitted, and installed to code. We are an MPCA-certified installer with more than 20 years putting systems in the ground, and we are here for you from the first drawing to the final inspection.',
+      'Inground systems, mound systems, and holding tanks, designed, permitted, and installed to code. We are an MPCA-certified installer with more than 20 years putting systems in the ground, and we are here for you from the first drawing to the final inspection.',
     includedHeading: "What's included",
     included: [
       'Site evaluation and system design',
       'County permit applications',
       'Full installation: tank, lines, and drain field or mound',
-      'Conventional systems, mound systems, and holding tanks',
+      'Inground systems, mound systems, and holding tanks',
       'System replacements',
       'Final inspection',
     ],
     factors: [
-      'System type (conventional, mound, or holding tank)',
+      'System type (inground, mound, or holding tank)',
       'Your soil and site conditions',
       'Size of the home and number of bedrooms',
       'Site access and how much dirt work is needed',
       'County permit and inspection requirements',
     ],
+    pricingNote:
+      'Every property is different. After we review the site and system requirements, you will know what is included and why.',
     timeline:
       'Design and permitting run on the county’s clock. Once we are approved and scheduled, the install itself is usually a few days.',
     expect:
       'We walk the site with you, handle the design and the county paperwork, install the system, and stay with it through the final inspection. Because we also pump and maintain systems, we see what fails and why, so we build yours to last.',
     faqs: [
       { q: 'Are you a licensed installer?', a: 'Yes. We are an MPCA-certified septic installer with more than 20 years of experience, licensed in Hubbard and Beltrami counties.' },
-      { q: 'Mound or conventional, which do I need?', a: 'It depends on your soil, water table, and site. We evaluate the property and recommend the right system instead of guessing.' },
+      { q: 'What type of septic system do I need?', a: 'It depends on your soil, water table, and site. We evaluate the property and recommend the right inground, mound, or holding-tank system instead of guessing.' },
       { q: 'Do you handle the permits?', a: 'Yes. We take care of the septic design and the county permit applications and stay with the job through the final inspection.' },
       { q: 'How long does a system last?', a: 'A well-built system that is pumped and maintained can last for decades. The drain field is the part you have to protect, and we will show you how.' },
     ],
@@ -166,10 +171,12 @@ const baseServices: Service[] = [
       'How much material has to be hauled in or out',
       'Any permits the job requires',
     ],
+    pricingNote:
+      'A clear plan keeps an earthwork project moving. We review the site, equipment, hauling, and permits with you before work starts.',
     timeline:
       'It depends on the scope. We will give you a realistic window once we have looked at the job and the site.',
     expect:
-      'We show up with the right iron, do the work, and leave the site graded and cleaned up. One company from the first cut to the final grade, instead of lining up three different outfits.',
+      'We show up with the right equipment, do the work, and leave the site graded and cleaned up. One company from the first cut to the final grade, instead of lining up three different outfits.',
     faqs: [
       { q: 'Do you do both residential and commercial?', a: 'Yes. Whether it is a cabin pad on a lake lot or a commercial site, we handle the dirt work either way.' },
       { q: 'Can you prep a site for a new build?', a: 'Absolutely. Building pads, basements, driveways, and grading are everyday work for us.' },
@@ -205,6 +212,8 @@ const baseServices: Service[] = [
       'What you want done with the debris (haul, pile, or burn)',
       'Access to the site',
     ],
+    pricingNote:
+      'We price to the trees, terrain, access, and how you want debris handled, then walk through the scope with you upfront.',
     timeline:
       'A small lot can be a day or two. Bigger clearing jobs depend on the trees and the terrain, and we will give you a window up front.',
     expect:
@@ -225,15 +234,15 @@ const baseServices: Service[] = [
     h1: 'Demolition in Northern Minnesota',
     metaTitle: 'Demolition in Northern Minnesota | Shepard',
     metaDesc:
-      'Cabin teardowns, garages, and small commercial demolition, hauled away clean, across Northern Minnesota. Call Shepard at (218) 224-2754.',
+      'Cabin teardowns, garages, and commercial demolition, hauled away clean, across Northern Minnesota. Call Shepard at (218) 224-2754.',
     heroImage: 'svc-demolition.jpg',
     lead:
-      'Old cabins, garages, sheds, and small commercial structures, torn down and hauled away clean. We handle the equipment, hauling, and disposal, so it is all one call.',
+      'Old cabins, garages, sheds, and commercial structures, torn down and hauled away clean. We handle the equipment, hauling, and disposal, so it is all one call.',
     includedHeading: 'What we do',
     included: [
       'Cabin and house teardowns',
       'Garage and outbuilding demolition',
-      'Small commercial demolition',
+      'Commercial demolition',
       'Concrete and old foundation removal',
       'Debris haul-off with our own trucks and containers',
       'Grading the site afterward',
@@ -245,12 +254,14 @@ const baseServices: Service[] = [
       'Debris volume and disposal needs',
       'Site access',
     ],
+    pricingNote:
+      'We look at the structure, access, disposal, and site work first, so the price accounts for the full teardown and cleanup.',
     timeline:
       'Most residential teardowns are a few days, including cleanup and haul-off.',
     expect:
       'We knock it down, load it out with our own equipment, and grade the spot back so you would hardly know it was there. One crew handles the teardown, hauling, and cleanup.',
     faqs: [
-      { q: 'Do you tear down cabins and garages?', a: 'Yes. Cabin teardowns, old garages, sheds, and small commercial buildings are regular work for us.' },
+      { q: 'Do you tear down cabins and garages?', a: 'Yes. Cabin teardowns, old garages, sheds, and commercial buildings are regular work for us.' },
       { q: 'Can you remove an old foundation?', a: 'Yes. We remove concrete slabs and block foundations and bring in fill to grade the site back. Have a look at the before and after on our homepage.' },
       { q: 'Do you haul the debris?', a: 'We do. Our trucks and containers stay with our demolition crew, so one call covers the teardown and the cleanup.' },
       { q: 'Do I need a permit?', a: 'Some demolition needs a permit. We will let you know what your job requires and help you sort it out.' },
@@ -268,7 +279,7 @@ const baseServices: Service[] = [
       'Fill, sand, Class 5 gravel, washed rock, and boulders, delivered or picked up across Northern Minnesota. Call Shepard for pricing today.',
     heroImage: 'svc-aggregate.jpg',
     lead:
-      'Fill, sand, gravel, and rock, delivered to your site or picked up at the pit. We can spread it for you too.',
+      'Fill, sand, gravel, and rock, delivered to your site. Call ahead to discuss material availability and pickup options. We can spread it for you too.',
     includedHeading: 'Materials we carry',
     included: [
       'Fill sand',
@@ -285,12 +296,14 @@ const baseServices: Service[] = [
       'Whether you want it spread',
       'Site access for the truck',
     ],
+    pricingNote:
+      'We confirm the material, amount, delivery, and spreading before scheduling, so you know what your order covers.',
     timeline:
       'Delivery is usually quick once we know what you need and where it is going. Call for current pricing and availability.',
     expect:
       'Tell us the material, the amount, and where it goes. We will get it there and spread it if you want. If you need something that is not on the list, we can usually source it.',
     faqs: [
-      { q: 'Do you deliver, or do I pick it up?', a: 'Either one. We deliver across the area, or you can pick up at the pit.' },
+      { q: 'Do you deliver or offer pickup?', a: 'We deliver across the area. Call us to discuss availability and arrange a pickup option before heading to a pit.' },
       { q: 'Can you spread it for me?', a: 'Yes. We can deliver and spread it in one trip.' },
       { q: 'What gravel is best for a driveway?', a: 'Class 5 is the usual pick for driveways. Tell us about your drive and we will point you the right way.' },
       { q: 'Do you carry materials not on the list?', a: 'This is what we commonly sell, but if you need something particular, we can usually get it for you.' },
@@ -306,7 +319,7 @@ const baseServices: Service[] = [
     metaTitle: 'Snow Removal in Northern Minnesota | Shepard',
     metaDesc:
       'Driveway and commercial snow plowing across Northern Minnesota all winter. Seasonal routes fill up, so call (218) 224-2754 early.',
-    heroImage: 'svc-snow.jpg',
+    heroImage: 'snow-3.jpg',
     lead:
       'Driveways and commercial lots cleared through the long Northern Minnesota winter. Reliable plowing so you can get where you are going.',
     includedHeading: 'What we do',
@@ -314,7 +327,7 @@ const baseServices: Service[] = [
       'Residential driveway plowing',
       'Commercial lot plowing',
       'Seasonal and per-storm service',
-      'Loader work for big piles',
+      'Equipment to remove and haul out snow piles',
       'Ice dam removal',
     ],
     factors: [
@@ -323,10 +336,12 @@ const baseServices: Service[] = [
       'Where the snow gets stacked',
       'Distance',
     ],
+    pricingNote:
+      'Snow service is planned around your route, property, and stacking needs. We make the plan clear before the season begins.',
     timeline:
       'We run routes during and after storms. Get on the list before the season fills up.',
     expect:
-      'We plow it clean and stack the snow out of your way. Long lake-country drives and commercial lots are no problem.',
+      'We have the right equipment to remove and haul out snow piles. We plow your area clean and pile the snow out of your way. Long lake-country drives and commercial lots are no problem.',
     faqs: [
       { q: 'Do you plow residential and commercial?', a: 'Both. Driveways, long rural drives, and commercial lots are all on our routes.' },
       { q: 'Can I sign up for the whole season?', a: 'Yes. Seasonal service means you do not have to call after every storm. Sign up early before the routes fill.' },
@@ -334,7 +349,7 @@ const baseServices: Service[] = [
       { q: 'When should I get on the list?', a: 'Before the snow flies. Routes fill up, so the earlier you call, the better.' },
     ],
     related: ['fisher-snowplows', 'aggregate'],
-    gallery: ['snow-1.jpg', 'snow-3.jpg'],
+    gallery: ['snow-3.jpg'],
   },
   {
     slug: 'fisher-snowplows',
@@ -343,10 +358,10 @@ const baseServices: Service[] = [
     h1: 'Fisher Snowplow Dealer in Northern Minnesota',
     metaTitle: 'Fisher Snowplow Dealer in Northern Minnesota | Shepard',
     metaDesc:
-      'Fisher snowplow sales, parts, installation, and service across Northern Minnesota. We run Fisher on our own trucks. Call (218) 224-2754.',
+      'Fisher snowplow sales, parts, installation, and service across Northern Minnesota. More than 28 years of Fisher experience. Call (218) 224-2754.',
     heroImage: 'svc-fisher.jpg',
     lead:
-      'We are a Fisher snowplow dealer, so we sell, install, and service the plows we trust on our own trucks.',
+      'We have used Fisher plows and equipment for more than 28 years, so we know Fisher well. As a Fisher snowplow dealer, we sell, install, and service the plows we trust on our own trucks.',
     includedHeading: 'What we offer',
     included: [
       'Fisher snowplow sales',
@@ -356,7 +371,7 @@ const baseServices: Service[] = [
       'Help picking the right plow for your truck',
     ],
     expect:
-      'Whether you need a new plow, parts, or a repair before the next storm, we can help. We run Fisher gear ourselves, so we know it inside and out.',
+      'Whether you need a new plow, parts, or a repair before the next storm, we can help. After more than 28 years using Fisher plows and equipment, we know the gear inside and out.',
     faqs: [
       { q: 'Do you install the plows you sell?', a: 'Yes. We sell and install Fisher plows and can set you up right.' },
       { q: 'Do you stock parts and do repairs?', a: 'We do. Parts, service, and repairs are all part of being a Fisher dealer.' },

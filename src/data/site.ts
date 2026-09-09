@@ -70,7 +70,7 @@ export const featuredServices = [
   {
     slug: 'septic-system',
     title: 'Septic System Installation',
-    blurb: 'Mound and conventional systems, designed and installed to code. Licensed in Hubbard and Beltrami counties.',
+    blurb: 'Inground systems, mound systems, and holding tanks, designed and installed to code. Licensed in Hubbard and Beltrami counties.',
     img: 'svc-septic-install',
     bucket: 'Septic',
   },
@@ -91,14 +91,14 @@ export const featuredServices = [
   {
     slug: 'demolition',
     title: 'Demolition',
-    blurb: 'Cabin teardowns, old garages, and small commercial structures, hauled away clean.',
+    blurb: 'Cabin teardowns, old garages, and commercial structures, hauled away clean.',
     img: 'svc-demolition',
     bucket: 'Site Work',
   },
   {
     slug: 'aggregate',
     title: 'Sand, Gravel & Aggregate',
-    blurb: 'Sand, gravel, fill, and crushed rock. Picked up at the pit or delivered to your site.',
+    blurb: 'Sand, gravel, fill, and crushed rock, delivered to your site. Call ahead about pickup options.',
     img: 'svc-aggregate',
     bucket: 'Materials',
   },
