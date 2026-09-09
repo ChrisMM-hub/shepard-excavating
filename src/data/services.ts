@@ -322,26 +322,26 @@ const baseServices: Service[] = [
     heroImage: 'svc-snow-removal.jpg',
     lead:
       'Driveways and commercial lots cleared through the long Northern Minnesota winter. Reliable plowing so you can get where you are going.',
-    includedHeading: 'What we do',
+    includedHeading: 'Snow cleared and out of your way',
     included: [
       'Residential driveway plowing',
       'Commercial lot plowing',
       'Seasonal and per-storm service',
-      'Equipment to remove and haul out snow piles',
+      'Snow pile removal and hauling',
       'Ice dam removal',
     ],
     factors: [
       'Size of the driveway or lot',
       'How often you want it cleared (per storm or seasonal)',
       'Where the snow gets stacked',
-      'Distance',
+      'Travel distance to your property',
     ],
     pricingNote:
-      'Snow service is planned around your route, property, and stacking needs. We make the plan clear before the season begins.',
+      'Your price depends on the property, service schedule, and where the snow needs to go. We talk through these details with you before work begins.',
     timeline:
       'We run routes during and after storms. Get on the list before the season fills up.',
     expect:
-      'We have the right equipment to remove and haul out snow piles. We plow your area clean and pile the snow out of your way. Long lake-country drives and commercial lots are no problem.',
+      'We plow driveways and commercial lots clean and pile the snow out of your way. When piles need to go, we have the right equipment to remove and haul them out.',
     faqs: [
       { q: 'Do you plow residential and commercial?', a: 'Both. Driveways, long rural drives, and commercial lots are all on our routes.' },
       { q: 'Can I sign up for the whole season?', a: 'Yes. Seasonal service means you do not have to call after every storm. Sign up early before the routes fill.' },
@@ -371,7 +371,7 @@ const baseServices: Service[] = [
       'Help picking the right plow for your truck',
     ],
     expect:
-      'Whether you need a new plow, parts, or a repair before the next storm, we can help. After more than 28 years using Fisher plows and equipment, we know the gear inside and out.',
+      'Tell us about your truck and the areas you plow. We can help you choose a Fisher setup, handle installation, and keep it working with parts, service, and repairs.',
     faqs: [
       { q: 'Do you install the plows you sell?', a: 'Yes. We sell and install Fisher plows and can set you up right.' },
       { q: 'Do you stock parts and do repairs?', a: 'We do. Parts, service, and repairs are all part of being a Fisher dealer.' },

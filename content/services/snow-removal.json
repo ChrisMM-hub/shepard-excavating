@@ -3,22 +3,22 @@
   "metaTitle": "Snow Removal in Northern Minnesota | Shepard",
   "metaDesc": "Driveway and commercial snow plowing across Northern Minnesota all winter. Seasonal routes fill up, so call (218) 224-2754 early.",
   "lead": "Driveways and commercial lots cleared through the long Northern Minnesota winter. Reliable plowing so you can get where you are going.",
-  "includedHeading": "What we do",
+  "includedHeading": "Snow cleared and out of your way",
   "included": [
     "Residential driveway plowing",
     "Commercial lot plowing",
     "Seasonal and per-storm service",
-    "Equipment to remove and haul out snow piles",
+    "Snow pile removal and hauling",
     "Ice dam removal"
   ],
   "factors": [
     "Size of the driveway or lot",
     "How often you want it cleared (per storm or seasonal)",
     "Where the snow gets stacked",
-    "Distance"
+    "Travel distance to your property"
   ],
   "timeline": "We run routes during and after storms. Get on the list before the season fills up.",
-  "expect": "We have the right equipment to remove and haul out snow piles. We plow your area clean and pile the snow out of your way. Long lake-country drives and commercial lots are no problem.",
+  "expect": "We plow driveways and commercial lots clean and pile the snow out of your way. When piles need to go, we have the right equipment to remove and haul them out.",
   "faqs": [
     {
       "q": "Do you plow residential and commercial?",
@@ -37,5 +37,6 @@
       "a": "Before the snow flies. Routes fill up, so the earlier you call, the better."
     }
   ],
-  "heroUpload": ""
+  "heroUpload": "",
+  "pricingNote": "Your price depends on the property, service schedule, and where the snow needs to go. We talk through these details with you before work begins."
 }

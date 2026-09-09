@@ -65,6 +65,7 @@ export default defineConfig({
           { type: 'string', name: 'includedHeading', label: 'List Section Heading' },
           { type: 'string', name: 'included', label: 'What Is Included', list: true },
           { type: 'string', name: 'factors', label: 'What Affects the Price', list: true },
+          { type: 'string', name: 'pricingNote', label: 'Pricing Introduction', ui: { component: 'textarea' } },
           { type: 'string', name: 'timeline', label: 'Timeline Paragraph', ui: { component: 'textarea' } },
           { type: 'string', name: 'expect', label: 'What to Expect Paragraph', ui: { component: 'textarea' } },
           {
@@ -89,7 +90,7 @@ export default defineConfig({
             list: true,
             ui: { itemProps: () => ({ label: 'Photo' }) },
             description:
-              'Photos shown in the strip partway down the page. Leave this list empty to keep the standard photos; adding any photo here replaces the whole strip with your list.',
+              'Leave empty to keep the standard photos. Adding photos replaces the standard gallery. On Snow Removal, the first photo appears beside the service description and any remaining photos appear below.',
             fields: [{ type: 'image', name: 'image', label: 'Photo', required: true }],
           },
         ],

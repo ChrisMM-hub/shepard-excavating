@@ -9,6 +9,12 @@ interface Props { service: Service; }
 const { service } = Astro.props;
 const related = service.related.map((s) => serviceBySlug[s]).filter(Boolean);
 const hero = img(service.heroImage);
+const uploads = (service.photos ?? []).filter((p) => p && p.image);
+// Snow's first photo belongs beside the service description; additional CMS
+// photos still appear in the gallery, without duplicating the featured image.
+const hasFeature = service.slug === 'snow-removal' && (uploads.length > 0 || service.gallery.length > 0);
+const galleryUploads = hasFeature ? uploads.slice(1) : uploads;
+const galleryImages = uploads.length > 0 ? [] : (hasFeature ? service.gallery.slice(1) : service.gallery);
 ---
 
 <!-- Hero -->
@@ -42,16 +48,38 @@ const hero = img(service.heroImage);
 
 <!-- Details -->
 <section class="section" id="details">
-  <div class="container detail-grid">
+  {hasFeature && (
+    <div class="container service-feature">
+      <div class="feature-copy">
+        <p class="eyebrow">Plowing &amp; snow hauling</p>
+        <h2>{service.includedHeading}</h2>
+        {service.expect && <p class="feature-description">{service.expect}</p>}
+        <ul class="ticks feature-services">
+          {service.included.map((i) => (<li>{i}</li>))}
+        </ul>
+      </div>
+      <figure class="feature-photo">
+        {uploads.length > 0 ? (
+          <img src={uploads[0].image} alt="Snow removal work by Shepard Excavating" loading="lazy" decoding="async" />
+        ) : (
+          <Image src={img(service.gallery[0])} alt="Shepard's skid steer blowing a tall plume of snow across a snow-covered property" widths={[480, 800, 1200]} sizes="(max-width: 760px) calc(100vw - 2.2rem), (max-width: 1200px) 44vw, 500px" quality={82} loading="lazy" />
+        )}
+        <figcaption>Shepard equipment at work in Northern Minnesota.</figcaption>
+      </figure>
+    </div>
+  )}
+  <div class:list={['container detail-grid', { 'detail-grid--featured': hasFeature }]}>
     <div class="detail-main">
+      {!hasFeature && <>
       <h2>{service.includedHeading}</h2>
       <ul class="ticks two-col">
         {service.included.map((i) => (<li>{i}</li>))}
       </ul>
+      </>}
 
       {service.factors && service.factors.length > 0 && (
         <div class="detail-block">
-          <h3>What affects your price</h3>
+          {hasFeature ? <h2>Planning your snow service</h2> : <h3>What affects your price</h3>}
           <p class="muted">{service.pricingNote ?? 'We walk you through the scope and what moves the price before any work starts.'}</p>
           <ul class="ticks">
             {service.factors.map((f) => (<li>{f}</li>))}
@@ -59,11 +87,11 @@ const hero = img(service.heroImage);
         </div>
       )}
 
-      {(service.timeline || service.expect) && (
+      {(service.timeline || (!hasFeature && service.expect)) && (
         <div class="detail-block">
-          <h3>What to expect</h3>
+          <h3>{hasFeature ? 'When we clear your property' : 'What to expect'}</h3>
           {service.timeline && <p>{service.timeline}</p>}
-          {service.expect && <p>{service.expect}</p>}
+          {!hasFeature && service.expect && <p>{service.expect}</p>}
         </div>
       )}
     </div>
@@ -71,13 +99,15 @@ const hero = img(service.heroImage);
     <aside class="detail-aside">
       <div class="aside-card">
         <h3>Get a free estimate</h3>
-        <p>Tell us about your {service.navLabel.toLowerCase()} job and we will get you a fair, no-pressure price.</p>
+        <p>{service.slug === 'fisher-snowplows'
+          ? 'Tell us about your truck and plowing needs. We can help with equipment, installation, parts, or repairs.'
+          : `Tell us about your ${service.navLabel.toLowerCase()} job and we will get you a fair, no-pressure price.`}</p>
         <a href="#quote" class="btn btn-primary btn-block">Request an estimate</a>
         <a href={business.phoneHref} class="btn btn-ghost btn-block">
           <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.58 3.6a1 1 0 0 1-.25 1l-2.2 2.2Z" fill="currentColor"/></svg>
           {business.phone}
         </a>
-        <p class="aside-note">{business.hours}</p>
+        <p class="aside-note">{business.hours.split(' · ').map((hours) => <span>{hours}</span>)}</p>
       </div>
     </aside>
   </div>
@@ -85,13 +115,12 @@ const hero = img(service.heroImage);
 
 <!-- Photos: CMS-uploaded strip wins when set; otherwise the curated gallery. -->
 {(() => {
-  const uploads = (service.photos ?? []).filter((p) => p && p.image);
-  if (uploads.length > 0) {
+  if (galleryUploads.length > 0) {
     return (
       <section class="section section--stone">
         <div class="container">
-          <div class="svc-gallery" data-count={uploads.length}>
-            {uploads.map((p) => (
+          <div class="svc-gallery" data-count={galleryUploads.length}>
+            {galleryUploads.map((p) => (
               <figure><img src={p.image} alt={service.navLabel + ' work by Shepard Excavating'} loading="lazy" /></figure>
             ))}
           </div>
@@ -99,13 +128,13 @@ const hero = img(service.heroImage);
       </section>
     );
   }
-  if (service.gallery && service.gallery.length > 0) {
+  if (galleryImages.length > 0) {
     return (
       <section class="section section--stone">
         <div class="container">
-          <div class="svc-gallery" data-count={service.gallery.length}>
-            {service.gallery.map((g) => (
-              <figure><Image src={img(g)} alt={service.navLabel + ' work by Shepard Excavating'} widths={[400, 800]} sizes="(max-width: 700px) 100vw, 360px" quality={74} /></figure>
+          <div class="svc-gallery" data-count={galleryImages.length}>
+            {galleryImages.map((g) => (
+              <figure><Image src={img(g)} alt={service.navLabel + ' work by Shepard Excavating'} widths={[400, 800, 1200, 1600]} sizes={galleryImages.length === 1 ? '(max-width: 800px) 92vw, 760px' : '(max-width: 520px) 92vw, (max-width: 960px) 44vw, 360px'} quality={78} loading="lazy" /></figure>
             ))}
           </div>
         </div>
@@ -157,7 +186,7 @@ const hero = img(service.heroImage);
   <div class="container contact-grid">
     <div class="contact-info">
       <p class="eyebrow quote-eyebrow">Get a free estimate</p>
-      <h2 id="quote-h">Let's talk about your {service.navLabel.toLowerCase()}</h2>
+      <h2 id="quote-h">Let's talk about your {service.slug === 'fisher-snowplows' ? 'Fisher snowplow needs' : service.navLabel.toLowerCase()}</h2>
       <p class="lead">Fill out the form or call and talk to a real person. Fair price, no runaround.</p>
       <p class="contact-phone"><a href={business.phoneHref}>{business.phone}</a></p>
       <p class="contact-sub">{business.address.street}, {business.address.city}, {business.address.region} {business.address.zip}<br />{business.hours}</p>
@@ -174,16 +203,28 @@ const hero = img(service.heroImage);
   .crumbs { display: flex; gap: 0.5rem; font-family: var(--font-head); font-weight: 600; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; color: #cfccc2; margin-bottom: 0.8rem; }
   .crumbs a { color: var(--yellow); }
   .eyebrow--light { color: var(--yellow); }
-  .eyebrow--light::before { background: var(--yellow); }
+
   .svc-hero h1 { color: #fff; font-size: clamp(2rem, 4.2vw, 3.2rem); margin: 0.5rem 0 0; max-width: 20ch; text-shadow: 0 2px 20px rgba(0,0,0,0.35); }
   .svc-lead { max-width: 54ch; margin-top: 1rem; font-size: clamp(1.05rem, 1.5vw, 1.25rem); color: #ece9e2; }
   .svc-cta { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.6rem; }
 
+  .service-feature { display: grid; grid-template-columns: 1fr 0.95fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; margin-bottom: clamp(2.8rem, 5vw, 4.5rem); }
+  .feature-copy h2 { max-width: 18ch; margin-top: 0.7rem; font-size: clamp(1.9rem, 3.2vw, 2.65rem); }
+  .feature-description { margin-top: 1.1rem; max-width: 48ch; color: var(--slate); font-weight: 500; }
+  .feature-services { margin-top: 1.5rem; gap: 0.7rem; }
+  .feature-services li { font-weight: 500; }
+  .feature-photo { min-width: 0; }
+  .feature-photo :global(img) { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: var(--r-lg); }
+  .feature-photo figcaption { padding: 0.8rem 0 0 0.9rem; margin-top: 0.2rem; border-left: 3px solid var(--yellow); color: var(--slate); font-size: 0.85rem; line-height: 1.5; }
   .detail-grid { display: grid; grid-template-columns: 1fr 340px; gap: clamp(2rem, 4vw, 3.5rem); align-items: start; }
+  .detail-grid--featured { padding-top: clamp(2rem, 4vw, 3rem); position: relative; }
+  .detail-grid--featured::before { content: ''; position: absolute; top: 0; left: var(--gutter); right: var(--gutter); border-top: 1px solid var(--line); }
+  .detail-grid--featured .detail-block:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
   .detail-main h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
-  .detail-block { margin-top: 2.2rem; }
+  .detail-block { margin-top: 2rem; padding-top: 1.7rem; border-top: 1px solid var(--line); }
+  .detail-block h2 { margin-bottom: 0.8rem; }
   .detail-block h3 { font-size: 1.3rem; margin-bottom: 0.6rem; }
-  .detail-block p { color: var(--slate); margin-bottom: 0.8rem; max-width: 64ch; }
+  .detail-block p { color: var(--slate); font-weight: 500; margin-bottom: 0.8rem; max-width: 60ch; }
   .muted { color: var(--slate); }
   .ticks { display: grid; gap: 0.6rem; margin-top: 1rem; }
   .ticks.two-col { grid-template-columns: 1fr 1fr; gap: 0.6rem 1.6rem; }
@@ -196,6 +237,7 @@ const hero = img(service.heroImage);
   .aside-card > p { color: var(--slate); margin: 0.5rem 0 1.1rem; }
   .aside-card .btn { margin-bottom: 0.6rem; }
   .aside-note { font-family: var(--font-head); font-weight: 600; font-size: 0.84rem; color: var(--slate); margin-top: 0.4rem; }
+  .aside-note span { display: block; }
 
   .svc-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
   .svc-gallery[data-count='1'] { grid-template-columns: 1fr; max-width: 760px; margin: 0 auto; }
@@ -234,6 +276,12 @@ const hero = img(service.heroImage);
     .ticks.two-col { grid-template-columns: 1fr; }
     .svc-gallery { grid-template-columns: repeat(2, 1fr); }
     .contact-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    .service-feature { grid-template-columns: 1fr; gap: 1.8rem; }
+    .feature-copy h2 { max-width: 22ch; }
+    .feature-description { max-width: none; }
+    .feature-photo { width: 100%; max-width: 520px; margin-inline: auto; }
   }
   @media (max-width: 520px) { .svc-gallery, .svc-gallery[data-count='2'] { grid-template-columns: 1fr; } }
 </style>
