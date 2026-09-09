@@ -8,27 +8,6 @@ const [heroTitleLead, heroTitleValues] = homepage.hero.title.split('\n');
 <link rel="preload" as="image" href="/video/shepard-hero-desktop-poster.jpg" media="(min-width: 720px)" />
 
 <section class="hero" aria-label="Introduction" data-hero>
-  <div class="hero-inner">
-    <div class="hero-copy">
-      <p class="hero-eyebrow">Family-owned in Laporte since {business.founded}</p>
-      <h1>
-        <span class="hero-title-lead">{heroTitleLead}</span>
-        <span class="hero-title-values">{heroTitleValues}</span>
-      </h1>
-      <p class="hero-lead">Septic, excavation, aggregate, demolition, and snow services across Northern Minnesota.</p>
-      <div class="hero-actions">
-        <a href="#contact" class="btn btn-primary btn-lg">Get a Free Estimate</a>
-        <a href={business.phoneHref} class="hero-phone" aria-label={`Call Shepard Excavating at ${business.phone}`}>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.58 3.6a1 1 0 0 1-.25 1l-2.2 2.2Z" fill="currentColor"/></svg>
-          <span>
-            <span class="phone-label">Call or text</span>
-            <strong>{business.phone}</strong>
-          </span>
-        </a>
-      </div>
-    </div>
-  </div>
-
   <div class="hero-media">
     <picture class="hero-poster" aria-hidden="true">
       <source media="(max-width: 719px)" srcset="/video/shepard-hero-mobile-poster.jpg" />
@@ -64,23 +43,52 @@ const [heroTitleLead, heroTitleValues] = homepage.hero.title.split('\n');
       <span class="sr-only" data-motion-label>Pause video</span>
     </button>
   </div>
+
+  <div class="container hero-inner">
+    <div class="hero-copy">
+      <div class="hero-heading">
+        <p class="hero-eyebrow">Family-owned in Laporte since {business.founded}</p>
+        <h1>
+          <span class="hero-title-lead">{heroTitleLead}</span>
+          <span class="hero-title-values">{heroTitleValues}</span>
+        </h1>
+      </div>
+
+      <div class="hero-details">
+        <p class="hero-lead">Septic, excavation, aggregate, demolition, and snow services across Northern Minnesota.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary btn-lg">Get a Free Estimate</a>
+          <a href={business.phoneHref} class="hero-phone" aria-label={`Call Shepard Excavating at ${business.phone}`}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.58 3.6a1 1 0 0 1-.25 1l-2.2 2.2Z" fill="currentColor"/></svg>
+            <span>
+              <span class="phone-label">Call or text</span>
+              <strong>{business.phone}</strong>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <style>
   .hero {
     --hero-control: rgba(13, 13, 13, 0.68);
     position: relative;
-    min-height: clamp(520px, calc(100svh - 250px), 680px);
-    display: grid;
-    grid-template-columns: minmax(420px, 0.82fr) minmax(0, 1.18fr);
+    min-height: clamp(590px, calc(100svh - 210px), 720px);
+    display: flex;
+    align-items: flex-end;
+    isolation: isolate;
     overflow: hidden;
-    background: var(--paper);
+    background: var(--ink);
   }
 
   .hero-media {
-    position: relative;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
     isolation: isolate;
-    min-height: inherit;
+    min-height: 0;
     overflow: hidden;
     background: var(--ink);
   }
@@ -105,27 +113,34 @@ const [heroTitleLead, heroTitleValues] = homepage.hero.title.split('\n');
     inset: 0;
     z-index: 2;
     background:
-      linear-gradient(0deg, rgba(5, 5, 5, 0.24) 0%, rgba(5, 5, 5, 0) 38%),
-      linear-gradient(90deg, rgba(5, 5, 5, 0.08), rgba(5, 5, 5, 0));
+      linear-gradient(0deg, rgba(5, 5, 5, 0.38) 0%, rgba(5, 5, 5, 0.08) 48%, rgba(5, 5, 5, 0.02) 100%),
+      linear-gradient(90deg, rgba(5, 5, 5, 0.06), rgba(5, 5, 5, 0));
   }
 
   .hero-inner {
     position: relative;
     z-index: 3;
-    display: flex;
-    align-items: center;
-    padding:
-      clamp(3rem, 6vw, 5rem)
-      clamp(2rem, 5vw, 5rem);
-    background: var(--paper);
+    width: 100%;
+    padding-top: clamp(8rem, 19vh, 12rem);
+    padding-bottom: clamp(1.7rem, 3vw, 2.6rem);
+    background: transparent;
   }
   .hero-copy {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+    align-items: end;
+    gap: clamp(1.8rem, 3.8vw, 3.8rem);
     width: 100%;
-    max-width: 520px;
+    max-width: 1120px;
+    margin-inline: auto;
+    padding: clamp(1.6rem, 2.6vw, 2.25rem);
+    border-top: 6px solid var(--red);
+    background: rgba(245, 245, 245, 0.97);
+    box-shadow: 0 18px 46px rgba(0, 0, 0, 0.24);
   }
   .hero-eyebrow {
     display: block;
-    margin-bottom: 0.95rem;
+    margin-bottom: 0.8rem;
     color: var(--red);
     font-family: var(--font-head);
     font-size: 0.78rem;
@@ -138,29 +153,29 @@ const [heroTitleLead, heroTitleValues] = homepage.hero.title.split('\n');
   .hero h1 {
     max-width: none;
     color: var(--ink);
-    font-size: clamp(2.65rem, 3.6vw, 3.7rem);
+    font-size: clamp(2.75rem, 3.55vw, 3.7rem);
     line-height: 0.96;
     letter-spacing: -0.02em;
   }
   .hero-title-lead,
   .hero-title-values { display: block; }
+  .hero-title-lead { white-space: nowrap; }
   .hero-title-values {
-    margin-top: 0.45rem;
+    margin-top: 0.35rem;
     color: var(--red-deep);
-    font-size: 0.55em;
+    font-size: 0.57em;
     line-height: 1.08;
     letter-spacing: 0;
   }
 
   .hero-lead {
     max-width: 50ch;
-    margin-top: 1.15rem;
     color: var(--slate);
     font-size: clamp(1rem, 1.25vw, 1.1rem);
     line-height: 1.55;
   }
 
-  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.3rem; margin-top: 1.55rem; }
+  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.3rem; margin-top: 1.35rem; }
   .hero-phone {
     display: inline-flex;
     align-items: center;
@@ -192,7 +207,7 @@ const [heroTitleLead, heroTitleValues] = homepage.hero.title.split('\n');
   .motion-control {
     position: absolute;
     right: 1rem;
-    bottom: 1rem;
+    top: 1rem;
     z-index: 3;
     display: grid;
     width: 46px;
@@ -214,50 +229,54 @@ const [heroTitleLead, heroTitleValues] = homepage.hero.title.split('\n');
 
   @media (max-width: 1023px) {
     .hero {
-      min-height: clamp(590px, calc(100svh - 170px), 760px);
-      display: flex;
-      align-items: flex-end;
-      background: var(--ink);
+      min-height: 0;
+      flex-direction: column;
+      align-items: stretch;
+      overflow: visible;
+      background: var(--paper);
     }
     .hero-media {
-      position: absolute;
-      inset: 0;
+      position: relative;
+      inset: auto;
+      width: 100%;
+      height: clamp(340px, 52vw, 480px);
       min-height: 0;
     }
     .hero-overlay {
       background:
-        linear-gradient(0deg, rgba(5, 5, 5, 0.34) 0%, rgba(5, 5, 5, 0.03) 68%),
-        linear-gradient(90deg, rgba(5, 5, 5, 0.12), rgba(5, 5, 5, 0.02));
+        linear-gradient(0deg, rgba(5, 5, 5, 0.2) 0%, rgba(5, 5, 5, 0) 45%),
+        linear-gradient(90deg, rgba(5, 5, 5, 0.05), rgba(5, 5, 5, 0));
     }
     .hero-inner {
       width: 100%;
-      padding: 4.5rem var(--gutter) 1.4rem;
-      background: transparent;
+      max-width: none;
+      padding: 0;
+      background: var(--paper);
     }
     .hero-copy {
-      max-width: 600px;
-      padding: clamp(1.45rem, 3.6vw, 2rem);
-      border-left: 6px solid var(--red);
-      background: rgba(245, 245, 245, 0.95);
-      box-shadow: var(--shadow-lg);
-      backdrop-filter: blur(10px);
+      display: block;
+      max-width: 760px;
+      margin-inline: auto;
+      padding: clamp(1.6rem, 4vw, 2.2rem) var(--gutter) clamp(2rem, 5vw, 2.8rem);
+      border-top-width: 5px;
+      background: var(--paper);
+      box-shadow: none;
     }
-    .motion-control { top: 1rem; right: var(--gutter); bottom: auto; }
+    .hero-title-lead { white-space: normal; }
+    .hero-details { margin-top: 1.1rem; }
+    .motion-control { top: 1rem; right: var(--gutter); }
   }
 
   @media (max-width: 719px) {
-    .hero {
-      min-height: clamp(650px, calc(100svh - 145px), 790px);
-    }
-    .hero-inner { padding-block: 5rem 1.2rem; }
-    .hero-copy { max-width: none; padding: 1.3rem; border-left-width: 5px; }
-    .hero h1 { font-size: clamp(2.35rem, 11vw, 3.05rem); }
-    .hero-title-values { margin-top: 0.35rem; font-size: 0.58em; }
-    .hero-lead { max-width: 36ch; margin-top: 0.9rem; font-size: 0.98rem; }
+    .hero-media { height: clamp(380px, 52svh, 490px); }
+    .hero-copy { max-width: none; padding: 1.45rem var(--gutter) 2rem; }
+    .hero h1 { font-size: clamp(2.35rem, 10vw, 3.05rem); }
+    .hero-title-values { margin-top: 0.35rem; font-size: 0.6em; }
+    .hero-lead { max-width: 36ch; font-size: 0.98rem; }
     .hero-actions { display: grid; grid-template-columns: 1fr; gap: 0.8rem; margin-top: 1.2rem; }
     .hero-actions .btn { width: 100%; }
     .hero-phone { justify-self: center; }
-    .motion-control { top: 1rem; right: var(--gutter); bottom: auto; width: 42px; height: 42px; }
+    .motion-control { width: 42px; height: 42px; }
   }
 
   @media (prefers-reduced-motion: reduce) {

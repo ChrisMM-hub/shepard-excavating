@@ -32,8 +32,13 @@ test('ships separate desktop and mobile web video assets', async () => {
   assert.match(hero, /data-motion-control/);
   assert.match(hero, /userPaused/);
   assert.match(hero, /class="hero-media"/);
+  assert.match(hero, /class="hero-heading"/);
+  assert.match(hero, /class="hero-details"/);
   assert.match(hero, /class="hero-phone"/);
   assert.match(hero, /class="btn btn-primary btn-lg">Get a Free Estimate/);
+  assert.ok(hero.indexOf('class="hero-media"') < hero.indexOf('class="container hero-inner"'));
+  assert.match(hero, /@media \(max-width: 1023px\)/);
+  assert.doesNotMatch(hero, /grid-template-columns:\s*minmax\(420px/);
   assert.doesNotMatch(hero, /hero-eyebrow::before/);
   assert.doesNotMatch(hero, /class="btn btn-outline/);
   assert.doesNotMatch(hero, /class="hero-trust"/);
