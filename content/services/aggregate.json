@@ -19,6 +19,7 @@
     "Whether you want it spread",
     "Site access for the truck"
   ],
+  "pricingNote": "We confirm the material, amount, delivery, and spreading before scheduling, so you know what your order covers.",
   "timeline": "Delivery is usually quick once we know what you need and where it is going. Call for current pricing and availability.",
   "expect": "Tell us the material, the amount, and where it needs to go. We’ll get it there quickly. If you need something that isn’t on the list, just give us a call — we’ll make sure you get exactly what you need.",
   "faqs": [
@@ -39,6 +40,5 @@
       "a": "This is what we commonly sell, but if you need something particular, we can usually get it for you."
     }
   ],
-  "heroUpload": "",
-  "pricingNote": "We confirm the material, amount, delivery, and spreading before scheduling, so you know what your order covers."
+  "heroUpload": "/uploads/Shepard-Logo-2.png"
 }
