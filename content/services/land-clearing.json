@@ -18,6 +18,7 @@
     "What you want done with the debris (haul, pile, or burn)",
     "Access to the site"
   ],
+  "pricingNote": "We price to the trees, terrain, access, and how you want debris handled, then walk through the scope with you upfront.",
   "timeline": "A small lot can be a day or two. Bigger clearing jobs depend on the trees and the terrain, and we will give you a window up front.",
   "expect": "We clear what you mark, haul off or pile the debris, and leave the lot ready for the next step. Lake-lot work is something we do a lot of around here.",
   "faqs": [
@@ -38,6 +39,5 @@
       "a": "Yes, stump removal is part of clearing a site properly."
     }
   ],
-  "heroUpload": "",
-  "pricingNote": "We price to the trees, terrain, access, and how you want debris handled, then walk through the scope with you upfront."
+  "heroUpload": "/uploads/Shepard-Logo-2.png"
 }
