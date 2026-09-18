@@ -19,6 +19,7 @@
     "Travel distance to your property",
     "Anything we find that needs repair"
   ],
+  "pricingNote": "Clear pricing starts with a look at the tank and access. We explain the work and cost before we begin.",
   "timeline": "A routine pump-and-inspect visit is usually a couple of hours. Backups and line issues are scheduled as soon as a truck is available during business hours.",
   "expect": "We locate and uncover the tank, pump it down, and check the lid and baffles. If we spot something that needs attention, we tell you straight and what it will cost. Then we leave the site clean.",
   "faqs": [
@@ -39,6 +40,5 @@
       "a": "Call us at (218) 224-2754. We will walk you through a couple of things to check and help you schedule the right service."
     }
   ],
-  "heroUpload": "",
-  "pricingNote": "Clear pricing starts with a look at the tank and access. We explain the work and cost before we begin."
+  "heroUpload": "/uploads/Shepard-Logo-2.png"
 }
