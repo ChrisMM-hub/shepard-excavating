@@ -17,6 +17,7 @@
     "Where the snow gets stacked",
     "Travel distance to your property"
   ],
+  "pricingNote": "Your price depends on the property, service schedule, and where the snow needs to go. We talk through these details with you before work begins.",
   "timeline": "We run routes during and after storms. Get on the list before the season fills up.",
   "expect": "We plow driveways and commercial lots clean and pile the snow out of your way. When piles need to go, we have the right equipment to remove and haul them out.",
   "faqs": [
@@ -37,6 +38,5 @@
       "a": "Before the snow flies. Routes fill up, so the earlier you call, the better."
     }
   ],
-  "heroUpload": "",
-  "pricingNote": "Your price depends on the property, service schedule, and where the snow needs to go. We talk through these details with you before work begins."
+  "heroUpload": "/uploads/Shepard-Logo-2.png"
 }
