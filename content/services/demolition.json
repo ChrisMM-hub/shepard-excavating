@@ -19,6 +19,7 @@
     "Debris volume and disposal needs",
     "Site access"
   ],
+  "pricingNote": "We look at the structure, access, disposal, and site work first, so the price accounts for the full teardown and cleanup.",
   "timeline": "Most residential teardowns are a few days, including cleanup and haul-off.",
   "expect": "We knock it down, load it out with our own equipment, and grade the spot back so you would hardly know it was there. One crew handles the teardown, hauling, and cleanup.",
   "faqs": [
@@ -39,6 +40,5 @@
       "a": "Some demolition needs a permit. We will let you know what your job requires and help you sort it out."
     }
   ],
-  "heroUpload": "",
-  "pricingNote": "We look at the structure, access, disposal, and site work first, so the price accounts for the full teardown and cleanup."
+  "heroUpload": "/uploads/Shepard-Logo-2.png"
 }
