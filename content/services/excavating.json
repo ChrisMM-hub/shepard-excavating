@@ -20,6 +20,7 @@
     "How much material has to be hauled in or out",
     "Any permits the job requires"
   ],
+  "pricingNote": "A clear plan keeps an earthwork project moving. We review the site, equipment, hauling, and permits with you before work starts.",
   "timeline": "It depends on the scope. We will give you a realistic window once we have looked at the job and the site.",
   "expect": "We show up with the right equipment, do the work, and leave the site graded and cleaned up. One company from the first cut to the final grade, instead of lining up three different outfits.",
   "faqs": [
@@ -40,6 +41,5 @@
       "a": "Yes, we are a licensed and bonded business and have been at it since 1997."
     }
   ],
-  "heroUpload": "",
-  "pricingNote": "A clear plan keeps an earthwork project moving. We review the site, equipment, hauling, and permits with you before work starts."
+  "heroUpload": "/uploads/Shepard-Logo-2.png"
 }
