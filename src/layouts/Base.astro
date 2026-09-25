@@ -165,6 +165,14 @@ const localBusiness = {
         set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${ga4Id}');`}
       />
     )}
+    {/* Phone tap tracking: one delegated listener covers every tel: link (header,
+        mobile call bar, heroes, service/location pages). Production-only with GA. */}
+    {gaEnabled && (
+      <script
+        is:inline
+        set:html={`document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="tel:"]');if(!a||typeof gtag!=='function')return;gtag('event','click_to_call',{link_url:a.getAttribute('href'),link_classes:a.className||'',page_location:location.href,transport_type:'beacon'});},true);`}
+      />
+    )}
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>
