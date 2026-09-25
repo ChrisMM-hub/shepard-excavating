@@ -170,7 +170,7 @@ const localBusiness = {
     {gaEnabled && (
       <script
         is:inline
-        set:html={`document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="tel:"]');if(!a||typeof gtag!=='function')return;gtag('event','click_to_call',{link_url:a.getAttribute('href'),link_classes:a.className||'',page_location:location.href,transport_type:'beacon'});},true);`}
+        set:html={`document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="tel:"]');if(!a||typeof gtag!=='function')return;var loc=a.classList.contains('cb-call')?'sticky_call_bar':a.closest('header')?'header':a.closest('footer')?'footer':/hero/.test(a.className)?'hero':'body';gtag('event','click_to_call',{phone_location:loc,link_url:a.getAttribute('href'),page_location:location.href,transport_type:'beacon'});},true);`}
       />
     )}
   </head>
