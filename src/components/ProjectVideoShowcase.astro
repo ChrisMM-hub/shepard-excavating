@@ -1,0 +1,246 @@
+<section class="project-showcase section" aria-labelledby="walker-project-heading" data-project-video>
+  <div class="container">
+    <div class="project-intro">
+      <div class="project-copy">
+        <p class="project-eyebrow">Project Spotlight</p>
+        <h2 id="walker-project-heading">Equipped for Projects of Every Size</h2>
+        <p class="project-lead" id="walker-project-description">
+          From smaller residential projects to large septic systems like this one in Walker, Shepard Excavating has the equipment and experience to take on work at every scale.
+        </p>
+      </div>
+
+      <a href="/septic-system" class="btn btn-red btn-lg">Explore Septic System Services</a>
+    </div>
+
+    <figure class="project-card">
+      <div
+        class="project-media"
+        data-project-media
+        data-mobile-src="/video/shepard-hero-mobile.mp4"
+        data-desktop-src="/video/shepard-hero-desktop.mp4"
+      >
+        <picture class="project-poster" aria-hidden="true">
+          <source media="(max-width: 719px)" srcset="/video/shepard-hero-mobile-poster.jpg" />
+          <img
+            src="/video/shepard-hero-desktop-poster.jpg"
+            alt=""
+            width="1600"
+            height="900"
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+
+        <video
+          id="walker-project-video"
+          class="project-video"
+          data-project-player
+          muted
+          playsinline
+          preload="none"
+          aria-hidden="true"
+          aria-label="Large septic system project in Walker, Minnesota"
+          aria-describedby="walker-project-description walker-project-caption"
+        ></video>
+
+        <div class="project-overlay" aria-hidden="true"></div>
+
+        <button
+          class="project-play"
+          type="button"
+          data-project-play
+          aria-controls="walker-project-video"
+          aria-label="Play 27-second video of a large septic system project in Walker, Minnesota"
+          hidden
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z" fill="currentColor" /></svg>
+        </button>
+      </div>
+
+      <figcaption class="project-meta" id="walker-project-caption">
+        <span class="meta-location">Walker, Minnesota</span>
+        <span class="meta-service">Large septic system project</span>
+        <span class="meta-runtime">Silent video <span aria-hidden="true">•</span> 27 seconds</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .project-showcase {
+    border-block: 1px solid var(--line);
+    background: var(--stone);
+  }
+
+  .project-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: clamp(1.5rem, 4vw, 4rem);
+  }
+
+  .project-copy { max-width: 760px; }
+  .project-eyebrow {
+    color: var(--red);
+    font-family: var(--font-head);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+  .project-copy h2 { margin-top: 0.55rem; font-size: clamp(2rem, 4vw, 3rem); }
+  .project-lead {
+    max-width: 64ch;
+    margin-top: 0.9rem;
+    color: var(--slate);
+    font-size: clamp(1.02rem, 1.4vw, 1.14rem);
+  }
+
+  .project-card {
+    margin-top: clamp(1.8rem, 4vw, 2.8rem);
+    overflow: hidden;
+    border: 1px solid rgba(13, 13, 13, 0.08);
+    border-radius: var(--r-lg);
+    background: #fff;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .project-media {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .project-poster,
+  .project-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .project-poster :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .project-video { z-index: 1; object-fit: cover; opacity: 0; }
+  .project-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: radial-gradient(circle at center, rgba(13, 13, 13, 0.08), rgba(13, 13, 13, 0.38));
+  }
+
+  .project-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    display: grid;
+    width: 82px;
+    height: 82px;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: var(--ink);
+    box-shadow: 0 10px 34px rgba(0, 0, 0, 0.38);
+    transform: translate(-50%, -50%);
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .project-play[hidden] { display: none; }
+  .project-play svg { width: 34px; height: 34px; margin-left: 4px; }
+  .project-play:hover { background: var(--yellow-deep); transform: translate(-50%, -50%) scale(1.06); }
+
+  .project-media.is-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 4;
+    width: 48px;
+    height: 48px;
+    border: 4px solid rgba(255, 255, 255, 0.42);
+    border-top-color: var(--yellow);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: project-spin 0.8s linear infinite;
+  }
+  .project-media.is-loading .project-play { display: none; }
+  .project-media.is-active .project-poster,
+  .project-media.is-active .project-overlay,
+  .project-media.is-active .project-play { display: none; }
+  .project-media.is-active .project-video { opacity: 1; }
+
+  @keyframes project-spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  .project-meta {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.25fr) auto;
+    align-items: stretch;
+    font-family: var(--font-body);
+    font-size: 0.86rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .project-meta > span { display: flex; align-items: center; padding: 0.9rem 1.15rem; }
+  .meta-location { background: var(--yellow); color: var(--ink); }
+  .meta-service { background: var(--ink); color: #fff; }
+  .meta-runtime { gap: 0.4rem; color: var(--slate); }
+
+  @media (max-width: 880px) {
+    .project-intro { grid-template-columns: 1fr; }
+    .project-intro .btn { width: fit-content; }
+    .project-meta { grid-template-columns: 1fr 1fr; }
+    .meta-runtime { grid-column: 1 / -1; justify-content: center; border-top: 1px solid var(--line); }
+  }
+
+  @media (max-width: 719px) {
+    .project-intro .btn { width: 100%; }
+    .project-media { aspect-ratio: 3 / 4; }
+    .project-play { width: 70px; height: 70px; }
+    .project-play svg { width: 30px; height: 30px; }
+    .project-meta { grid-template-columns: 1fr; }
+    .project-meta > span { justify-content: center; text-align: center; }
+    .meta-runtime { grid-column: auto; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-project-video]').forEach((section) => {
+    const media = section.querySelector<HTMLElement>('[data-project-media]');
+    const video = section.querySelector<HTMLVideoElement>('[data-project-player]');
+    const play = section.querySelector<HTMLButtonElement>('[data-project-play]');
+
+    if (!media || !video || !play) return;
+
+    play.hidden = false;
+    video.addEventListener('loadeddata', () => {
+      media.classList.remove('is-loading');
+      media.classList.add('is-active');
+      media.removeAttribute('aria-busy');
+    });
+
+    play.addEventListener('click', () => {
+      const mobile = window.matchMedia('(max-width: 719px)').matches;
+      const source = mobile ? media.dataset.mobileSrc : media.dataset.desktopSrc;
+      if (!source) return;
+
+      video.src = source;
+      video.controls = true;
+      video.removeAttribute('aria-hidden');
+      media.classList.add('is-loading');
+      media.setAttribute('aria-busy', 'true');
+      video.load();
+      video.play().catch(() => undefined);
+    });
+
+    video.addEventListener('error', () => {
+      video.removeAttribute('src');
+      video.controls = false;
+      video.setAttribute('aria-hidden', 'true');
+      media.classList.remove('is-loading', 'is-active');
+      media.removeAttribute('aria-busy');
+    });
+  });
+</script>

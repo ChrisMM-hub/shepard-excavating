@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import HomeFeature from '../components/HomeFeature.astro';
+import ProjectVideoShowcase from '../components/ProjectVideoShowcase.astro';
 import CalculatorCTA from '../components/CalculatorCTA.astro';
 import Reviews from '../components/Reviews.astro';
 import Contact from '../components/Contact.astro';
@@ -43,6 +44,8 @@ const feat = Object.fromEntries(homepage.features.map((f) => [f.key, f]));
     flip
     tint
   />
+
+  <ProjectVideoShowcase />
 
   <HomeFeature
     heading={feat.fisher.heading}
