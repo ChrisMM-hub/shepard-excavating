@@ -2,14 +2,16 @@
   <div class="container">
     <div class="project-intro">
       <div class="project-copy">
-        <p class="project-eyebrow">Project Spotlight</p>
-        <h2 id="walker-project-heading">Equipped for Projects of Every Size</h2>
-        <p class="project-lead" id="walker-project-description">
-          From smaller residential projects to large septic systems like this one in Walker, Shepard Excavating has the equipment and experience to take on work at every scale.
-        </p>
+        <p class="project-eyebrow">Recent Project Highlight</p>
+        <h2 id="walker-project-heading">Large Septic System <span>on Leech Lake, Minnesota</span></h2>
       </div>
 
-      <a href="/septic-system" class="btn btn-red btn-lg">Explore Septic System Services</a>
+      <div class="project-details">
+        <p class="project-lead" id="walker-project-description">
+          A closer look at our work near Walker, on the shores of Leech Lake. From residential septic systems to projects of this scale, we bring the equipment, experience, and care to get the job done right.
+        </p>
+        <a href="/septic-system" class="btn btn-red btn-lg">Plan Your Septic Project <span aria-hidden="true">↗</span></a>
+      </div>
     </div>
 
     <figure class="project-card">
@@ -39,7 +41,7 @@
           playsinline
           preload="none"
           aria-hidden="true"
-          aria-label="Large septic system project in Walker, Minnesota"
+          aria-label="Large septic system project on Leech Lake, Minnesota"
           aria-describedby="walker-project-description walker-project-caption"
         ></video>
 
@@ -50,17 +52,15 @@
           type="button"
           data-project-play
           aria-controls="walker-project-video"
-          aria-label="Play 27-second video of a large septic system project in Walker, Minnesota"
+          aria-label="Watch our large septic system project on Leech Lake, Minnesota"
           hidden
         >
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z" fill="currentColor" /></svg>
         </button>
       </div>
 
-      <figcaption class="project-meta" id="walker-project-caption">
-        <span class="meta-location">Walker, Minnesota</span>
-        <span class="meta-service">Large septic system project</span>
-        <span class="meta-runtime">Silent video <span aria-hidden="true">•</span> 27 seconds</span>
+      <figcaption class="sr-only" id="walker-project-caption">
+        Shepard Excavating at work on a large septic system project on Leech Lake near Walker, Minnesota.
       </figcaption>
     </figure>
   </div>
@@ -74,12 +74,12 @@
 
   .project-intro {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
     align-items: end;
     gap: clamp(1.5rem, 4vw, 4rem);
   }
 
-  .project-copy { max-width: 760px; }
+  .project-copy { max-width: 660px; }
   .project-eyebrow {
     color: var(--red);
     font-family: var(--font-head);
@@ -89,9 +89,11 @@
     text-transform: uppercase;
   }
   .project-copy h2 { margin-top: 0.55rem; font-size: clamp(2rem, 4vw, 3rem); }
+  .project-copy h2 span { display: block; margin-top: 0.2em; font-size: 0.76em; line-height: 1.2; color: var(--slate); }
+  .project-details .btn { margin-top: 1.3rem; gap: 1rem; }
   .project-lead {
     max-width: 64ch;
-    margin-top: 0.9rem;
+    margin: 0;
     color: var(--slate);
     font-size: clamp(1.02rem, 1.4vw, 1.14rem);
   }
@@ -102,7 +104,7 @@
     border: 1px solid rgba(13, 13, 13, 0.08);
     border-radius: var(--r-lg);
     background: #fff;
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
   }
 
   .project-media {
@@ -174,25 +176,9 @@
     to { transform: translate(-50%, -50%) rotate(360deg); }
   }
 
-  .project-meta {
-    display: grid;
-    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.25fr) auto;
-    align-items: stretch;
-    font-family: var(--font-body);
-    font-size: 0.86rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-  }
-  .project-meta > span { display: flex; align-items: center; padding: 0.9rem 1.15rem; }
-  .meta-location { background: var(--yellow); color: var(--ink); }
-  .meta-service { background: var(--ink); color: #fff; }
-  .meta-runtime { gap: 0.4rem; color: var(--slate); }
-
   @media (max-width: 880px) {
     .project-intro { grid-template-columns: 1fr; }
     .project-intro .btn { width: fit-content; }
-    .project-meta { grid-template-columns: 1fr 1fr; }
-    .meta-runtime { grid-column: 1 / -1; justify-content: center; border-top: 1px solid var(--line); }
   }
 
   @media (max-width: 719px) {
@@ -200,9 +186,6 @@
     .project-media { aspect-ratio: 3 / 4; }
     .project-play { width: 70px; height: 70px; }
     .project-play svg { width: 30px; height: 30px; }
-    .project-meta { grid-template-columns: 1fr; }
-    .project-meta > span { justify-content: center; text-align: center; }
-    .meta-runtime { grid-column: auto; }
   }
 </style>
 
