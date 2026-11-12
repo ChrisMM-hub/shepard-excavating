@@ -18,6 +18,7 @@
   "redirects": [
     { "source": "/emergency", "destination": "/septic-pumping", "permanent": true },
     { "source": "/septic-emergency", "destination": "/septic-pumping", "permanent": true },
+    { "source": "/septic-emergency/", "destination": "/septic-pumping/", "permanent": true },
     { "source": "/septic-pumping-maintenance", "destination": "/septic-pumping", "permanent": true },
     { "source": "/septic-system-education", "destination": "/septic-education", "permanent": true }
   ],
