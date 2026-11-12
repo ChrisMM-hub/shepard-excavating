@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://www.shepardexcavating.com',
   integrations: [
-    sitemap({ filter: (page) => !/\/(thank-you|privacy-policy|demo-homepage)\/?$/.test(page) }),
+    sitemap({ filter: (page) => !/\/(thank-you|privacy-policy|terms-of-service|demo-homepage)\/?$/.test(page) }),
   ],
   build: { inlineStylesheets: 'always' },
   image: { service: { entrypoint: 'astro/assets/services/sharp' } },
